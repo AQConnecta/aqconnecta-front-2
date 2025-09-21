@@ -23,6 +23,11 @@
 # misc
 .DS_Store
 *.pem
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
+volume/
 
 # debug
 npm-debug.log*
