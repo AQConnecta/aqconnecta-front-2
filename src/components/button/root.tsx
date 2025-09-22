@@ -5,8 +5,8 @@ import type { TButtonSize, TButtonVariant } from ".";
 
 type ButtonCoreProps = PropsWithChildren<{
   className?: string;
-  variant: TButtonVariant;
-  size: TButtonSize;
+  variant?: TButtonVariant;
+  size?: TButtonSize;
 }>;
 
 type ButtonProps =
@@ -20,8 +20,8 @@ export function ButtonRoot({
   children,
   asChild,
   className,
-  variant,
-  size,
+  variant = "primary",
+  size = "md",
   ...props
 }: ButtonProps) {
   const Element = asChild ? Slot.Root : "button";
@@ -32,7 +32,10 @@ export function ButtonRoot({
       className={clsx(
         "group flex gap-3 items-center justify-center font-bold",
         "transition-all duration-100 cursor-default",
-        size === "md" && "px-8 py-3 rounded-xl",
+        size === "md" && [
+          "px-8 py-3 rounded-xl text-lg",
+          "max-medium-width:px-5 max-medium-width:py-2 max-medium-width:text-sm",
+        ],
         size === "sm" && "px-5 py-2 rounded-xl",
         variant === "primary" && [
           "drop-shadow-[0_2px_0] drop-shadow-black/15 bg-primary-600 text-white",

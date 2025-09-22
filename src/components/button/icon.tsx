@@ -13,7 +13,8 @@ export function ButtonIcon({ icon: I, weight = "fill" }: ButtonIconProps) {
     <I
       weight={weight}
       className={clsx(
-        "group-data-[size=md]:size-6 group-data-[size=sm]:size-4",
+        "medium-width:group-data-[size=md]:size-6 max-medium-width:group-data[size=md]:size-4",
+        "group-data-[size=sm]:size-4",
         "group-data-[variant=primary]:text-primary-300",
         [
           "group-data-[variant=ghost-primary]:text-primary-600/70",
