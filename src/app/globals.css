@@ -19,6 +19,16 @@
   --color-orange-500: #ff8000;
 }
 
+@theme {
+  --container-full-width: 1440px;
+
+  --breakpoint-full-width: 1440px;
+  --breakpoint-medium-width: 940px;
+  --breakpoint-small-width: 720px;
+  --breakpoint-xs-width: 480px;
+  --breakpoint-2xs-width: 360px;
+}
+
 @theme inline {
   --color-background: var(--color-gray-100);
   --color-foreground: var(--color-black);
