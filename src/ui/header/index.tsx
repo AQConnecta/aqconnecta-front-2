@@ -8,7 +8,7 @@ import Link from "next/link";
 import Logo from "@/assets/logo-icon.svg";
 import Button from "@/components/button";
 import { Routes } from "@/core/routes";
-import NavbarItem from "./navbar-item";
+import NavbarItem from "../navbar-item";
 
 export function Header() {
   const userIsLoggedIn = false;
