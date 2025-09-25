@@ -58,13 +58,23 @@ export function Header() {
           <span>foo</span>
         ) : (
           <>
-            <Button.Root asChild size="md" variant="primary">
+            <Button.Root
+              asChild
+              className="text-nowrap"
+              size="md"
+              variant="primary"
+            >
               <Link href={Routes.register}>
                 <Button.Icon icon={UserIcon} />
                 Registre-se
               </Link>
             </Button.Root>
-            <Button.Root asChild size="md" variant="ghost-primary">
+            <Button.Root
+              asChild
+              className="text-nowrap"
+              size="md"
+              variant="ghost-primary"
+            >
               <Link href={Routes.login}>
                 <Button.Icon icon={KeyIcon} />
                 Login
