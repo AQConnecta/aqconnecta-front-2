@@ -21,8 +21,8 @@ export function Header() {
         "sticky",
       )}
     >
-      <div className="full-width:flex-1 flex justify-start items-center">
-        <Link href={Routes.home}>
+      <div className="full-width:flex-1 flex justify-start items-stretch gap-3">
+        <Link href={Routes.home} className="flex items-center">
           <Image
             src={Logo}
             alt="Logo do AQConnecta"
@@ -31,11 +31,11 @@ export function Header() {
             className="max-small-width:size-[30px]"
           />
         </Link>
+        <div
+          aria-hidden
+          className="max-xs-width:hidden h-auto w-[1px] bg-gray-200 block"
+        />
       </div>
-      <div
-        aria-hidden
-        className="max-xs-width:hidden h-auto w-[1px] bg-gray-200 block"
-      />
       <nav
         className={clsx(
           "full-width:flex-2 max-full-width:flex-1 flex gap-2",
