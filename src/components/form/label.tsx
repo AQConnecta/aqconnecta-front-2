@@ -2,12 +2,10 @@ import clsx from "clsx";
 import type { LabelHTMLAttributes } from "react";
 
 type Props = {
-  labelSize: "md" | "sm";
   required: boolean;
 } & LabelHTMLAttributes<HTMLLabelElement>;
 
 export function FormLabel({
-  labelSize,
   children,
   className,
   htmlFor,
@@ -18,9 +16,7 @@ export function FormLabel({
     <label
       htmlFor={htmlFor}
       className={clsx(
-        "font-medium text-foreground",
-        labelSize === "md" && "text-lg",
-        labelSize === "sm" && "text-base",
+        "font-medium text-foreground max-small-width:text-base small-width:text-lg",
         className && className,
       )}
       {...props}
