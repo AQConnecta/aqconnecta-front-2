@@ -78,15 +78,16 @@ export function RegisterForm() {
         />
       </div>
 
-      <div className="flex-1 flex gap-2 justify-end">
+      <div className="flex-1 flex gap-2 justify-end max-xs-width:flex-col">
         <Button.Root
           onClick={() => toast.success("Teste", {})}
           type="button"
           variant="ghost-primary"
+          className="max-xs-width:justify-start"
         >
           Já tenho uma conta
         </Button.Root>
-        <Button.Root type="submit">
+        <Button.Root type="submit" className="max-xs-width:justify-between">
           Criar conta
           <Button.Icon icon={ArrowRightIcon} weight="bold" />
         </Button.Root>
