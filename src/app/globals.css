@@ -21,8 +21,8 @@
 
 @theme {
   --container-full-with-margins: calc(100% - 48px);
-  --container-full: 1440px;
-  --container-main: 744px;
+  --container-full-area: 1440px;
+  --container-main-area: 744px;
 
   --breakpoint-full-width: 1440px;
   --breakpoint-medium-width: 940px;

@@ -64,7 +64,7 @@ export function Header() {
               size="md"
               variant="primary"
             >
-              <Link href={Routes.register}>
+              <Link href={Routes.auth.register}>
                 <Button.Icon icon={UserIcon} />
                 Registre-se
               </Link>
@@ -75,7 +75,7 @@ export function Header() {
               size="md"
               variant="ghost-primary"
             >
-              <Link href={Routes.login}>
+              <Link href={Routes.auth.login}>
                 <Button.Icon icon={KeyIcon} />
                 Login
               </Link>

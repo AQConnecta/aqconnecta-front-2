@@ -3,10 +3,10 @@
 import type { Icon } from "@phosphor-icons/react";
 import { Slot } from "@radix-ui/react-slot";
 import clsx from "clsx";
-import { type FormEvent, type InputHTMLAttributes, useId } from "react";
+import { type InputHTMLAttributes, useId } from "react";
 import { FormLabel } from "./label";
 
-type HTMLInputProps = InputHTMLAttributes<HTMLInputProps>;
+type HTMLInputProps = InputHTMLAttributes<HTMLInputElement>;
 
 type Props = {
   asChild?: boolean;
@@ -19,23 +19,20 @@ type Props = {
   errorMessage?: string;
   type?: HTMLInputProps["type"];
   inputSize?: "md" | "sm";
-  onInput?: (value: string) => void;
-  name: string;
+  inputProps?: HTMLInputProps;
 };
 
 export function FormInput({
   asChild = false,
   leftIcon,
   rightIcon,
-  inputSize = "md",
   label,
   placeholder,
   type = "text",
   details,
   errorMessage,
   required = false,
-  onInput,
-  name,
+  inputProps,
 }: Props) {
   const Input = asChild ? Slot : "input";
   const inputId = useId();
@@ -43,12 +40,7 @@ export function FormInput({
 
   return (
     <div>
-      <FormLabel
-        htmlFor={inputId}
-        required={required}
-        labelSize={inputSize}
-        className="block mb-1"
-      >
+      <FormLabel htmlFor={inputId} required={required} className="block mb-1">
         {label}
       </FormLabel>
 
@@ -58,20 +50,21 @@ export function FormInput({
           "px-6 py-2 rounded-3xl bg-black/5 border border-black/3",
           "flex items-start gap-2.5 transition-all will-change-[shadow] duration-100",
           "ring-0 ring-primary-600/40 focus-within:ring-4",
+          "max-small-width:text-sm",
         )}
       >
         {leftIcon && <InputIcon icon={leftIcon} />}
 
         <Input
-          name={name}
           id={inputId}
           type={type}
           placeholder={placeholder}
-          onInput={(event: FormEvent<HTMLInputElement>) =>
-            onInput?.(event.currentTarget.value)
-          }
-          className="outline-none flex-1 leading-tight"
+          className={clsx(
+            "outline-none w-full small-width:leading-tight max-small-width:leading-4",
+            "text-wrap placeholder:text-ellipsis",
+          )}
           aria-describedby={details && detailsId}
+          {...inputProps}
         />
 
         {rightIcon && <InputIcon icon={rightIcon} />}
@@ -95,5 +88,10 @@ type InputIconProps = {
 };
 
 function InputIcon({ icon: I }: InputIconProps) {
-  return <I size={20} weight="fill" className="text-gray-600" />;
+  return (
+    <I
+      weight="fill"
+      className="shrink-0 text-gray-600 small-width:size-5 max-small-width:size-4"
+    />
+  );
 }
