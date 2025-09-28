@@ -39,8 +39,6 @@ export class APIRequestError extends Error {
    * @param error an error thrown by axios
    */
   public static prepareFromAxiosError(error: unknown) {
-    console.log(error);
-
     if (!(error instanceof AxiosError)) {
       return APIRequestError.internalServerError();
     }
