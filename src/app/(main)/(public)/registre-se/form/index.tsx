@@ -6,6 +6,7 @@ import { EnvelopeIcon } from "@phosphor-icons/react/dist/ssr/Envelope";
 import { KeyIcon } from "@phosphor-icons/react/dist/ssr/Key";
 import { UserIcon } from "@phosphor-icons/react/dist/ssr/User";
 import { useMutation } from "@tanstack/react-query";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -80,12 +81,11 @@ export function RegisterForm() {
 
       <div className="flex-1 flex gap-2 justify-end max-xs-width:flex-col">
         <Button.Root
-          onClick={() => toast.success("Teste", {})}
-          type="button"
+          asChild
           variant="ghost-primary"
           className="max-xs-width:justify-start"
         >
-          Já tenho uma conta
+          <Link href={Routes.auth.login}>Já tenho uma conta</Link>
         </Button.Root>
         <Button.Root type="submit" className="max-xs-width:justify-between">
           Criar conta
