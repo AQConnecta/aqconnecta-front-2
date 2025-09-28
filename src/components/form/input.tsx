@@ -3,10 +3,10 @@
 import type { Icon } from "@phosphor-icons/react";
 import { Slot } from "@radix-ui/react-slot";
 import clsx from "clsx";
-import { type FormEvent, type InputHTMLAttributes, useId } from "react";
+import { type InputHTMLAttributes, useId } from "react";
 import { FormLabel } from "./label";
 
-type HTMLInputProps = InputHTMLAttributes<HTMLInputProps>;
+type HTMLInputProps = InputHTMLAttributes<HTMLInputElement>;
 
 type Props = {
   asChild?: boolean;
@@ -19,8 +19,7 @@ type Props = {
   errorMessage?: string;
   type?: HTMLInputProps["type"];
   inputSize?: "md" | "sm";
-  onInput?: (value: string) => void;
-  name: string;
+  inputProps?: HTMLInputProps;
 };
 
 export function FormInput({
@@ -34,8 +33,7 @@ export function FormInput({
   details,
   errorMessage,
   required = false,
-  onInput,
-  name,
+  inputProps,
 }: Props) {
   const Input = asChild ? Slot : "input";
   const inputId = useId();
@@ -63,15 +61,12 @@ export function FormInput({
         {leftIcon && <InputIcon icon={leftIcon} />}
 
         <Input
-          name={name}
           id={inputId}
           type={type}
           placeholder={placeholder}
-          onInput={(event: FormEvent<HTMLInputElement>) =>
-            onInput?.(event.currentTarget.value)
-          }
           className="outline-none flex-1 leading-tight"
           aria-describedby={details && detailsId}
+          {...inputProps}
         />
 
         {rightIcon && <InputIcon icon={rightIcon} />}
