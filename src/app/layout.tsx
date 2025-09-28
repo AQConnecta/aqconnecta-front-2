@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { ServerEnv } from "@/config/env/server";
 import { resolveTitle } from "@/core/metadata";
+import { ReactQueryProvider } from "@/libs/react-query/provider";
+import { ToasterProvider } from "@/libs/toaster";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat-sans",
@@ -26,7 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${montserrat.variable} antialiased`}>{children}</body>
+      <body className={`${montserrat.variable} antialiased`}>
+        <ReactQueryProvider>
+          <ToasterProvider>{children}</ToasterProvider>
+        </ReactQueryProvider>
+      </body>
     </html>
   );
 }
