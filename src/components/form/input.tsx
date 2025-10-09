@@ -3,7 +3,8 @@
 import type { Icon } from "@phosphor-icons/react";
 import { Slot } from "@radix-ui/react-slot";
 import clsx from "clsx";
-import { type InputHTMLAttributes, useId } from "react";
+import { type InputHTMLAttributes, type ReactElement, useId } from "react";
+import { InputIcon } from "./input-icon";
 import { FormLabel } from "./label";
 
 type HTMLInputProps = InputHTMLAttributes<HTMLInputElement>;
@@ -12,6 +13,8 @@ type Props = {
   asChild?: boolean;
   leftIcon?: Icon;
   rightIcon?: Icon;
+  leftComponent?: ReactElement;
+  rightComponent?: ReactElement;
   label: string;
   required?: boolean;
   placeholder?: string;
@@ -26,6 +29,8 @@ export function FormInput({
   asChild = false,
   leftIcon,
   rightIcon,
+  rightComponent,
+  leftComponent,
   label,
   placeholder,
   type = "text",
@@ -37,6 +42,12 @@ export function FormInput({
   const Input = asChild ? Slot : "input";
   const inputId = useId();
   const detailsId = useId();
+
+  if ((rightComponent && rightIcon) || (leftComponent && leftIcon)) {
+    throw new Error(
+      "FormInput can only receive either {left, right} icon or component, never both at the same time.",
+    );
+  }
 
   return (
     <div>
@@ -54,6 +65,7 @@ export function FormInput({
         )}
       >
         {leftIcon && <InputIcon icon={leftIcon} />}
+        {leftComponent ?? null}
 
         <Input
           id={inputId}
@@ -68,6 +80,7 @@ export function FormInput({
         />
 
         {rightIcon && <InputIcon icon={rightIcon} />}
+        {rightComponent ?? null}
       </label>
 
       {details && (
@@ -80,18 +93,5 @@ export function FormInput({
         <p className="text-red-300 text-sm my-1 mb-0 p-0">{errorMessage}</p>
       )}
     </div>
-  );
-}
-
-type InputIconProps = {
-  icon: Icon;
-};
-
-function InputIcon({ icon: I }: InputIconProps) {
-  return (
-    <I
-      weight="fill"
-      className="shrink-0 text-gray-600 small-width:size-5 max-small-width:size-4"
-    />
   );
 }
