@@ -7,7 +7,7 @@ export function ToasterProvider({ children }: PropsWithChildren) {
   return (
     <>
       {children}
-      <Toaster position="bottom-right">{CustomToastBar}</Toaster>
+      <Toaster position="top-center">{CustomToastBar}</Toaster>
     </>
   );
 }
