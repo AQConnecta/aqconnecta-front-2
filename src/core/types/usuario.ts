@@ -14,8 +14,6 @@ export type Usuario = {
   userUrl: string;
   permissao: Permissao[];
   competencias: Competencia[];
-  // TODO: decorar esse campo com @JsonIgnore no back-end
-  senha?: string | null;
   deletado: boolean;
   ativado: boolean;
   enderecos: Endereco[];
