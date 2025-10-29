@@ -2,6 +2,7 @@
 
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr/ArrowRight";
 import { EnvelopeIcon } from "@phosphor-icons/react/dist/ssr/Envelope";
+import { KeyIcon } from "@phosphor-icons/react/dist/ssr/Key";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -58,7 +59,7 @@ export function LoginForm() {
 
         <Form.Input
           label="Senha"
-          leftIcon={EnvelopeIcon}
+          leftIcon={KeyIcon}
           rightComponent={
             <TogglePasswordVisibilityButton
               isVisible={passwordIsVisible}
