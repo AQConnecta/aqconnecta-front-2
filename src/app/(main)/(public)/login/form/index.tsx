@@ -45,7 +45,7 @@ export function LoginForm() {
   });
 
   return (
-    <form className="card" onSubmit={handleSubmit((data) => login(data))}>
+    <form className="card mb-80" onSubmit={handleSubmit((data) => login(data))}>
       <div className="flex flex-col gap-4">
         <Form.Input
           label="E-mail"

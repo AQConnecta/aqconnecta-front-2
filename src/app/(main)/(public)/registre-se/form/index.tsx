@@ -38,7 +38,7 @@ export function RegisterForm() {
   return (
     <form
       onSubmit={handleSubmit((data) => registerUser(data))}
-      className="card"
+      className="card mb-80"
     >
       <div className="flex flex-col gap-4">
         <Form.Input
