@@ -1,17 +1,22 @@
+"use client";
+
 import { BriefcaseIcon } from "@phosphor-icons/react/dist/ssr/Briefcase";
 import { FilesIcon } from "@phosphor-icons/react/dist/ssr/Files";
-import { KeyIcon } from "@phosphor-icons/react/dist/ssr/Key";
-import { UserIcon } from "@phosphor-icons/react/dist/ssr/User";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/assets/logo-icon.svg";
-import Button from "@/components/button";
 import { Routes } from "@/core/routes";
+import { useAuth } from "@/stores/auth";
 import NavbarItem from "../navbar-item";
+import { LoggedUserBox } from "./logged-user-box";
+import { UnloggedBox } from "./unlogged-user-box";
+import { UserBoxSkeleton } from "./user-box-skeleton";
 
 export function Header() {
-  const userIsLoggedIn = false;
+  const isLoadingAuth = useAuth((state) => state.isLoadingAuth);
+  const user = useAuth((state) => state.user);
+  const userIsLoggedIn = user !== null;
 
   return (
     <header
@@ -53,34 +58,13 @@ export function Header() {
           <NavbarItem.Label>Minhas candidaturas</NavbarItem.Label>
         </NavbarItem.Root>
       </nav>
-      <div className="flex-1 flex justify-end gap-2">
-        {userIsLoggedIn ? (
-          <span>foo</span>
+      <div className="flex-1 flex justify-end items-center gap-2">
+        {isLoadingAuth ? (
+          <UserBoxSkeleton />
+        ) : userIsLoggedIn ? (
+          <LoggedUserBox />
         ) : (
-          <>
-            <Button.Root
-              asChild
-              className="text-nowrap"
-              size="md"
-              variant="primary"
-            >
-              <Link href={Routes.auth.register}>
-                <Button.Icon icon={UserIcon} />
-                Registre-se
-              </Link>
-            </Button.Root>
-            <Button.Root
-              asChild
-              className="text-nowrap"
-              size="md"
-              variant="ghost-primary"
-            >
-              <Link href={Routes.auth.login}>
-                <Button.Icon icon={KeyIcon} />
-                Login
-              </Link>
-            </Button.Root>
-          </>
+          <UnloggedBox />
         )}
       </div>
     </header>
