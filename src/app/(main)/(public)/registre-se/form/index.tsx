@@ -10,10 +10,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { ApiAuthQueries } from "@/api/auth";
+import authQueries from "@/api/auth-queries";
 import Button from "@/components/button";
 import Form from "@/components/form";
 import { Routes } from "@/core/routes";
+import { RQKeys } from "@/libs/react-query";
 import { registerFormSchema } from "./schema";
 
 export function RegisterForm() {
@@ -24,8 +25,8 @@ export function RegisterForm() {
   });
 
   const { mutate: registerUser } = useMutation({
-    mutationKey: ["register"],
-    mutationFn: ApiAuthQueries.register,
+    mutationKey: [RQKeys.auth],
+    mutationFn: authQueries.register,
     onError: (error) => {
       toast.error(error.message);
     },

@@ -9,10 +9,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { ApiAuthQueries } from "@/api/auth";
+import authQueries from "@/api/auth-queries";
 import Button from "@/components/button";
 import Form from "@/components/form";
 import { Routes } from "@/core/routes";
+import { RQKeys } from "@/libs/react-query";
+import { useAuth } from "@/stores/auth";
 import type { LoginFormData } from "./schema";
 import { TogglePasswordVisibilityButton } from "./toggle-password-visibility-button";
 
@@ -20,6 +22,7 @@ export function LoginForm() {
   const [passwordIsVisible, setPasswordIsVisible] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
+  const setAuth = useAuth((state) => state.setAuth);
 
   const { handleSubmit, clearErrors, register } = useForm<LoginFormData>({
     defaultValues: {
@@ -29,8 +32,8 @@ export function LoginForm() {
   });
 
   const { mutate: login } = useMutation({
-    mutationKey: ["login"],
-    mutationFn: ApiAuthQueries.login,
+    mutationKey: [RQKeys.auth],
+    mutationFn: authQueries.login,
     onMutate: () => {
       setIsProcessing(true);
       clearErrors();
@@ -39,7 +42,9 @@ export function LoginForm() {
     onError: (error) => {
       toast.error(error.message);
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
+      const data = response.data!;
+      setAuth(data.token, data.usuario);
       toast.success("Logado com sucesso!");
       router.replace(Routes.auth.login);
     },
