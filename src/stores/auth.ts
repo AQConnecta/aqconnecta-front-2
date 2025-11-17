@@ -4,10 +4,9 @@ import type { Usuario } from "@/core/types/usuario";
 type AuthStore = {
   token: string | null;
   user: Usuario | null;
-  isRefreshing: boolean;
+  isLoadingAuth: boolean;
 
   setAuth(token: string, user: Usuario): void;
-  setIsRefreshing(value: boolean): void;
   removeAuth(): void;
 };
 
@@ -16,18 +15,15 @@ export const useAuth = create<AuthStore>(
     ({
       token: null,
       user: null,
-      isRefreshing: false,
+      isLoadingAuth: true,
 
       setAuth(token: string, user: Usuario) {
-        set({ token, user });
+        console.log("setou auth");
+        set({ token, user, isLoadingAuth: false });
       },
 
       removeAuth() {
         set({ token: null, user: null });
-      },
-
-      setIsRefreshing(value: boolean) {
-        set((state) => ({ ...state, isRefreshing: value }));
       },
     }) satisfies AuthStore,
 );
