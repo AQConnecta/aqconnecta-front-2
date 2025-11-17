@@ -9,7 +9,7 @@ export type Usuario = {
   id: string;
   nome: string;
   email: string;
-  fotoPerfil: string;
+  fotoPerfil?: string;
   descricao: string;
   userUrl: string;
   permissao: Permissao[];
