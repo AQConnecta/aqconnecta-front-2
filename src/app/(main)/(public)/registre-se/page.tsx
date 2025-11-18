@@ -1,10 +1,14 @@
+import { Heading } from "@/components/heading";
+import { Main } from "@/components/main";
 import { RegisterForm } from "./form";
 
 export default function Register() {
   return (
-    <main className="max-w-main-area w-full-with-margins mx-auto">
-      <h1 className="font-bold text-lg mb-6 mt-8">Registre-se</h1>
+    <Main>
+      <Heading level={3} className="mb-6 mt-8">
+        Registre-se
+      </Heading>
       <RegisterForm />
-    </main>
+    </Main>
   );
 }

@@ -16,7 +16,7 @@ export function FormLabel({
     <label
       htmlFor={htmlFor}
       className={clsx(
-        "font-medium text-foreground max-small-width:text-base small-width:text-lg",
+        "font-medium text-foreground max-small-width:text-sm small-width:text-base",
         className && className,
       )}
       {...props}

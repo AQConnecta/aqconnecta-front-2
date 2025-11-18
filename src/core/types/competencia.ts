@@ -1,4 +1,4 @@
 export type Competencia = {
   id: string;
-  descricao: string;
+  descricao: string | null;
 };
