@@ -1,6 +1,6 @@
 services:
   db:
-    image: mariadb:11.4
+    image: mariadb:10.10
     container_name: aq-connecta-db
     command: [ "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci" ]
     environment:
@@ -30,6 +30,7 @@ services:
     environment:
       # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
       - DEBUG=${DEBUG:-0}
+      - SERVICES=s3
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -52,50 +53,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    env_file:
+      - .env
     environment:
-      # Profile ativo em runtime
-      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
-
-      # DB (Spring lê do application-*.properties via env placeholders)
       MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_DB: ${MYSQL_DB:-aqConnecta}
-      MYSQL_USER: ${MYSQL_USER:-aq_user}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-aq_password}
-
-      # Flyway / JPA / Logging (opcionais)
-      FLYWAY_ENABLED: ${FLYWAY_ENABLED:-true}
-      FLYWAY_BASELINE_ON_MIGRATE: ${FLYWAY_BASELINE_ON_MIGRATE:-true}
-      JPA_DDL_AUTO: ${JPA_DDL_AUTO:-none}
-      LOG_LEVEL_ROOT: ${LOG_LEVEL_ROOT:-INFO}
-      LOG_LEVEL_APP: ${LOG_LEVEL_APP:-INFO}
-
-      # CORS: a URL pública do frontend
-      CORS_URLS: ${CORS_URLS:-http://localhost:8080}
-
-      # Server
-      PORT: ${BACKEND_HTTP_PORT:-8080}
-
-      # JWT
-      JWT_SECRET: ${JWT_SECRET:-troque-isto}
-      JWT_EXPIRATION: ${JWT_EXPIRATION:-604800000}
-
-      # AWS
-      AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
-      AWS_SECRET: ${AWS_SECRET}
-      BUCKET: ${BUCKET}
-      # E-mail (preencha no .env em produção)
-      MAIL_HOST: ${MAIL_HOST:-smtp.gmail.com}
-      MAIL_PORT: ${MAIL_PORT:-465}
-      MAIL_USERNAME: ${MAIL_USERNAME:-}
-      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
-      MAIL_SMTP_AUTH: ${MAIL_SMTP_AUTH:-true}
-      MAIL_SMTP_CONNECTION_TIMEOUT: ${MAIL_SMTP_CONNECTION_TIMEOUT:-5000}
-      MAIL_SMTP_TIMEOUT: ${MAIL_SMTP_TIMEOUT:-5000}
-      MAIL_SMTP_WRITETIMEOUT: ${MAIL_SMTP_WRITETIMEOUT:-5000}
-      MAIL_SMTP_STARTTLS_ENABLE: ${MAIL_SMTP_STARTTLS_ENABLE:-true}
-      MAIL_SMTP_STARTTLS_REQUIRED: ${MAIL_SMTP_STARTTLS_REQUIRED:-true}
-      MAIL_SMTP_SSL_PROTOCOLS: ${MAIL_SMTP_SSL_PROTOCOLS:-TLSv1.2}
+      PORT: ${BACKEND_HTTP_PORT}
     ports:
       - "${BACKEND_HTTP_PORT}:8080" # host:container
     restart: unless-stopped
