@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --color-primary-200: #f0edff;
@@ -15,6 +16,7 @@
 
   --color-red-100: #fbd5d6;
   --color-red-300: #ff4e51;
+  --color-red-700: #B30003;
 
   --color-orange-500: #ff8000;
 }
