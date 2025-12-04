@@ -1,6 +1,7 @@
-import axios, { type HttpStatusCode } from "axios";
+import type { HttpStatusCode } from "axios";
 import { APIRequestError } from "@/core/errors/api-request-error";
 import type { Usuario } from "@/core/types/usuario";
+import { axios } from "@/libs/axios";
 import type { BasicServerResponse } from "../types/server-responses/basic";
 import { mountPath } from ".";
 
