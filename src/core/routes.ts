@@ -4,6 +4,6 @@ export const Routes = Object.freeze({
     register: "/registre-se",
     login: "/login",
   },
-  vacancies: "/vagas",
+  vacancies: "/",
   userSubmits: "/minhas-candidaturas",
 });
