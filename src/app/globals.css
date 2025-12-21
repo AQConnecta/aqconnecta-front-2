@@ -59,4 +59,5 @@ body {
   background: var(--color-white);
   box-shadow: 0 2px 8px -4px
     color-mix(in oklab, var(--color-black) 15%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-black) 10%, transparent);
 }
