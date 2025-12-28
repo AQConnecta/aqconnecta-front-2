@@ -10,4 +10,5 @@ export default {
   Container: DialogContainer,
   Header: DialogHeader,
   Close: DialogClose,
+  Description: DialogPrimitive.Description,
 };

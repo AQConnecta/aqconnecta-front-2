@@ -8,6 +8,9 @@ import type { AlertVariantsProps } from "./variants";
 type Props = AlertVariantsProps & {
   className?: string;
   title?: string;
+  /**
+   * Alert's content. If `string`, becomes a paragraph (`p`) element.
+   */
   content?: string | ReactElement;
   icon?: Icon;
 };
@@ -20,11 +23,11 @@ export function Alert({ title, content, icon, variant }: Props) {
 
   return (
     <AlertContainer variant={variant}>
-      <I size={16} className="my-0.5" />
+      <I size={16} className="my-0.5 min-w-4" />
       <div className="flex flex-col gap-1 items-start">
         {title && (
           <header className="min-h-4 tracking-tight">
-            <span>{title}</span>
+            <span className="font-semibold">{title}</span>
           </header>
         )}
         {contentElement}

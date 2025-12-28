@@ -5,6 +5,7 @@ import type { PresentedVacancy } from "@/api/types/presented-vacancy";
 import Avatar from "@/components/avatar";
 import { Badge } from "@/components/badge";
 import Button from "@/components/button";
+import { Routes } from "@/core/routes";
 import { useAuth } from "@/stores/auth";
 
 type Props = {
@@ -66,9 +67,12 @@ export function VacancyCard({ vacancy }: Props) {
         {isUserThePublisher && (
           <>{/* TODO: add button to show candidatures */}</>
         )}
-        <Button.Root className="justify-self-end w-fit place-self-end">
-          <Button.Icon icon={SuitcaseIcon} />
-          Candidatar-se
+
+        <Button.Root className="justify-self-end w-fit place-self-end" asChild>
+          <Link href={Routes.candidatures.apply(vacancy.id)}>
+            <Button.Icon icon={SuitcaseIcon} />
+            Candidatar-se
+          </Link>
         </Button.Root>
       </div>
     </div>
