@@ -1,4 +1,4 @@
-import { type AvatarFallbackProps, Fallback } from "@radix-ui/react-avatar";
+import { Avatar, type AvatarFallbackProps } from "@base-ui/react/avatar";
 import clsx from "clsx";
 
 type Props = AvatarFallbackProps & { name?: string };
@@ -13,16 +13,16 @@ export function AvatarFallback({ className, children, name, ...props }: Props) {
   })();
 
   return (
-    <Fallback
+    <Avatar.Fallback
       data-slot="avatar-fallback"
       className={clsx(
         "flex size-full items-center justify-center rounded-full",
-        "bg-gradient-to-br from-primary-700 to-purple-300 text-white",
+        "bg-linear-to-br from-primary-700 to-purple-300 text-white",
         className,
       )}
       {...props}
     >
       {children ?? initials}
-    </Fallback>
+    </Avatar.Fallback>
   );
 }
