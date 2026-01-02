@@ -25,7 +25,7 @@ export function RegisterForm() {
   });
 
   const { mutate: registerUser } = useMutation({
-    mutationKey: [RQKeys.auth],
+    mutationKey: RQKeys.auth.register(),
     mutationFn: authQueries.register,
     onError: (error) => {
       toast.error(error.message);

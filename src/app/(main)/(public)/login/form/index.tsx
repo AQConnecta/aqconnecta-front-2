@@ -32,7 +32,7 @@ export function LoginForm() {
   });
 
   const { mutate: login } = useMutation({
-    mutationKey: [RQKeys.auth],
+    mutationKey: RQKeys.auth.base,
     mutationFn: authQueries.login,
     onMutate: () => {
       setIsProcessing(true);

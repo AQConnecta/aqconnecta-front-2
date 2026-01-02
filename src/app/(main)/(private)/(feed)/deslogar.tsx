@@ -7,7 +7,7 @@ import { RQKeys } from "@/libs/react-query";
 
 export function Deslogar() {
   const { mutate: logout, isPending } = useMutation({
-    mutationKey: [RQKeys.auth],
+    mutationKey: RQKeys.auth.base,
     mutationFn: authQueries.logout,
     onError: (error) => {
       toast.error(error.message);
