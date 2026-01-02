@@ -1,17 +1,20 @@
 "use client";
 
+import { SuitcaseIcon } from "@phosphor-icons/react/dist/ssr/Suitcase";
 import { useQuery } from "@tanstack/react-query";
 import { HttpStatusCode } from "axios";
-import { type PropsWithChildren, useState } from "react";
+import Link from "next/link";
+import React, { type PropsWithChildren, useState } from "react";
 import apiVacanciesQueries from "@/api/api-vacancies-queries";
 import type { ListAllVacanciesResponse } from "@/api/api-vacancies-queries/fetch-many-vacancies";
 import type { PresentedVacancy } from "@/api/types/presented-vacancy";
 import { Alert } from "@/components/alert";
+import Button from "@/components/button";
 import type { APIRequestError } from "@/core/errors/api-request-error";
+import { Routes } from "@/core/routes";
 import { RQKeys } from "@/libs/react-query";
 import { useAuth } from "@/stores/auth";
-import { VacancyCard } from "@/ui/vacancy-card";
-import { VacancyCardSkeleton } from "@/ui/vacancy-card/skeleton";
+import VacancyCard from "@/ui/vacancy-card";
 
 // Assumindo que a interface Competencia seja algo assim:
 // interface Competencia { id: string; nome: string; }
@@ -123,7 +126,7 @@ const MOCK_PRESENTED_VACANCIES: PresentedVacancy[] = [
 ];
 
 export function Vacancies() {
-  const auth = useAuth();
+  const user = useAuth((state) => state.user);
   const [mayRetry, SetMayRetry] = useState(true);
   const {
     data: queryResult,
@@ -134,7 +137,7 @@ export function Vacancies() {
     isSuccess,
     refetch,
   } = useQuery<ListAllVacanciesResponse, APIRequestError>({
-    queryKey: [RQKeys.vacancies, auth],
+    queryKey: RQKeys.vacancies.list(),
     queryFn: () => apiVacanciesQueries.fetchMany(),
     retry: (count, error) => {
       if (error.status === HttpStatusCode.Unauthorized) {
@@ -149,9 +152,9 @@ export function Vacancies() {
   if (isLoading || isPending)
     return (
       <VacanciesContainer>
-        <VacancyCardSkeleton />
-        <VacancyCardSkeleton />
-        <VacancyCardSkeleton />
+        <VacancyCard.Skeleton />
+        <VacancyCard.Skeleton />
+        <VacancyCard.Skeleton />
       </VacanciesContainer>
     );
 
@@ -182,9 +185,48 @@ export function Vacancies() {
   return (
     <VacanciesContainer>
       {[...(queryResult!.data ?? []), ...MOCK_PRESENTED_VACANCIES].map(
-        (vacancy) => (
-          <VacancyCard vacancy={vacancy} key={`vacancy-card-${vacancy.id}`} />
-        ),
+        (vacancy) => {
+          const isUserThePublisher = user?.id === vacancy.publicador.id;
+          return (
+            <VacancyCard.Root key={`vacancy-card-${vacancy.id}`}>
+              <VacancyCard.Header
+                isUserThePublisher={isUserThePublisher}
+                publisherName={vacancy.publicador.nome}
+                title={vacancy.titulo}
+                publisherProfilePicutreUrl={vacancy.publicador.fotoPerfil}
+              />
+              <VacancyCard.Details
+                acceptsBeginners={vacancy.isIniciante}
+                isRemote={vacancy.aceitaRemoto}
+                locale={vacancy.localDaVaga}
+              />
+              <VacancyCard.Content description={vacancy.descricao} />
+              <VacancyCard.Competences
+                vacancyId={vacancy.id}
+                competences={vacancy.competencias}
+              />
+              <VacancyCard.Footer>
+                {isUserThePublisher && (
+                  /* TODO: add button to show candidatures */
+                  <React.Fragment />
+                )}
+
+                <Button.Root
+                  className="justify-self-end w-fit place-self-end"
+                  asChild
+                >
+                  <Link
+                    href={Routes.candidatures.apply(vacancy.id)}
+                    scroll={false}
+                  >
+                    <Button.Icon icon={SuitcaseIcon} />
+                    Candidatar-se
+                  </Link>
+                </Button.Root>
+              </VacancyCard.Footer>
+            </VacancyCard.Root>
+          );
+        },
       )}
     </VacanciesContainer>
   );
