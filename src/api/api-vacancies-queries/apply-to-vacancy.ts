@@ -6,7 +6,7 @@ import { axios } from "@/libs/axios";
 import type { BasicServerResponse } from "../types/server-responses/basic";
 import { mountPath } from ".";
 
-export type GetVacancyResponse = BasicServerResponse<
+export type ApplyToVacancyResponse = BasicServerResponse<
   Vaga,
   | HttpStatusCode.Unauthorized
   | HttpStatusCode.BadRequest
@@ -17,15 +17,18 @@ export type GetVacancyResponse = BasicServerResponse<
   // | HttpStatusCode.NotFound
 >;
 
-export type GetVacancyArgs = {
+export type ApplyToVacancyArgs = {
   vacancyId: Vaga["id"];
   resumeId: Curriculo["id"];
 };
 
-export async function applyToVacancy({ resumeId, vacancyId }: GetVacancyArgs) {
+export async function applyToVacancy({
+  resumeId,
+  vacancyId,
+}: ApplyToVacancyArgs) {
   const path = mountPath(`candidatar/${vacancyId}`);
   try {
-    const response = await axios.post<GetVacancyResponse>(path, resumeId);
+    const response = await axios.post<ApplyToVacancyResponse>(path, resumeId);
     return response.data;
   } catch (error) {
     throw APIRequestError.prepareFromAxiosError(error);
