@@ -8,5 +8,8 @@ export const Routes = Object.freeze({
   candidatures: {
     apply: (id: string) => `/candidaturas/${id}/candidatar`,
   },
+  resumes: {
+    list: "/",
+  },
   userSubmits: "/minhas-candidaturas",
 });
