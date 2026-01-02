@@ -21,7 +21,7 @@ export function Header() {
   return (
     <header
       className={clsx(
-        "flex bg-gray-100/70 px-6 py-2.5 border-b border-black/10",
+        "flex bg-gray-100/70 mb-6 px-6 py-2.5 border-b border-black/10",
         "backdrop-blur-md shadow-[inset_0_-1px_0] shadow-white/70 gap-3 items-stretch",
         "sticky",
       )}

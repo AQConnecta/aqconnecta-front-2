@@ -1,4 +1,4 @@
 export type Permissao = {
-  id: string;
+  id: number;
   descricao: string;
 };

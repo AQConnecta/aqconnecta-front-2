@@ -57,6 +57,9 @@ export async function tryToPrefetchAccessToken() {
     const response = await cachedRefreshAccessToken();
     trySetAuthState(response);
   } catch (e) {
-    if (e instanceof APIRequestError) console.error(e.message);
+    if (e instanceof APIRequestError)
+      console.error("Access token prefetch failed:", e.message);
+  } finally {
+    useAuth.getState().sinalizeStoppedLoading();
   }
 }

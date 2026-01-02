@@ -32,7 +32,7 @@ export function LoginForm() {
   });
 
   const { mutate: login } = useMutation({
-    mutationKey: [RQKeys.auth],
+    mutationKey: RQKeys.auth.base,
     mutationFn: authQueries.login,
     onMutate: () => {
       setIsProcessing(true);
@@ -52,7 +52,7 @@ export function LoginForm() {
 
   return (
     <form className="card mb-80" onSubmit={handleSubmit((data) => login(data))}>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 mb-8">
         <Form.Input
           label="E-mail"
           leftIcon={EnvelopeIcon}

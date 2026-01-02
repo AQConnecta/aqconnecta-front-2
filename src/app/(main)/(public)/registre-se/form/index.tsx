@@ -25,7 +25,7 @@ export function RegisterForm() {
   });
 
   const { mutate: registerUser } = useMutation({
-    mutationKey: [RQKeys.auth],
+    mutationKey: RQKeys.auth.register(),
     mutationFn: authQueries.register,
     onError: (error) => {
       toast.error(error.message);
@@ -41,7 +41,7 @@ export function RegisterForm() {
       onSubmit={handleSubmit((data) => registerUser(data))}
       className="card mb-80"
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 mb-8">
         <Form.Input
           label="Nome"
           type="text"
