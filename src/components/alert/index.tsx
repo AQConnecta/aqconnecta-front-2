@@ -15,14 +15,14 @@ type Props = AlertVariantsProps & {
   icon?: Icon;
 };
 
-export function Alert({ title, content, icon, variant }: Props) {
+export function Alert({ title, content, icon, variant, className }: Props) {
   const contentElement =
     typeof content === "string" ? <p>{content}</p> : content;
 
   const I = resolveIcon({ icon, variant });
 
   return (
-    <AlertContainer variant={variant}>
+    <AlertContainer variant={variant} className={className}>
       <I size={16} className="my-0.5 min-w-4" />
       <div className="flex flex-col gap-1 items-start">
         {title && (
