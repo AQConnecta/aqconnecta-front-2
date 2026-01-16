@@ -43,7 +43,7 @@ export function CandidatureDialog({ vacancyId }: Props) {
               resumes={user.curriculo}
               cancelButton={
                 <Dialog.Close asChild>
-                  <Button.Root variant="ghost-primary">Cancelar</Button.Root>
+                  <Button.Root variant="outline">Cancelar</Button.Root>
                 </Dialog.Close>
               }
             />

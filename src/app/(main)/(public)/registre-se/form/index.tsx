@@ -83,7 +83,7 @@ export function RegisterForm() {
       <div className="flex-1 flex gap-2 justify-end max-xs-width:flex-col">
         <Button.Root
           asChild
-          variant="ghost-primary"
+          variant="ghost"
           className="max-xs-width:justify-start"
         >
           <Link href={Routes.auth.login}>Já tenho uma conta</Link>
