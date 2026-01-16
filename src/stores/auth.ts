@@ -8,6 +8,7 @@ type AuthStore = {
 
   setAuth(token: string, user: Usuario): void;
   removeAuth(): void;
+  sinalizeStoppedLoading(): void;
 };
 
 export const useAuth = create<AuthStore>(
@@ -18,12 +19,15 @@ export const useAuth = create<AuthStore>(
       isLoadingAuth: true,
 
       setAuth(token: string, user: Usuario) {
-        console.log("setou auth");
-        set({ token, user, isLoadingAuth: false });
+        set({ token, user });
       },
 
       removeAuth() {
         set({ token: null, user: null });
+      },
+
+      sinalizeStoppedLoading() {
+        set({ isLoadingAuth: false });
       },
     }) satisfies AuthStore,
 );

@@ -5,7 +5,7 @@ import { LoginForm } from "./form";
 export default function LoginPage() {
   return (
     <Main>
-      <Heading level={3} className="mb-6 mt-8">
+      <Heading level={3} className="mb-6">
         Acesse sua conta
       </Heading>
       <LoginForm />
