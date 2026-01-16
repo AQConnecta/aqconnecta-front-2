@@ -6,6 +6,7 @@
   --color-primary-300: #dad5fb;
   --color-primary-600: #5e63b6;
   --color-primary-700: #534da9;
+  --color-primary-800: #4d3b96;
 
   --color-gray-100: #f5f5f5;
   --color-gray-300: #bbbbbb;
@@ -15,7 +16,8 @@
   --color-gray-800: #333333;
 
   --color-red-100: #fbd5d6;
-  --color-red-300: #ff4e51;
+  --color-red-300: #ffc0c2;
+  --color-red-500: #ff4e51;
   --color-red-700: #b30003;
 
   --color-orange-500: #ff8000;
