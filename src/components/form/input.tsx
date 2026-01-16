@@ -90,7 +90,7 @@ export function FormInput({
       )}
 
       {errorMessage && (
-        <p className="text-red-300 text-sm my-1 mb-0 p-0">{errorMessage}</p>
+        <p className="text-red-500 text-sm my-1 mb-0 p-0">{errorMessage}</p>
       )}
     </div>
   );

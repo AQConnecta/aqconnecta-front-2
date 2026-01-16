@@ -33,7 +33,7 @@ function CustomToastBar(t: Toast) {
       case "success":
         return "var(--color-primary-200)";
       case "error":
-        return "var(--color-red-300)";
+        return "var(--color-red-500)";
     }
   })();
 

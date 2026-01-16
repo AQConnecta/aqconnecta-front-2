@@ -75,7 +75,7 @@ export default function Candidatar() {
                 resumes={user?.curriculo ?? []}
                 vacancyId={vacancy.id}
                 cancelButton={
-                  <Button.Root variant="ghost-primary" asChild>
+                  <Button.Root variant="outline" asChild>
                     <Link href={Routes.home}>Voltar</Link>
                   </Button.Root>
                 }
