@@ -51,6 +51,7 @@ body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans), sans-serif;
+  font-size: var(--text-sm);
 }
 
 hr {
