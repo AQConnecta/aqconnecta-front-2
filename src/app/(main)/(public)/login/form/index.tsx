@@ -84,7 +84,7 @@ export function LoginForm() {
           variant="ghost-primary"
           className="max-xs-width:justify-start"
         >
-          <Link href={Routes.auth.login}>Ainda não tenho conta</Link>
+          <Link href={Routes.auth.register}>Ainda não tenho conta</Link>
         </Button.Root>
 
         <Button.Root
