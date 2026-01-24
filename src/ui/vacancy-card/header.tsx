@@ -23,7 +23,7 @@ export function VacancyCardHeader({
         </Avatar.Root>
       </Link>
       <div className="flex flex-col gap-1">
-        <span className="font-medium">{title}</span>
+        <span className="font-medium text-base">{title}</span>
         <span className="text-sm text-gray-750">
           Criado por{" "}
           <Link href={"#"}>{isUserThePublisher ? "você" : publisherName}</Link>
