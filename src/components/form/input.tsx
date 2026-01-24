@@ -16,6 +16,7 @@ type Props = {
   leftComponent?: ReactElement;
   rightComponent?: ReactElement;
   label: string;
+  hideLabel?: boolean;
   required?: boolean;
   placeholder?: string;
   details?: string;
@@ -23,6 +24,7 @@ type Props = {
   type?: HTMLInputProps["type"];
   inputSize?: "md" | "sm";
   inputProps?: HTMLInputProps;
+  className?: string;
 };
 
 export function FormInput({
@@ -32,12 +34,14 @@ export function FormInput({
   rightComponent,
   leftComponent,
   label,
+  hideLabel = false,
   placeholder,
   type = "text",
   details,
   errorMessage,
   required = false,
   inputProps,
+  className,
 }: Props) {
   const Input = asChild ? Slot : "input";
   const inputId = useId();
@@ -50,14 +54,18 @@ export function FormInput({
   }
 
   return (
-    <div>
-      <FormLabel htmlFor={inputId} required={required} className="block mb-1">
+    <div className={className}>
+      <FormLabel
+        htmlFor={inputId}
+        required={required}
+        className={clsx("block mb-1", hideLabel && "sr-only")}
+      >
         {label}
       </FormLabel>
 
       <div
         className={clsx(
-          "flex items-start gap-2.5 w-full rounded-md px-3 text-base max-small-width:text-sm bg--100",
+          "flex items-start gap-2.5 w-full rounded-md px-3 text-sm max-small-width:text-sm",
           "transition-[color,box-shadow] outline-none bg-gray-100",
           "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
           "ring-0 ring-primary-600/40 focus-within:ring-4 aria-invalid:ring-red-500/20",
