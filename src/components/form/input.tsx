@@ -55,13 +55,12 @@ export function FormInput({
         {label}
       </FormLabel>
 
-      <label
-        htmlFor={inputId}
+      <div
         className={clsx(
-          "px-6 py-2 rounded-3xl bg-black/5 border border-black/3",
-          "flex items-start gap-2.5 transition-all will-change-[shadow] duration-100",
-          "ring-0 ring-primary-600/40 focus-within:ring-4",
-          "max-small-width:text-sm",
+          "flex items-start gap-2.5 w-full rounded-md px-3 text-base max-small-width:text-sm bg--100",
+          "transition-[color,box-shadow] outline-none bg-black/5",
+          "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+          "ring-0 ring-primary-600/40 focus-within:ring-4 aria-invalid:ring-red-500/20",
         )}
       >
         {leftIcon && <InputIcon icon={leftIcon} />}
@@ -73,7 +72,9 @@ export function FormInput({
           placeholder={placeholder}
           className={clsx(
             "outline-none w-full small-width:leading-tight max-small-width:leading-4",
-            "text-wrap placeholder:text-ellipsis",
+            "file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium",
+            "file:text-foreground placeholder:text-gray-500",
+            "text-wrap placeholder:text-ellipsis min-h-9",
           )}
           aria-describedby={details && detailsId}
           {...inputProps}
@@ -81,7 +82,7 @@ export function FormInput({
 
         {rightIcon && <InputIcon icon={rightIcon} />}
         {rightComponent ?? null}
-      </label>
+      </div>
 
       {details && (
         <p id={detailsId} className="text-gray-900 text-sm my-1 mb-0 p-0">
