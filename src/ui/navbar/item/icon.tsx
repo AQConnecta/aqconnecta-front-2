@@ -5,5 +5,5 @@ type NavbarItemIconProps = {
 };
 
 export function NavbarItemIcon({ icon: I }: NavbarItemIconProps) {
-  return <I weight="fill" size={32} className="text-primary-600/75" />;
+  return <I weight="fill" size={20} className="text-primary-600/75" />;
 }

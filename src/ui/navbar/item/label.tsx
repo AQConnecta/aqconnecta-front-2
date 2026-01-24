@@ -7,8 +7,8 @@ export function NavbarItemLabel({ children }: Props) {
   return (
     <span
       className={clsx(
-        "text-balance font-bold text-gray-700",
-        "max-medium-width:text-xs max-medium-width:text-center",
+        "text-balance font-medium text-gray-700 text-base",
+        "max-medium-width:text-sm max-medium-width:text-center",
       )}
     >
       {children}
