@@ -46,7 +46,7 @@ export function LoginForm() {
       const data = response.data!;
       setAuth(data.token, data.usuario);
       toast.success("Logado com sucesso!");
-      router.replace(Routes.auth.login);
+      router.replace(Routes.home);
     },
   });
 
