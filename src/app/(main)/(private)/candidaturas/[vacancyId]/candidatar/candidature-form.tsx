@@ -1,6 +1,5 @@
 import { Radio, RadioGroup } from "@base-ui/react";
 import { ArrowSquareOutIcon } from "@phosphor-icons/react/dist/ssr/ArrowSquareOut";
-import { useMutation } from "@tanstack/react-query";
 import clsx from "clsx";
 import Link from "next/link";
 import {
@@ -10,13 +9,12 @@ import {
   useId,
   useState,
 } from "react";
-import apiVacanciesQueries from "@/api/api-vacancies-queries";
 import type { PresentedVacancy } from "@/api/types/presented-vacancy";
 import { Alert } from "@/components/alert";
 import Button from "@/components/button";
 import { Routes } from "@/core/routes";
 import type { Curriculo } from "@/core/types/value-objects/curriculo";
-import { RQKeys } from "@/libs/react-query";
+import { useCandidate } from "@/hooks/vacancies/use-candidate";
 
 type Props = {
   formId: string;
@@ -42,19 +40,7 @@ export function CandidatureForm({
     isPending,
     isSuccess,
     mutate: apply,
-  } = useMutation({
-    mutationKey: RQKeys.vacancies.apply(vacancyId, resumeId),
-    mutationFn: async () => {
-      if (resumeId) {
-        await apiVacanciesQueries.apply({ resumeId, vacancyId });
-        return;
-      }
-
-      throw new Error(
-        "Você precisa selecionar um currículo para se candidatar.",
-      );
-    },
-  });
+  } = useCandidate(vacancyId, resumeId);
 
   const handleSubmit = useCallback(
     (event: FormEvent) => {
