@@ -7,6 +7,7 @@ export const alertVariants = cva(
       variant: {
         default: "bg-primary-200 border-primary-300 text-primary-700",
         danger: "bg-red-100 border-red-300 text-red-700",
+        warning: "bg-yellow-500/30 border-yellow-400 text-yellow-800",
       },
     },
     defaultVariants: {

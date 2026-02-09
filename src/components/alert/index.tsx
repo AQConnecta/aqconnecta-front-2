@@ -43,6 +43,7 @@ function resolveIcon({ variant, icon }: ResolveIconArgs) {
 
   switch (variant) {
     case "danger":
+    case "warning":
       return WarningIcon;
     default:
       return WarningCircleIcon;
