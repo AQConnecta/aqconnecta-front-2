@@ -7,7 +7,7 @@ import { CandidatureFormSkeleton } from "@/app/(main)/(private)/candidaturas/[va
 import { Alert } from "@/components/alert";
 import Dialog from "@/components/dialog";
 import { useFetchVacancyCandidatures } from "@/hooks/vacancies/fetch-vacancy-candidatures";
-import { CandidatureCard } from "./candidature-card";
+import CandidatureCard from "@/ui/candidature-card";
 import { DialogHeader } from "./dialog-header";
 
 type Props = {
@@ -37,10 +37,12 @@ export function ViewCandidaturesDialog({ vacancyId }: Props) {
           {candidatures.length > 0 ? (
             <div className="divide-y divide-black/15">
               {candidatures.map((candidature) => (
-                <CandidatureCard
+                <CandidatureCard.Root
                   key={`vacancy-${vacancyId}-candidature-${candidature.id}`}
-                  candidature={candidature}
-                />
+                >
+                  <CandidatureCard.Content candidature={candidature} />
+                  <CandidatureCard.Avatar user={candidature.usuario} />
+                </CandidatureCard.Root>
               ))}
             </div>
           ) : (

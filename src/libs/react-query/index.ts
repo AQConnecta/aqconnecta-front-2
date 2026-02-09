@@ -22,7 +22,7 @@ export const RQKeys = {
       ] as const,
     candidatures: {
       base: ["candidatures"] as const,
-      list: (vacancyId: string, filters?: object) =>
+      list: (vacancyId?: string, filters?: object) =>
         [
           ...RQKeys.vacancies.base,
           ...RQKeys.vacancies.candidatures.base,
