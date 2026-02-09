@@ -4,7 +4,7 @@ import { SuitcaseIcon } from "@phosphor-icons/react/dist/ssr/Suitcase";
 import { useQuery } from "@tanstack/react-query";
 import { HttpStatusCode } from "axios";
 import Link from "next/link";
-import React, { type PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useState } from "react";
 import apiVacanciesQueries from "@/api/api-vacancies-queries";
 import type { ListAllVacanciesResponse } from "@/api/api-vacancies-queries/fetch-many-vacancies";
 import { Alert } from "@/components/alert";
@@ -95,10 +95,10 @@ export function Vacancies() {
               competences={vacancy.competencias}
             />
             <VacancyCard.Footer>
-              {isUserThePublisher && (
-                /* TODO: add button to show candidatures */
-                <React.Fragment />
-              )}
+              <VacancyCard.SeeCandidaturesButton
+                userIsThePublisher={isUserThePublisher}
+                vacancyId={vacancy.id}
+              />
 
               <Button.Root
                 className="justify-self-end w-fit place-self-end"

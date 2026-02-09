@@ -18,6 +18,7 @@ const buttonIconVariants = cva("transition-all duration-200 ease-in", {
     } satisfies Record<AvailableVariants, unknown>,
     size: {
       md: "size-4",
+      sm: "size-3.5",
     } satisfies Record<AvailableSizes, unknown>,
   },
   compoundVariants: [

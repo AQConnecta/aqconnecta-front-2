@@ -1,6 +1,5 @@
 import { Radio, RadioGroup } from "@base-ui/react";
 import { ArrowSquareOutIcon } from "@phosphor-icons/react/dist/ssr/ArrowSquareOut";
-import { useMutation } from "@tanstack/react-query";
 import clsx from "clsx";
 import Link from "next/link";
 import {
@@ -10,19 +9,19 @@ import {
   useId,
   useState,
 } from "react";
-import apiVacanciesQueries from "@/api/api-vacancies-queries";
 import type { PresentedVacancy } from "@/api/types/presented-vacancy";
 import { Alert } from "@/components/alert";
 import Button from "@/components/button";
 import { Routes } from "@/core/routes";
 import type { Curriculo } from "@/core/types/value-objects/curriculo";
-import { RQKeys } from "@/libs/react-query";
+import { useCandidate } from "@/hooks/vacancies/use-candidate";
 
 type Props = {
   formId: string;
   vacancyId: PresentedVacancy["id"];
   resumes: Curriculo[];
   cancelButton?: ReactElement;
+  extraActionButtons?: ReactElement | ReactElement[];
 };
 
 export function CandidatureForm({
@@ -30,6 +29,7 @@ export function CandidatureForm({
   resumes,
   formId,
   cancelButton,
+  extraActionButtons,
 }: Props) {
   const hasResumes = Boolean(resumes.length);
 
@@ -42,19 +42,7 @@ export function CandidatureForm({
     isPending,
     isSuccess,
     mutate: apply,
-  } = useMutation({
-    mutationKey: RQKeys.vacancies.apply(vacancyId, resumeId),
-    mutationFn: async () => {
-      if (resumeId) {
-        await apiVacanciesQueries.apply({ resumeId, vacancyId });
-        return;
-      }
-
-      throw new Error(
-        "Você precisa selecionar um currículo para se candidatar.",
-      );
-    },
-  });
+  } = useCandidate(vacancyId, resumeId);
 
   const handleSubmit = useCallback(
     (event: FormEvent) => {
@@ -102,17 +90,20 @@ export function CandidatureForm({
 
       <hr className="my-6" />
 
-      <div className="flex items-center justify-end gap-2">
-        {cancelButton}
+      <div className="flex items-center justify-between gap-2">
+        {extraActionButtons}
+        <div className="flex items-center justify-end gap-2">
+          {cancelButton}
 
-        <Button.Root
-          type="submit"
-          form={formId}
-          disabled={isPending || isSuccess}
-          aria-disabled={isPending}
-        >
-          Avançar
-        </Button.Root>
+          <Button.Root
+            type="submit"
+            form={formId}
+            disabled={isPending || isSuccess}
+            aria-disabled={isPending}
+          >
+            Avançar
+          </Button.Root>
+        </div>
       </div>
     </div>
   );
