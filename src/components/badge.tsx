@@ -6,7 +6,7 @@ import type * as React from "react";
 const badgeVariants = cva(
   [
     "inline-flex items-center justify-center rounded-lg border px-2 py-0.5",
-    "text-xs font-medium w-fit whitespace-nowrap shrink-0 focus-visible:border-ring",
+    "text-xs font-semibold w-fit whitespace-nowrap shrink-0 focus-visible:border-ring",
     "focus-visible:ring-4 transition-[color,box-shadow] overflow-hidden",
     "[&>svg]:size-3 gap-1 [&>svg]:pointer-events-none",
   ],
@@ -14,10 +14,12 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-primary-300 bg-primary-200 text-primary-700 [a&]:hover:bg-primary-200/90",
+          "border-gray-200 bg-gray-200 [a&]:hover:bg-gray-400 ring-primary-600/25",
+        primary:
+          "border-primary-300 bg-primary-200 text-primary-700 [a&]:hover:bg-primary-200/90 ring-primary-600/40",
         blue: "border-royal-blue-300 bg-royal-blue-100 text-royal-blue-700 [a&]:hover:bg-royal-blue-300/80",
         green:
-          "border-jade-300 bg-jade-100 text-jade-500 [a&]:hover:bg-jade-300/90 focus-visible:ring-jade-500/40",
+          "border-jade-300 bg-jade-100 text-jade-500 [a&]:hover:bg-jade-300/90 ring-jade-500/40",
       },
     },
     defaultVariants: {

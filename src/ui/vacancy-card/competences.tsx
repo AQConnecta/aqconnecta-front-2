@@ -10,7 +10,10 @@ export function VacancyCardCompetences({ competences, vacancyId }: Props) {
       <span className="block font-medium text-sm mb-2">Competências</span>
       <div className="flex gap-2">
         {competences.map((competency) => (
-          <Badge key={`vacancy-${vacancyId}-competency-${competency.id}`}>
+          <Badge
+            variant="primary"
+            key={`vacancy-${vacancyId}-competency-${competency.id}`}
+          >
             {competency.descricao}
           </Badge>
         ))}
