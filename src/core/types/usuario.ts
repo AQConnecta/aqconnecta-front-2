@@ -10,7 +10,7 @@ export type Usuario = {
   nome: string;
   email: string;
   fotoPerfil?: string;
-  descricao: string;
+  descricao?: string | null;
   userUrl: string;
   permissao: Permissao[];
   competencias: Competencia[];
