@@ -13,4 +13,7 @@ export const Routes = Object.freeze({
     list: "/",
   },
   userSubmits: "/minhas-candidaturas",
+  users: {
+    profile: (userProfilePath: string) => `/perfil/${userProfilePath}`,
+  },
 });
