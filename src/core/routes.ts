@@ -7,6 +7,7 @@ export const Routes = Object.freeze({
   vacancies: "/",
   candidatures: {
     apply: (id: string) => `/candidaturas/${id}/candidatar`,
+    view: (id: string) => `/candidaturas/${id}/visualizar`,
   },
   resumes: {
     list: "/",
