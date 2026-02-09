@@ -4,6 +4,7 @@ import type { GetVacancyResponse } from "@/api/api-vacancies-queries/find-vacanc
 import type { APIRequestError } from "@/core/errors/api-request-error";
 import type { Vaga } from "@/core/types/vaga";
 import { RQKeys } from "@/libs/react-query";
+import { checkShouldRetry } from ".";
 
 type Args = {
   vacancyId: Vaga["id"] | undefined;
@@ -11,10 +12,12 @@ type Args = {
 
 export const useFindVacancyById = ({ vacancyId }: Args) =>
   useQuery<GetVacancyResponse, APIRequestError>({
-    queryKey: [RQKeys.vacancies.find(vacancyId)],
+    queryKey: RQKeys.vacancies.find(vacancyId),
     queryFn: async () => {
       if (!vacancyId) throw new Error("Identificador de vaga não encontrado.");
       return await apiVacanciesQueries.findById({ id: vacancyId });
     },
-    retry: false,
+    retry: checkShouldRetry,
+    staleTime: 1000 * 60 * 5,
+    enabled: !!vacancyId,
   });
