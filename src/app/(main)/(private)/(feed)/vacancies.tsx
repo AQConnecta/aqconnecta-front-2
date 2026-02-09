@@ -1,6 +1,5 @@
 "use client";
 
-import { UsersIcon } from "@phosphor-icons/react/dist/ssr";
 import { SuitcaseIcon } from "@phosphor-icons/react/dist/ssr/Suitcase";
 import { useQuery } from "@tanstack/react-query";
 import { HttpStatusCode } from "axios";
@@ -96,18 +95,10 @@ export function Vacancies() {
               competences={vacancy.competencias}
             />
             <VacancyCard.Footer>
-              {isUserThePublisher && (
-                <Button.Root
-                  asChild
-                  className="justify-self-start"
-                  variant="ghost"
-                >
-                  <Link href={Routes.candidatures.view(vacancy.id)}>
-                    <Button.Icon icon={UsersIcon} />
-                    Ver candidatos
-                  </Link>
-                </Button.Root>
-              )}
+              <VacancyCard.SeeCandidaturesButton
+                userIsThePublisher={isUserThePublisher}
+                vacancyId={vacancy.id}
+              />
 
               <Button.Root
                 className="justify-self-end w-fit place-self-end"

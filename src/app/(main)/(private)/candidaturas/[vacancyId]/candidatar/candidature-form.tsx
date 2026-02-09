@@ -21,6 +21,7 @@ type Props = {
   vacancyId: PresentedVacancy["id"];
   resumes: Curriculo[];
   cancelButton?: ReactElement;
+  extraActionButtons?: ReactElement | ReactElement[];
 };
 
 export function CandidatureForm({
@@ -28,6 +29,7 @@ export function CandidatureForm({
   resumes,
   formId,
   cancelButton,
+  extraActionButtons,
 }: Props) {
   const hasResumes = Boolean(resumes.length);
 
@@ -88,17 +90,20 @@ export function CandidatureForm({
 
       <hr className="my-6" />
 
-      <div className="flex items-center justify-end gap-2">
-        {cancelButton}
+      <div className="flex items-center justify-between gap-2">
+        {extraActionButtons}
+        <div className="flex items-center justify-end gap-2">
+          {cancelButton}
 
-        <Button.Root
-          type="submit"
-          form={formId}
-          disabled={isPending || isSuccess}
-          aria-disabled={isPending}
-        >
-          Avançar
-        </Button.Root>
+          <Button.Root
+            type="submit"
+            form={formId}
+            disabled={isPending || isSuccess}
+            aria-disabled={isPending}
+          >
+            Avançar
+          </Button.Root>
+        </div>
       </div>
     </div>
   );

@@ -74,6 +74,12 @@ export default function Candidatar() {
                 formId={formId}
                 resumes={user?.curriculo ?? []}
                 vacancyId={vacancy.id}
+                extraActionButtons={
+                  <VacancyCard.SeeCandidaturesButton
+                    userIsThePublisher={userIsThePublisher}
+                    vacancyId={vacancy.id}
+                  />
+                }
                 cancelButton={
                   <Button.Root variant="outline" asChild>
                     <Link href={Routes.home}>Voltar</Link>
