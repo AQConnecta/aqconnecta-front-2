@@ -90,9 +90,9 @@ export function CandidatureForm({
 
       <hr className="my-6" />
 
-      <div className="flex items-center justify-between gap-2">
-        {extraActionButtons}
-        <div className="flex items-center justify-end gap-2">
+      <div className="grid grid-flow-col gap-2">
+        <div className="self-start">{extraActionButtons}</div>
+        <div className="self-end flex items-center justify-end gap-2">
           {cancelButton}
 
           <Button.Root
