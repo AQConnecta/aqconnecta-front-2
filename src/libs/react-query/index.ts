@@ -20,6 +20,17 @@ export const RQKeys = {
         vacancyId,
         resumeId,
       ] as const,
+    candidatures: {
+      base: ["candidatures"] as const,
+      list: (vacancyId: string, filters?: object) =>
+        [
+          ...RQKeys.vacancies.base,
+          ...RQKeys.vacancies.candidatures.base,
+          "list",
+          vacancyId,
+          filters,
+        ] as const,
+    },
   },
   auth: {
     base: ["auth"] as const,
