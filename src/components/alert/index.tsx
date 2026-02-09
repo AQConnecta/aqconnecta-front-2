@@ -24,7 +24,7 @@ export function Alert({ title, content, icon, variant, className }: Props) {
   return (
     <AlertContainer variant={variant} className={className}>
       <I size={16} className="my-0.5 min-w-4" />
-      <div className="flex flex-col gap-1 items-start">
+      <div className="flex flex-1 flex-col gap-1 items-start">
         {title && (
           <header className="min-h-4 tracking-tight">
             <span className="font-semibold">{title}</span>

@@ -78,15 +78,18 @@ function Header({ query, className }: TitleProps) {
   if (query.status === "error")
     return (
       <header className={className}>
-        <Heading>Não foi possível carregar detalhes desta vaga. </Heading>
+        <Heading className="mb-3">
+          Não foi possível carregar detalhes desta vaga.
+        </Heading>
         <Alert
           variant="danger"
           content={
-            <div className="flex justify-between gap-3 items-start">
-              {query.error.message}
+            <div className="w-full flex justify-between gap-3 items-start">
+              <span>{query.error.message}</span>
+
               <Button.Root
                 size="sm"
-                variant="outline"
+                variant="ghost"
                 type="button"
                 onClick={() => query.refetch()}
               >
