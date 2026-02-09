@@ -26,6 +26,7 @@ const buttonVariants = cva(
       },
       size: {
         md: "px-2.5 py-2 rounded-lg gap-2 font-semibold text-sm",
+        sm: "px-2 py-1.5 rounded-lg gap-1.5 font-semibold text-xs",
       },
     },
     compoundVariants: [
