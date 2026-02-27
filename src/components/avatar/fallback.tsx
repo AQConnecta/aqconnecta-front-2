@@ -16,7 +16,7 @@ export function AvatarFallback({ className, children, name, ...props }: Props) {
     <Avatar.Fallback
       data-slot="avatar-fallback"
       className={clsx(
-        "flex size-full items-center justify-center rounded-full",
+        "flex size-full items-center justify-center rounded-full select-none",
         "bg-linear-to-br from-primary-700 to-purple-300 text-white",
         className,
       )}
