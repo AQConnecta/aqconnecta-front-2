@@ -69,6 +69,14 @@ hr {
   border: 1px solid color-mix(in oklab, var(--color-black) 10%, transparent);
 }
 
+@utility card-skeleton {
+  border-radius: calc(var(--spacing) * 3);
+  background: var(--color-gray-200);
+  box-shadow: 0 2px 8px -4px
+    color-mix(in oklab, var(--color-black) 15%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-black) 5%, transparent);
+}
+
 a {
   transition: all 100ms ease;
   @apply outline-0 outline-offset-1 outline-primary-300 focus-visible:outline-2;
