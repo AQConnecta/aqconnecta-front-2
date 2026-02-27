@@ -7,7 +7,11 @@ import authQueries from "@/api/auth-queries";
 import Button from "@/components/button";
 import { RQKeys } from "@/libs/react-query";
 
-export function Deslogar() {
+type Props = {
+  className?: string;
+};
+
+export function LogoutButton({ className }: Props) {
   const { mutate: logout, isPending } = useMutation({
     mutationKey: RQKeys.auth.base,
     mutationFn: authQueries.logout,
@@ -18,12 +22,12 @@ export function Deslogar() {
 
   return (
     <Button.Root
-      variant="ghost"
+      variant="outline"
       color="destructive"
       type="button"
       disabled={isPending}
       onClick={() => logout()}
-      className="mt-8"
+      className={className}
     >
       <Button.Icon icon={SignOutIcon} weight="bold" />
       {isPending ? "deslogando" : "deslogar"}
