@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <HotCompetences />
-      <Main>
+      <Main className="w-full! mx-0!">
         <Vacancies />
       </Main>
     </>
