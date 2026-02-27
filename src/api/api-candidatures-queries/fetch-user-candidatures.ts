@@ -1,6 +1,5 @@
 import type { HttpStatusCode } from "axios";
 import { APIRequestError } from "@/core/errors/api-request-error";
-import type { Vaga } from "@/core/types/vaga";
 import type { Candidatura } from "@/core/types/value-objects/candidatura";
 import { axios } from "@/libs/axios";
 import type { BasicServerResponse } from "../types/server-responses/basic";
@@ -13,15 +12,9 @@ export type FetchCandidaturesResponse = BasicServerResponse<
   | HttpStatusCode.InternalServerError
 >;
 
-export type FetchCandidaturesArgs = {
-  vacancyId: Vaga["id"];
-};
-
-export async function fetchManyCandidatures({
-  vacancyId,
-}: FetchCandidaturesArgs) {
+export async function fetchAuthUserCandidatures() {
   try {
-    const path = `/vaga/candidaturas/${vacancyId}`;
+    const path = `/usuario/candidaturas`;
     const response = await axios.get<FetchCandidaturesResponse>(path);
     return response.data;
   } catch (error) {
