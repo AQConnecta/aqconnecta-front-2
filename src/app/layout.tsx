@@ -30,8 +30,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${montserrat.variable} antialiased`}>
-        <PrefetchAuthUser />
         <ReactQueryProvider>
+          <PrefetchAuthUser />
           <ToasterProvider>{children}</ToasterProvider>
         </ReactQueryProvider>
       </body>
