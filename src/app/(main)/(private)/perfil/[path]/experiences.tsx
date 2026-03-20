@@ -7,17 +7,17 @@ import { SectionContainer } from "./section-container";
 
 type Props = {
   completeUser: UsuarioCompleto;
-  isUserOwnProfile: boolean;
+  userOwnsProfile: boolean;
 };
 
-export function Experiences({ completeUser, isUserOwnProfile }: Props) {
+export function Experiences({ completeUser, userOwnsProfile }: Props) {
   const hasNoExperiences = completeUser.experiencias.length === 0;
 
   return (
     <SectionContainer
       icon={ReadCvLogoIcon}
       title="Experiências"
-      shouldShowEditButton={isUserOwnProfile}
+      shouldShowEditButton={userOwnsProfile}
     >
       {hasNoExperiences ? (
         <Alert

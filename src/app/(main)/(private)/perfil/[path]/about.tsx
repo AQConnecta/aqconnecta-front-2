@@ -6,13 +6,13 @@ import { SectionContainer } from "./section-container";
 
 type Props = {
   completeUser: UsuarioCompleto;
-  isUserOwnProfile: boolean;
+  userOwnsProfile: boolean;
 };
 
-export function About({ completeUser, isUserOwnProfile }: Props) {
-  if (!completeUser.descricao && isUserOwnProfile) {
+export function About({ completeUser, userOwnsProfile }: Props) {
+  if (!completeUser.descricao && userOwnsProfile) {
     return (
-      <Wrapper shouldShowEditButton={isUserOwnProfile}>
+      <Wrapper shouldShowEditButton={userOwnsProfile}>
         <Alert variant="warning" title="Você ainda não tem uma bio." />
       </Wrapper>
     );
@@ -21,7 +21,7 @@ export function About({ completeUser, isUserOwnProfile }: Props) {
   if (!completeUser.descricao) return null;
 
   return (
-    <Wrapper shouldShowEditButton={isUserOwnProfile}>
+    <Wrapper shouldShowEditButton={userOwnsProfile}>
       <p>{completeUser.descricao}</p>
     </Wrapper>
   );

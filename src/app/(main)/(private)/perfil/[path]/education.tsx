@@ -6,10 +6,10 @@ import { SectionContainer } from "./section-container";
 
 type Props = {
   completeUser: UsuarioCompleto;
-  isUserOwnProfile: boolean;
+  userOwnsProfile: boolean;
 };
 
-export function Education({ completeUser, isUserOwnProfile }: Props) {
+export function Education({ completeUser, userOwnsProfile }: Props) {
   const hasNoAcademicBackgronud = completeUser.formacoesAcademicas.length === 0;
 
   const content = hasNoAcademicBackgronud ? (
@@ -32,7 +32,7 @@ export function Education({ completeUser, isUserOwnProfile }: Props) {
     <SectionContainer
       icon={GraduationCapIcon}
       title="Formação Acadêmica"
-      shouldShowEditButton={isUserOwnProfile}
+      shouldShowEditButton={userOwnsProfile}
     >
       {content}
     </SectionContainer>

@@ -13,6 +13,7 @@ import type { Endereco } from "@/core/types/value-objects/endereco";
 
 type Props = {
   completeUser: UsuarioCompleto;
+  userOwnsProfile: boolean;
 };
 
 export function Summary({ completeUser }: Props) {

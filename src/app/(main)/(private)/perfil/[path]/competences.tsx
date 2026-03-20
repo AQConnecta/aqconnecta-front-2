@@ -7,15 +7,15 @@ import { SectionContainer } from "./section-container";
 
 type Props = {
   completeUser: UsuarioCompleto;
-  isUserOwnProfile: boolean;
+  userOwnsProfile: boolean;
 };
 
-export function Competences({ completeUser, isUserOwnProfile }: Props) {
+export function Competences({ completeUser, userOwnsProfile }: Props) {
   const hasNoCompetences = completeUser.competencias.length === 0;
 
-  if (isUserOwnProfile && hasNoCompetences) {
+  if (userOwnsProfile && hasNoCompetences) {
     return (
-      <Wrapper isUserOwnProfile={isUserOwnProfile}>
+      <Wrapper userOwnsProfile={userOwnsProfile}>
         <Alert variant="warning" title="Você ainda não possui competências!" />
       </Wrapper>
     );
@@ -24,7 +24,7 @@ export function Competences({ completeUser, isUserOwnProfile }: Props) {
   if (hasNoCompetences) return null;
 
   return (
-    <Wrapper isUserOwnProfile={isUserOwnProfile}>
+    <Wrapper userOwnsProfile={userOwnsProfile}>
       <div className="flex flex-wrap gap-2">
         {completeUser.competencias.map((competencia) => (
           <Badge
@@ -41,14 +41,14 @@ export function Competences({ completeUser, isUserOwnProfile }: Props) {
 
 function Wrapper({
   children,
-  isUserOwnProfile,
+  userOwnsProfile,
 }: {
   children: ReactNode;
-  isUserOwnProfile: boolean;
+  userOwnsProfile: boolean;
 }) {
   return (
     <SectionContainer
-      shouldShowEditButton={isUserOwnProfile}
+      shouldShowEditButton={userOwnsProfile}
       icon={MedalIcon}
       title="Competências"
     >
