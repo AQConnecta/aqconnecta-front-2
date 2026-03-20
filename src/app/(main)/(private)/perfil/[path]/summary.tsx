@@ -11,6 +11,7 @@ import IconButton from "@/components/icon-button";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import type { Endereco } from "@/core/types/value-objects/endereco";
 import { useAuth } from "@/stores/auth";
+import { SectionContainerEditButton } from "./section-container";
 
 type Props = {
   completeUser: UsuarioCompleto;
@@ -31,6 +32,10 @@ export function Summary({ completeUser, userOwnsProfile }: Props) {
 
   return (
     <section className="card flex flex-col items-center gap-4">
+      {userOwnsProfile && (
+        <SectionContainerEditButton editButtonLabel="Editar informações do perfil" />
+      )}
+
       <Avatar.Root className="size-32">
         <Avatar.Fallback name={completeUser.nome} />
         <Avatar.Image src={completeUser.fotoPerfil ?? undefined} />
