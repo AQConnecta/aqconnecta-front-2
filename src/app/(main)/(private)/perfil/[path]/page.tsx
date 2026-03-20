@@ -10,6 +10,7 @@ import { About } from "./about";
 import { Competences } from "./competences";
 import { Education } from "./education";
 import { Experiences } from "./experiences";
+import { Skeleton } from "./skeleton";
 import { Summary } from "./summary";
 
 type Params = {
@@ -34,8 +35,7 @@ export default function PerfilUsuario() {
       content = <Alert variant="danger" content={error.message} />;
       break;
     case "pending":
-      // TODO: add a skeleton
-      content = <p>loading</p>;
+      content = <Skeleton />;
       break;
     case "success": {
       const completeUser = response.data!;
