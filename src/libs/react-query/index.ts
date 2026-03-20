@@ -22,7 +22,15 @@ export const RQKeys = {
       ] as const,
     candidatures: {
       base: ["candidatures"] as const,
-      list: (vacancyId?: string, filters?: object) =>
+      listByUser: (userId?: string, filters?: object) =>
+        [
+          ...RQKeys.vacancies.base,
+          ...RQKeys.vacancies.candidatures.base,
+          "list",
+          userId,
+          filters,
+        ] as const,
+      listByVacancy: (vacancyId?: string, filters?: object) =>
         [
           ...RQKeys.vacancies.base,
           ...RQKeys.vacancies.candidatures.base,
@@ -35,5 +43,10 @@ export const RQKeys = {
   auth: {
     base: ["auth"] as const,
     register: () => [...RQKeys.auth.base, "register"] as const,
+  },
+  user: {
+    base: ["user"] as const,
+    findCompleteByUserUrl: (userUrl?: string) =>
+      [...RQKeys.user.base, "find_complete_by_user_url", userUrl] as const,
   },
 };

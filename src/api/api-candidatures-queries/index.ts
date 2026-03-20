@@ -1,11 +1,7 @@
 import { fetchManyCandidatures } from "./fetch-many-candidatures";
-
-const prefix = "/vaga";
-
-export function mountPath(endpoint: string): string {
-  return `${prefix}/${endpoint}`;
-}
+import { fetchAuthUserCandidatures } from "./fetch-user-candidatures";
 
 export default {
   fetchManyFromVacancy: fetchManyCandidatures,
+  fetchManyFromAuthUser: fetchAuthUserCandidatures,
 };

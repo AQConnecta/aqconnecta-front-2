@@ -12,7 +12,7 @@ export const useCandidate = (
     mutationKey: RQKeys.vacancies.apply(vacancyId, resumeId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: RQKeys.vacancies.candidatures.list(vacancyId),
+        queryKey: RQKeys.vacancies.candidatures.listByVacancy(vacancyId),
       });
     },
     mutationFn: async () => {
