@@ -16,12 +16,12 @@ export function Heading({
   return (
     <Element
       className={clsx(
-        "text-foreground font-bold max-xs-width:text-sm",
-        level === 1 && "text-xl",
-        level === 2 && "text-xl",
-        level === 3 && "text-lg",
-        level === 4 && "text-base",
-        level === 5 && "text-base",
+        "text-foreground max-xs-width:text-sm",
+        level === 1 && "text-xl font-bold",
+        level === 2 && "text-xl font-semibold",
+        level === 3 && "text-lg font-semibold",
+        level === 4 && "text-base font-semibold",
+        level === 5 && "text-base font-medium",
         level === 6 && "text-base",
         className && className,
       )}
