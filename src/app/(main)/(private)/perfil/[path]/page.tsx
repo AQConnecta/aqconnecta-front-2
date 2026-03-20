@@ -42,7 +42,7 @@ export default function PerfilUsuario() {
       const userOwnsProfile = authUser?.id === completeUser.id;
 
       content = (
-        <div className="flex gap-4">
+        <div className="flex gap-4 max-small-width:flex-col">
           <div className="w-full medium-width:max-w-3xs flex flex-col gap-4">
             <Summary
               completeUser={completeUser}

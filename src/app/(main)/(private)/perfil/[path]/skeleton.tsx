@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 export function Skeleton() {
   return (
-    <div className="flex gap-4" inert>
+    <div className="flex gap-4 max-small-width:flex-col" inert>
       <div className="w-full medium-width:max-w-3xs">
         <SummarySkeleton />
         <SectionSkeleton className="h-14" titleChars={15} />
