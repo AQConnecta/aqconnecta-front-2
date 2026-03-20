@@ -9,7 +9,7 @@ export function AvatarRoot({ className, ...props }: Props) {
   return (
     <Avatar.Root
       className={clsx(
-        "relative flex size-12 shrink-0 overflow-hidden rounded-full",
+        "relative flex size-12 shrink-0 overflow-hidden rounded-full @container",
         className,
       )}
       {...props}

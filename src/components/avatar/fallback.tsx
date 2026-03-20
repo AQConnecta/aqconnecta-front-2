@@ -17,7 +17,7 @@ export function AvatarFallback({ className, children, name, ...props }: Props) {
       data-slot="avatar-fallback"
       className={clsx(
         "flex size-full items-center justify-center rounded-full select-none",
-        "bg-linear-to-br from-primary-700 to-purple-300 text-white",
+        "bg-linear-to-br from-primary-700 to-purple-300 text-white text-[50cqw]",
         className,
       )}
       {...props}
