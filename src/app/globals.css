@@ -35,6 +35,7 @@
 @theme {
   --container-full-with-margins: calc(100% - 48px);
   --container-full-area: 1440px;
+  --container-medium-area: 940px;
   --container-main-area: 744px;
 
   --breakpoint-full-width: 1440px;
