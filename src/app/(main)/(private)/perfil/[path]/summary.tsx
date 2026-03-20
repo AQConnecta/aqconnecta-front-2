@@ -10,14 +10,24 @@ import { Heading } from "@/components/heading";
 import IconButton from "@/components/icon-button";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import type { Endereco } from "@/core/types/value-objects/endereco";
+import { useAuth } from "@/stores/auth";
 
 type Props = {
   completeUser: UsuarioCompleto;
   userOwnsProfile: boolean;
 };
 
-export function Summary({ completeUser }: Props) {
+export function Summary({ completeUser, userOwnsProfile }: Props) {
   const firstAddress: Endereco | undefined = completeUser.enderecos[0];
+
+  const authUserIsAdmin = useAuth((state) => state.userIsAdmin());
+  const canSeeEmail = userOwnsProfile || authUserIsAdmin;
+
+  const hasAnySocialMedia = Boolean(
+    completeUser.githubProfileUrl ||
+      completeUser.curriculoLattesUrl ||
+      completeUser.linkedinProfileUrl,
+  );
 
   return (
     <section className="card flex flex-col items-center gap-4">
@@ -26,7 +36,7 @@ export function Summary({ completeUser }: Props) {
         <Avatar.Image src={completeUser.fotoPerfil ?? undefined} />
       </Avatar.Root>
 
-      <Heading level={1} as="h1">
+      <Heading level={1} as="h1" className="text-center">
         <span className="sr-only">Perfil de </span>
         {completeUser.nome}
       </Heading>
@@ -39,38 +49,44 @@ export function Summary({ completeUser }: Props) {
           />
         )}
 
-        <SummaryListItem icon={EnvelopeIcon} content={completeUser.email} />
+        {canSeeEmail && (
+          <SummaryListItem icon={EnvelopeIcon} content={completeUser.email} />
+        )}
 
         {completeUser.telefone && (
           <SummaryListItem icon={PhoneIcon} content={completeUser.telefone} />
         )}
       </ul>
 
-      <hr className="w-full" />
+      {hasAnySocialMedia && (
+        <>
+          <hr className="w-full" />
 
-      <ul className="flex items-center justify-center list-none">
-        {completeUser.curriculoLattesUrl && (
-          <IconSocialMediaLink
-            icon={GraduationCapIcon}
-            label="Currículo Lattes"
-            href={completeUser.curriculoLattesUrl}
-          />
-        )}
-        {completeUser.githubProfileUrl && (
-          <IconSocialMediaLink
-            icon={GithubLogoIcon}
-            label="Github"
-            href={completeUser.githubProfileUrl}
-          />
-        )}
-        {completeUser.linkedinProfileUrl && (
-          <IconSocialMediaLink
-            icon={LinkedinLogoIcon}
-            label="Linkedin"
-            href={completeUser.linkedinProfileUrl}
-          />
-        )}
-      </ul>
+          <ul className="flex items-center justify-center list-none">
+            {completeUser.curriculoLattesUrl && (
+              <IconSocialMediaLink
+                icon={GraduationCapIcon}
+                label="Currículo Lattes"
+                href={completeUser.curriculoLattesUrl}
+              />
+            )}
+            {completeUser.githubProfileUrl && (
+              <IconSocialMediaLink
+                icon={GithubLogoIcon}
+                label="Github"
+                href={completeUser.githubProfileUrl}
+              />
+            )}
+            {completeUser.linkedinProfileUrl && (
+              <IconSocialMediaLink
+                icon={LinkedinLogoIcon}
+                label="Linkedin"
+                href={completeUser.linkedinProfileUrl}
+              />
+            )}
+          </ul>
+        </>
+      )}
     </section>
   );
 }
