@@ -39,6 +39,7 @@ function Wrapper({
       icon={SparkleIcon}
       title="Sobre"
       shouldShowEditButton={shouldShowEditButton}
+      editButtonLabel="Editar sua biografia"
     >
       {children}
     </SectionContainer>

@@ -33,6 +33,7 @@ export function Education({ completeUser, userOwnsProfile }: Props) {
       icon={GraduationCapIcon}
       title="Formação Acadêmica"
       shouldShowEditButton={userOwnsProfile}
+      editButtonLabel="Editar sua formação acadêmica"
     >
       {content}
     </SectionContainer>

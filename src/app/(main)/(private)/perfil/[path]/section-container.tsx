@@ -10,6 +10,7 @@ type Props = {
   icon: Icon;
   title: string;
   onEditButtonClick?: MouseEventHandler<HTMLButtonElement>;
+  editButtonLabel: string;
 };
 
 export function SectionContainer({
@@ -18,6 +19,7 @@ export function SectionContainer({
   icon: I,
   title,
   onEditButtonClick,
+  editButtonLabel,
 }: Props) {
   return (
     <section className="card">
@@ -28,17 +30,35 @@ export function SectionContainer({
         </Heading>
 
         {shouldShowEditButton && (
-          <IconButton.Root
-            className="ml-auto"
-            color="foreground"
-            onClick={onEditButtonClick}
-          >
-            <IconButton.Icon icon={PencilIcon} weight="fill" />
-            <IconButton.Label>Adicione novas competências</IconButton.Label>
-          </IconButton.Root>
+          <SectionContainerEditButton
+            editButtonLabel={editButtonLabel}
+            onEditButtonClick={onEditButtonClick}
+          />
         )}
       </header>
       {children}
     </section>
+  );
+}
+
+type EditButtonProps = {
+  onEditButtonClick?: MouseEventHandler<HTMLButtonElement>;
+  editButtonLabel: string;
+};
+
+export function SectionContainerEditButton({
+  editButtonLabel,
+  onEditButtonClick,
+}: EditButtonProps) {
+  return (
+    <IconButton.Root
+      className="ml-auto"
+      color="foreground"
+      onClick={onEditButtonClick}
+      title={editButtonLabel}
+    >
+      <IconButton.Icon icon={PencilIcon} weight="fill" />
+      <IconButton.Label>{editButtonLabel}</IconButton.Label>
+    </IconButton.Root>
   );
 }

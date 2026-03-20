@@ -18,6 +18,7 @@ export function Experiences({ completeUser, userOwnsProfile }: Props) {
       icon={ReadCvLogoIcon}
       title="Experiências"
       shouldShowEditButton={userOwnsProfile}
+      editButtonLabel="Editar suas experiências acadêmicas e/ou profissionalizantes"
     >
       {hasNoExperiences ? (
         <Alert

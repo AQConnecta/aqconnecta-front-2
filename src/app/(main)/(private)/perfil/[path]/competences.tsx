@@ -51,6 +51,7 @@ function Wrapper({
       shouldShowEditButton={userOwnsProfile}
       icon={MedalIcon}
       title="Competências"
+      editButtonLabel="Editar suas competências"
     >
       {children}
     </SectionContainer>
