@@ -1,0 +1,76 @@
+"use client";
+
+import { useParams } from "next/navigation";
+import type { ReactElement } from "react";
+import { Alert } from "@/components/alert";
+import { Main } from "@/components/main";
+import { useGetUserProfile } from "@/hooks/users/get-user-profile";
+import { useAuth } from "@/stores/auth";
+import { About } from "./about";
+import { Competences } from "./competences";
+import { Education } from "./education";
+import { Experiences } from "./experiences";
+import { Summary } from "./summary";
+
+type Params = {
+  path: string;
+};
+
+export default function PerfilUsuario() {
+  const authUser = useAuth((state) => state.user);
+  const { path } = useParams<Params>();
+  const {
+    data: response,
+    status,
+    error,
+  } = useGetUserProfile({
+    userUrl: path,
+  });
+
+  let content: ReactElement;
+
+  switch (status) {
+    case "error":
+      content = <Alert variant="danger" content={error.message} />;
+      break;
+    case "pending":
+      // TODO: add a skeleton
+      content = <p>loading</p>;
+      break;
+    case "success": {
+      const completeUser = response.data!;
+      const isUserOwnProfile = authUser?.id === completeUser.id;
+
+      content = (
+        <div className="flex gap-4">
+          <div className="w-full medium-width:max-w-3xs flex flex-col gap-4">
+            <Summary completeUser={completeUser} />
+            <Competences
+              completeUser={completeUser}
+              isUserOwnProfile={isUserOwnProfile}
+            />
+          </div>
+
+          <div className="flex flex-col w-full gap-4">
+            <About
+              completeUser={completeUser}
+              isUserOwnProfile={isUserOwnProfile}
+            />
+            <Education
+              completeUser={completeUser}
+              isUserOwnProfile={isUserOwnProfile}
+            />
+            <Experiences
+              completeUser={completeUser}
+              isUserOwnProfile={isUserOwnProfile}
+            />
+          </div>
+        </div>
+      );
+
+      break;
+    }
+  }
+
+  return <Main className="max-w-medium-area!">{content}</Main>;
+}
