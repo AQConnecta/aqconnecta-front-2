@@ -44,4 +44,9 @@ export const RQKeys = {
     base: ["auth"] as const,
     register: () => [...RQKeys.auth.base, "register"] as const,
   },
+  user: {
+    base: ["user"] as const,
+    findCompleteByUserUrl: (userUrl?: string) =>
+      [...RQKeys.user.base, "find_complete_by_user_url", userUrl] as const,
+  },
 };

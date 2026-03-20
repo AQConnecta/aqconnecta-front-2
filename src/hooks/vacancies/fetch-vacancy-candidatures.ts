@@ -4,7 +4,7 @@ import type { FetchCandidaturesResponse } from "@/api/api-candidatures-queries/f
 import type { APIRequestError } from "@/core/errors/api-request-error";
 import type { Vaga } from "@/core/types/vaga";
 import { RQKeys } from "@/libs/react-query";
-import { checkShouldRetry } from ".";
+import { checkShouldRetry } from "..";
 
 type Args = { vacancyId: Vaga["id"] | undefined };
 
