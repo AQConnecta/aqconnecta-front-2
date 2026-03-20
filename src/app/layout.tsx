@@ -5,6 +5,7 @@ import { ServerEnv } from "@/config/env/server";
 import { resolveTitle } from "@/core/metadata";
 import { ReactQueryProvider } from "@/libs/react-query/provider";
 import { ToasterProvider } from "@/libs/toaster";
+import { PrefetchAuthUser } from "./prefetch-auth-user";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${montserrat.variable} antialiased`}>
         <ReactQueryProvider>
+          <PrefetchAuthUser />
           <ToasterProvider>{children}</ToasterProvider>
         </ReactQueryProvider>
       </body>

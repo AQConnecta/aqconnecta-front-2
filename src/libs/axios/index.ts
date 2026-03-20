@@ -1,3 +1,5 @@
+"use client";
+
 import _axios, {
   type AxiosError,
   HttpStatusCode,
@@ -5,10 +7,7 @@ import _axios, {
 } from "axios";
 import { PublicEnv } from "@/config/env/public";
 import { useAuth } from "@/stores/auth";
-import {
-  refreshAndRetryFailedRequest,
-  tryToPrefetchAccessToken,
-} from "./refresh-access-token";
+import { refreshAndRetryFailedRequest } from "./refresh-access-token";
 
 const refreshTokenEndpoint = "/auth/refresh";
 const refreshAttempt = "__has_already_tried_to_refresh";
@@ -48,5 +47,3 @@ axios.interceptors.response.use(
     return refreshAndRetryFailedRequest(config, error);
   },
 );
-
-await tryToPrefetchAccessToken();
