@@ -24,6 +24,7 @@ export function IconButtonRoot({
   children,
   size,
   variant,
+  color,
   className,
   ref,
   ...props
@@ -34,10 +35,11 @@ export function IconButtonRoot({
       {...props}
       ref={ref}
       data-size={size ?? defaultVariants.size}
+      data-color={color ?? defaultVariants.color}
       data-variant={variant ?? defaultVariants.variant}
       className={clsx(
         "group",
-        iconButtonVariants({ size, variant }),
+        iconButtonVariants({ size, variant, color }),
         className && className,
       )}
     >
