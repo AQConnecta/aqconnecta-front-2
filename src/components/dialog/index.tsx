@@ -1,4 +1,5 @@
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
+import { DialogActionsContainer } from "./actions-container";
 import { DialogClose } from "./close";
 import { DialogContainer } from "./container";
 import { DialogHeader } from "./header";
@@ -11,4 +12,5 @@ export default {
   Header: DialogHeader,
   Close: DialogClose,
   Description: DialogPrimitive.Description,
+  ActionsContainer: DialogActionsContainer,
 };

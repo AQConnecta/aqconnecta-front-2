@@ -12,6 +12,7 @@ import {
 import type { PresentedVacancy } from "@/api/types/presented-vacancy";
 import { Alert } from "@/components/alert";
 import Button from "@/components/button";
+import Dialog from "@/components/dialog";
 import { Routes } from "@/core/routes";
 import type { Curriculo } from "@/core/types/value-objects/curriculo";
 import { useCandidate } from "@/hooks/vacancies/use-candidate";
@@ -88,11 +89,11 @@ export function CandidatureForm({
         Gerencie seus currículos
       </Link>
 
-      <hr className="my-6" />
-
-      <div className="grid grid-flow-col gap-2">
-        <div className="self-start">{extraActionButtons}</div>
-        <div className="self-end flex items-center justify-end gap-2">
+      <Dialog.ActionsContainer>
+        <Dialog.ActionsContainer.RightArea>
+          {extraActionButtons}
+        </Dialog.ActionsContainer.RightArea>
+        <Dialog.ActionsContainer.LeftArea>
           {cancelButton}
 
           <Button.Root
@@ -103,8 +104,8 @@ export function CandidatureForm({
           >
             Avançar
           </Button.Root>
-        </div>
-      </div>
+        </Dialog.ActionsContainer.LeftArea>
+      </Dialog.ActionsContainer>
     </div>
   );
 }
