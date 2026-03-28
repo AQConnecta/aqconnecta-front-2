@@ -62,6 +62,7 @@ export default function Candidatar() {
               isUserThePublisher={userIsThePublisher}
               publisherName={vacancy.publicador.nome}
               publisherProfilePicutreUrl={vacancy.publicador.fotoPerfil}
+              publisherSlug={vacancy.publicador.userUrl}
             />
             <VacancyCard.Details
               acceptsBeginners={vacancy.isIniciante}

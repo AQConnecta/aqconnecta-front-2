@@ -83,6 +83,7 @@ export function Vacancies() {
               publisherName={vacancy.publicador.nome}
               title={vacancy.titulo}
               publisherProfilePicutreUrl={vacancy.publicador.fotoPerfil}
+              publisherSlug={vacancy.publicador.userUrl}
             />
             <VacancyCard.Details
               acceptsBeginners={vacancy.isIniciante}
