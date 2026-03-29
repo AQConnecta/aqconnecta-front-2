@@ -63,15 +63,7 @@ export function FormInput({
         {label}
       </FormLabel>
 
-      <div
-        className={clsx(
-          "flex items-start gap-2.5 w-full rounded-md px-3 text-sm max-small-width:text-sm",
-          "transition-[color,box-shadow] outline-none bg-gray-100",
-          "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
-          "ring-0 ring-primary-600/40 focus-within:ring-4 aria-invalid:ring-red-500/20",
-          "has-autofill:bg-primary-200",
-        )}
-      >
+      <div className="input-wrapper gap-2.5 has-autofill:bg-primary-200">
         {leftIcon && <InputIcon icon={leftIcon} />}
         {leftComponent ?? null}
 
@@ -80,10 +72,9 @@ export function FormInput({
           type={type}
           placeholder={placeholder}
           className={clsx(
-            "outline-none w-full small-width:leading-tight max-small-width:leading-4",
+            "input-inner",
             "file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium",
             "file:text-foreground placeholder:text-gray-500",
-            "text-wrap placeholder:text-ellipsis min-h-9",
             "autofill:bg-primary-200 shadow-primary-200 autofill:shadow-[inset_0_0_0px_1000px_var(--tw-shadow-color)]",
             "autofill:[-webkit-text-fill-color:var(--color-primary-600)] autofill:font-medium",
           )}
