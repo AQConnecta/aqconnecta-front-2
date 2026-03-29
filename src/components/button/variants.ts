@@ -4,7 +4,7 @@ import clsx from "clsx";
 const defaultVariants = {
   size: "md",
   variant: "default",
-  color: "primary",
+  color: "default",
 } as const;
 
 const buttonVariants = cva(
@@ -22,6 +22,7 @@ const buttonVariants = cva(
       },
       color: {
         primary: undefined,
+        default: undefined,
         destructive: undefined,
       },
       size: {
@@ -30,6 +31,14 @@ const buttonVariants = cva(
       },
     },
     compoundVariants: [
+      {
+        variant: "default",
+        color: "default",
+        class: [
+          "bg-gray-200/60 text-foreground hover:bg-gray-200 active:bg-gray-300/50",
+          "ring-primary-300",
+        ],
+      },
       {
         variant: "default",
         color: "primary",
@@ -46,10 +55,18 @@ const buttonVariants = cva(
       },
       {
         variant: "ghost",
+        color: "default",
+        class: [
+          "bg-black/0 text-foreground hover:bg-black/5 active:bg-black/10",
+          "ring-primary-300",
+        ],
+      },
+      {
+        variant: "ghost",
         color: "primary",
         class: [
-          "bg-black/5 text-foreground hover:bg-black/10 active:bg-black/20",
-          "ring-primary-300",
+          "bg-primary-600/10 text-primary-800 hover:bg-primary-600/15 active:bg-primary-600/20",
+          "ring-primary-600/40",
         ],
       },
       {
@@ -60,7 +77,7 @@ const buttonVariants = cva(
       },
       {
         variant: "outline",
-        color: "primary",
+        color: "default",
         class: [
           "border border-black/10 bg-transparent text-foreground ring-primary-300",
           "hover:bg-black/5 active:bg-black/10",

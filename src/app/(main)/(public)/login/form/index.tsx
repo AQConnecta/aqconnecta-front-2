@@ -92,6 +92,7 @@ export function LoginForm() {
           className="max-xs-width:justify-between"
           disabled={isProcessing}
           aria-busy={isProcessing}
+          color="primary"
         >
           Logar
           <Button.Icon icon={ArrowRightIcon} weight="bold" />

@@ -88,7 +88,11 @@ export function RegisterForm() {
         >
           <Link href={Routes.auth.login}>Já tenho uma conta</Link>
         </Button.Root>
-        <Button.Root type="submit" className="max-xs-width:justify-between">
+        <Button.Root
+          type="submit"
+          className="max-xs-width:justify-between"
+          color="primary"
+        >
           Criar conta
           <Button.Icon icon={ArrowRightIcon} weight="bold" />
         </Button.Root>

@@ -101,6 +101,7 @@ export function CandidatureForm({
             form={formId}
             disabled={isPending || isSuccess}
             aria-disabled={isPending}
+            color="primary"
           >
             Avançar
           </Button.Root>

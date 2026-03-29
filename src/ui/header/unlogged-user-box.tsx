@@ -7,13 +7,13 @@ import { Routes } from "@/core/routes";
 export function UnloggedBox() {
   return (
     <>
-      <Button.Root asChild className="text-nowrap">
+      <Button.Root asChild className="text-nowrap" variant="ghost">
         <Link href={Routes.auth.register}>
           <Button.Icon icon={UserIcon} />
           Registre-se
         </Link>
       </Button.Root>
-      <Button.Root asChild className="text-nowrap" variant="ghost">
+      <Button.Root asChild className="text-nowrap" color="primary">
         <Link href={Routes.auth.login}>
           <Button.Icon icon={KeyIcon} />
           Login

@@ -103,6 +103,8 @@ export function Vacancies() {
 
               <Button.Root
                 className="justify-self-end w-fit place-self-end"
+                variant="default"
+                color="primary"
                 asChild
               >
                 <Link

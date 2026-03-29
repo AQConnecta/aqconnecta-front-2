@@ -9,6 +9,7 @@ const buttonIconVariants = cva("transition-all duration-200 ease-in", {
   variants: {
     color: {
       primary: undefined,
+      default: undefined,
       destructive: undefined,
     } satisfies Record<AvailableColors, unknown>,
     variant: {
@@ -23,18 +24,12 @@ const buttonIconVariants = cva("transition-all duration-200 ease-in", {
   },
   compoundVariants: [
     {
-      color: "primary",
-      variant: "default",
-      class:
-        "text-primary-300 group-hover:text-primary-200 group-active:primary-200",
-    },
-    {
       color: "destructive",
       variant: "default",
       class: "text-red-50 group-hover:text-red-100 group-active:text-red-100",
     },
     {
-      color: "primary",
+      color: ["primary", "default"],
       variant: ["ghost", "outline"],
       class:
         "text-primary-600/70 group-hover:text-primary-700/70 group-active:text-primary-700/70",
@@ -44,6 +39,18 @@ const buttonIconVariants = cva("transition-all duration-200 ease-in", {
       variant: ["ghost", "outline"],
       class:
         "text-red-600 group-hover:text-red-700/70 group-active:text-red-700/70",
+    },
+    {
+      variant: "default",
+      color: "default",
+      class:
+        "text-primary-600/70 group-hover:text-primary-700/70 group-active:text-primary-700/70",
+    },
+    {
+      variant: "default",
+      color: "primary",
+      class:
+        "text-primary-300 group-hover:text-primary-200 group-active:primary-200",
     },
   ],
 });
