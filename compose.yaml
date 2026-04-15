@@ -13,7 +13,6 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
     healthcheck:
-      # Use CMD-SHELL para poder usar $$ (escapa para avaliar dentro do container)
       test: [ "CMD-SHELL", "mariadb -h 127.0.0.1 -uroot -p${DB_ROOT_PASSWORD:-rootpass} -e 'SELECT 1' >/dev/null 2>&1 || exit 1" ]
       interval: 5s
       timeout: 3s
@@ -28,12 +27,14 @@ services:
       - "127.0.0.1:4566:4566" # LocalStack Gateway
       - "127.0.0.1:4510-4559:4510-4559" # external services port range
     environment:
-      # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
+      # https://docs.localstack.cloud/references/configuration/
       - DEBUG=${DEBUG:-0}
       - SERVICES=s3
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - localstack-net
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:4566/_localstack/health" ]
       interval: 10s
@@ -42,11 +43,9 @@ services:
       start_period: 15s
 
   backend:
-    # Constrói sua imagem Java (Dockerfile multi-stage com Maven que te passei)
     build:
-      context: https://github.com/AQConnecta/AQConnecta-back.git#master
+      context: https://github.com/AQConnecta/AQConnecta-back.git#dev
       dockerfile: Dockerfile
-      # Se quiser forçar profile no build (opcional):
       args:
         SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
     container_name: aqconnecta-backend
@@ -64,3 +63,8 @@ services:
 
 volumes:
   mariadb_data:
+
+
+networks:
+  localstack-net:
+    name: localstack-network
