@@ -49,4 +49,14 @@ export const RQKeys = {
     findCompleteByUserUrl: (userUrl?: string) =>
       [...RQKeys.user.base, "find_complete_by_user_url", userUrl] as const,
   },
+  universities: {
+    base: ["university"] as const,
+    list: (filters?: object) =>
+      [...RQKeys.universities.base, "list", filters] as const,
+  },
+  education: {
+    base: ["education"] as const,
+    listByUser: (userId?: string) =>
+      [...RQKeys.education.base, "list", "userId", userId] as const,
+  },
 };
