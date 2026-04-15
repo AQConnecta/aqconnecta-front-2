@@ -4,7 +4,7 @@ import type { FetchCandidaturesResponse } from "@/api/api-candidatures-queries/f
 import type { APIRequestError } from "@/core/errors/api-request-error";
 import type { Usuario } from "@/core/types/usuario";
 import { RQKeys } from "@/libs/react-query";
-import { checkShouldRetry } from "..";
+import { checkShouldRetry, ensureAuthUser } from "..";
 
 type Args = { authUser: Usuario | null };
 
@@ -12,7 +12,7 @@ export const useFetchAuthUserCandidatures = ({ authUser }: Args) =>
   useQuery<FetchCandidaturesResponse, APIRequestError>({
     queryKey: RQKeys.vacancies.candidatures.listByUser(authUser?.id),
     queryFn: () => {
-      if (!authUser) throw new Error("Identificador da vaga não encontrado.");
+      ensureAuthUser(authUser);
       return apiCandidaturesQueries.fetchManyFromAuthUser();
     },
     retry: checkShouldRetry,
