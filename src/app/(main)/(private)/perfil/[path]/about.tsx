@@ -90,8 +90,12 @@ function Wrapper({
         icon={SparkleIcon}
         title="Sobre"
         shouldShowEditButton={shouldShowEditButton}
-        editButtonLabel="Editar sua biografia"
-        onEditButtonClick={() => setEditDialogIsOpen(true)}
+        actionContent={
+          <SectionContainer.EditButton
+            editButtonLabel="Editar sua biografia"
+            onClick={() => setEditDialogIsOpen(true)}
+          />
+        }
       >
         {children}
       </SectionContainer>

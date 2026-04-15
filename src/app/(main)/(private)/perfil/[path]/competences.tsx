@@ -51,7 +51,9 @@ function Wrapper({
       shouldShowEditButton={userOwnsProfile}
       icon={MedalIcon}
       title="Competências"
-      editButtonLabel="Editar suas competências"
+      actionContent={
+        <SectionContainer.EditButton editButtonLabel="Editar suas competências" />
+      }
     >
       {children}
     </SectionContainer>
