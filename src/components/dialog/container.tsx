@@ -18,7 +18,7 @@ export function DialogContainer({ children, className }: Props) {
             "relative card transition-all duration-150",
             "data-ending-style:opacity-0 data-ending-style:scale-90",
             "data-starting-style:opacity-0 data-starting-style:scale-90",
-            "w-full-with-margins max-w-2xl max-h-full min-h-0",
+            "w-full max-w-2xl max-h-full min-h-0",
             className && className,
           )}
         >
