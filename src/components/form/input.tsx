@@ -3,7 +3,12 @@
 import type { Icon } from "@phosphor-icons/react";
 import { Slot } from "@radix-ui/react-slot";
 import clsx from "clsx";
-import { type InputHTMLAttributes, type ReactElement, useId } from "react";
+import {
+  type InputHTMLAttributes,
+  type ReactElement,
+  type ReactNode,
+  useId,
+} from "react";
 import { InputIcon } from "./input-icon";
 import { FormLabel } from "./label";
 
@@ -25,6 +30,8 @@ type Props = {
   inputSize?: "md" | "sm";
   inputProps?: HTMLInputProps;
   className?: string;
+  children?: ReactNode;
+  inputWrapperClassname?: string;
 };
 
 export function FormInput({
@@ -42,6 +49,8 @@ export function FormInput({
   required = false,
   inputProps,
   className,
+  children,
+  inputWrapperClassname,
 }: Props) {
   const Input = asChild ? Slot : "input";
   const inputId = useId();
@@ -63,7 +72,12 @@ export function FormInput({
         {label}
       </FormLabel>
 
-      <div className="input-wrapper gap-2.5 has-autofill:bg-primary-200">
+      <div
+        className={clsx(
+          "input-wrapper gap-2.5 has-autofill:bg-primary-200",
+          inputWrapperClassname,
+        )}
+      >
         {leftIcon && <InputIcon icon={leftIcon} />}
         {leftComponent ?? null}
 
@@ -80,7 +94,9 @@ export function FormInput({
           )}
           aria-describedby={details && detailsId}
           {...inputProps}
-        />
+        >
+          {children}
+        </Input>
 
         {rightIcon && <InputIcon icon={rightIcon} />}
         {rightComponent ?? null}
