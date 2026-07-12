@@ -3,6 +3,7 @@ import { FormInput } from "./input";
 import { InputIcon } from "./input-icon";
 import { FormLabel } from "./label";
 import { FormSwitch } from "./switch";
+import { FormTextField } from "./text-field";
 
 export default {
   Input: FormInput,
@@ -10,4 +11,5 @@ export default {
   Switch: FormSwitch,
   InputIcon: InputIcon,
   DatePicker: FormDatePickerInput,
+  TextField: FormTextField,
 };
