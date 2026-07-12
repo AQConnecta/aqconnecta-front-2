@@ -48,6 +48,12 @@ export const RQKeys = {
     base: ["user"] as const,
     findCompleteByUserUrl: (userUrl?: string) =>
       [...RQKeys.user.base, "find_complete_by_user_url", userUrl] as const,
+    editSelf: (userId: string | undefined, currentUserData: object) => [
+      ...RQKeys.user.base,
+      "edit_self_data",
+      userId,
+      currentUserData,
+    ],
   },
   universities: {
     base: ["university"] as const,

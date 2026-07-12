@@ -1,3 +1,4 @@
+import { editSelf } from "./edit-self";
 import { findCompleteUserByUrl } from "./find-complete-user-by-url";
 import { getResumes } from "./get-resumes";
 
@@ -10,5 +11,6 @@ export function mountPath(endpoint: string): string {
 
 export default {
   findCompleteUserBySlug: findCompleteUserByUrl,
+  editSelf,
   getResumes,
 };
