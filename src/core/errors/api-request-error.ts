@@ -1,10 +1,11 @@
 import { AxiosError, HttpStatusCode } from "axios";
 import type { BasicServerResponse } from "@/api/types/server-responses/basic";
 
-export class APIRequestError extends Error {
+export class APIRequestError<ErrorBody = never> extends Error {
   public constructor(
     public readonly message: string,
     public readonly status: number,
+    public readonly body?: ErrorBody,
   ) {
     super(message);
   }
@@ -38,7 +39,7 @@ export class APIRequestError extends Error {
    * thrown error.
    * @param error an error thrown by axios
    */
-  public static prepareFromAxiosError(error: unknown) {
+  public static prepareFromAxiosError<ErrorBody = never>(error: unknown) {
     if (!(error instanceof AxiosError)) {
       return APIRequestError.internalServerError();
     }
@@ -48,6 +49,20 @@ export class APIRequestError extends Error {
       APIRequestError.isServerUnhandledException(error)
     ) {
       return APIRequestError.internalServerError();
+    }
+
+    const errorResponseStatus = error.status ?? error.response?.status;
+
+    if (
+      errorResponseStatus &&
+      [400, 422].includes(errorResponseStatus) &&
+      "data" in (error.response?.data ?? {})
+    ) {
+      return new APIRequestError<ErrorBody>(
+        "Erros de validação encontrados.",
+        errorResponseStatus,
+        error.response!.data,
+      );
     }
 
     const data = error.response?.data as BasicServerResponse<never>;
