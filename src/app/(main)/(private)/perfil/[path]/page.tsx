@@ -56,6 +56,7 @@ export default function PerfilUsuario() {
 
           <div className="flex flex-col w-full gap-4">
             <About
+              authUser={authUser}
               completeUser={completeUser}
               userOwnsProfile={userOwnsProfile}
             />
