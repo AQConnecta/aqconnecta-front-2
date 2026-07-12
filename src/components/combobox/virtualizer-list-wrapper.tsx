@@ -23,7 +23,7 @@ export function ComboboxVirtualizerListWrapper({
       ref={ref}
       className={clsx(
         "h-[min(--spacing(92),var(--total-size))] max-h-(--available-height)",
-        "overflow-auto overscroll-contain scroll-p-2 p-1",
+        "overflow-auto overscroll-contain scroll-p-2 p-1 box-content",
         className,
       )}
       style={{ "--total-size": `${totalSize}px`, ...style } as CSSProperties}
