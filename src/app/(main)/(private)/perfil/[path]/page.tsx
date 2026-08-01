@@ -7,8 +7,8 @@ import { Main } from "@/components/main";
 import { useGetUserProfile } from "@/hooks/users/get-user-profile";
 import { useAuth } from "@/stores/auth";
 import { About } from "./about";
+import { AcademicTrainingSection } from "./academic-training";
 import { Competences } from "./competences";
-import { Education } from "./education";
 import { Experiences } from "./experiences";
 import { Skeleton } from "./skeleton";
 import { Summary } from "./summary";
@@ -60,7 +60,7 @@ export default function PerfilUsuario() {
               completeUser={completeUser}
               userOwnsProfile={userOwnsProfile}
             />
-            <Education
+            <AcademicTrainingSection
               completeUser={completeUser}
               userOwnsProfile={userOwnsProfile}
             />
