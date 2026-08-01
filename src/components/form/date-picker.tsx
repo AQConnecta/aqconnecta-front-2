@@ -2,9 +2,11 @@
 
 import { CalendarIcon } from "@phosphor-icons/react/dist/ssr/Calendar";
 import * as React from "react";
+import { useEffect } from "react";
 import Popover from "@/components/popover";
 import { Calendar } from "../calendar";
 import IconButton from "../icon-button";
+import { FormErrorMessage } from "./error-message";
 import { FormLabel } from "./label";
 
 function formatDate(date: Date | undefined) {
@@ -17,34 +19,91 @@ function formatDate(date: Date | undefined) {
   });
 }
 
+function parseDateBR(dateString: string): Date | undefined {
+  if (!dateString) return undefined;
+
+  const parts = dateString.split("/");
+
+  if (parts.length !== 3) return undefined;
+
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10);
+  const year = parseInt(parts[2], 10);
+
+  if (Number.isNaN(day) || Number.isNaN(month) || Number.isNaN(year)) {
+    return undefined;
+  }
+
+  const parsedDate = new Date(year, month - 1, day);
+
+  if (
+    parsedDate.getFullYear() === year &&
+    parsedDate.getMonth() === month - 1 &&
+    parsedDate.getDate() === day
+  ) {
+    return parsedDate;
+  }
+
+  return undefined;
+}
+
 function isValidDate(date: Date | undefined) {
   return !!date && !Number.isNaN(date.getTime());
 }
 
 type Props = {
+  name?: string;
+  disabled?: boolean;
   required?: boolean;
   label: string;
   className?: string;
   placeholder?: string;
+  errorMessage?: string;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onDateChange?: (date: Date | undefined) => void;
+  ref?: React.RefCallback<HTMLInputElement>;
+  value?: Date;
 };
 
 const today = formatDate(new Date());
 
 export function FormDatePickerInput({
+  name,
   required = false,
   className,
   label,
   placeholder = today,
+  errorMessage,
+  onBlur,
+  onDateChange,
+  ref,
+  disabled,
+  value,
 }: Props) {
   const dataPickerId = React.useId();
   const resolvedDataPickerId = dataPickerId;
 
   const [open, setOpen] = React.useState(false);
-  const [date, setDate] = React.useState<Date | undefined>(
-    new Date("2025-06-01"),
+  const [month, setMonth] = React.useState<Date | undefined>(value);
+  const [inputValue, setInputValue] = React.useState(formatDate(value));
+
+  const maybeUpdateDateDueToValueChange = React.useEffectEvent(
+    (newDate: Date | undefined) => {
+      const currentParsedDate = parseDateBR(inputValue);
+
+      if (newDate?.getTime() !== currentParsedDate?.getTime()) {
+        setInputValue(formatDate(newDate));
+      }
+
+      if (isValidDate(newDate)) {
+        setMonth(newDate);
+      }
+    },
   );
-  const [month, setMonth] = React.useState<Date | undefined>(date);
-  const [value, setValue] = React.useState(formatDate(date));
+
+  useEffect(() => {
+    maybeUpdateDateDueToValueChange(value);
+  }, [value]);
 
   return (
     <div className={className}>
@@ -58,17 +117,22 @@ export function FormDatePickerInput({
 
       <div className="input-wrapper gap-2.5 has-autofill:bg-primary-200">
         <input
+          name={name}
           id={resolvedDataPickerId}
-          value={value}
+          value={inputValue}
           placeholder={placeholder}
           className="input-inner"
+          onBlur={onBlur}
+          ref={ref}
+          disabled={disabled}
           onChange={(e) => {
-            const date = new Date(e.target.value);
-            setValue(e.target.value);
-            if (isValidDate(date)) {
-              setDate(date);
-              setMonth(date);
-            }
+            const rawDate = e.currentTarget.value;
+            setInputValue(e.target.value);
+
+            const parsedDate = parseDateBR(rawDate);
+            onDateChange?.(parsedDate);
+
+            if (isValidDate(parsedDate)) setMonth(parsedDate);
           }}
           onKeyDown={(e) => {
             if (e.key === "ArrowDown") {
@@ -79,7 +143,7 @@ export function FormDatePickerInput({
         />
 
         <Popover.Root open={open} onOpenChange={setOpen}>
-          <Popover.Trigger asChild>
+          <Popover.Trigger asChild disabled={disabled}>
             <IconButton.Root
               id="date-picker"
               variant="ghost"
@@ -98,19 +162,22 @@ export function FormDatePickerInput({
             sideOffset={10}
           >
             <Calendar
+              disabled={disabled}
               mode="single"
-              selected={date}
+              selected={value}
               month={month}
               onMonthChange={setMonth}
               onSelect={(date) => {
-                setDate(date);
-                setValue(formatDate(date));
+                setInputValue(formatDate(date));
+                onDateChange?.(date);
                 setOpen(false);
               }}
             />
           </Popover.Content>
         </Popover.Root>
       </div>
+
+      <FormErrorMessage errorMessage={errorMessage} />
     </div>
   );
 }
