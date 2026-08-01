@@ -9,6 +9,7 @@ import {
   type ReactNode,
   useId,
 } from "react";
+import { FormErrorMessage } from "./error-message";
 import { InputIcon } from "./input-icon";
 import { FormLabel } from "./label";
 
@@ -108,9 +109,7 @@ export function FormInput({
         </p>
       )}
 
-      {errorMessage && (
-        <p className="text-red-500 text-sm my-1 mb-0 p-0">{errorMessage}</p>
-      )}
+      <FormErrorMessage errorMessage={errorMessage} />
     </div>
   );
 }
