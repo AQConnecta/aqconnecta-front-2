@@ -3,3 +3,7 @@ export type BasicServerResponse<T, Status extends number = number> = {
   status: Status;
   data: T | null;
 };
+
+export type BasicServerValidationErrors<FormType> = {
+  [K in keyof FormType]: string[];
+};

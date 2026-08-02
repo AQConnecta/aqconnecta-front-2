@@ -1,28 +1,42 @@
-import { useMutation } from "@tanstack/react-query";
+import { type UseMutationOptions, useMutation } from "@tanstack/react-query";
 import apiUsersQueries from "@/api/api-users-queries";
 import type { EditSelfArgs } from "@/api/api-users-queries/edit-self";
+import type { APIRequestError } from "@/core/errors/api-request-error";
 import type { Usuario } from "@/core/types/usuario";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import { queryClient, RQKeys } from "@/libs/react-query";
 
-type Args = { authUser: Usuario | null; completeUser: UsuarioCompleto };
+type MutationOptions = UseMutationOptions<
+  unknown,
+  APIRequestError,
+  EditSelfArgs
+>;
 
-export const useEditSelf = ({ authUser, completeUser }: Args) =>
+type Args = {
+  authUser: Usuario | null;
+  completeUser: UsuarioCompleto;
+  onError: MutationOptions["onError"];
+  onSuccess: MutationOptions["onSuccess"];
+};
+
+export const useEditSelf = ({
+  authUser,
+  completeUser,
+  onError,
+  onSuccess,
+}: Args) =>
   useMutation({
-    mutationKey: RQKeys.user.editSelf(authUser?.id, completeUser),
-    onSuccess: () => {
+    mutationKey: RQKeys.user.editSelf(authUser?.id, completeUser, "edit_self"),
+    onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({
         queryKey: RQKeys.user.findCompleteByUserUrl(authUser?.userUrl),
       });
-    },
-    mutationFn: async (newData: EditSelfArgs) => {
-      if (authUser) {
-        await apiUsersQueries.editSelf(newData);
-        return;
-      }
 
-      throw new Error(
-        "Você não pode editar seu próprio perfil sem se identificar primeiro.",
-      );
+      onSuccess?.(data, variables, onMutateResult, context);
+    },
+    onError,
+    mutationFn: async (newData: EditSelfArgs) => {
+      await apiUsersQueries.editSelf(newData);
+      return;
     },
   });

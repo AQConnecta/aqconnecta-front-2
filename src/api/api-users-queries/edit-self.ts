@@ -1,12 +1,14 @@
 import type { HttpStatusCode } from "axios";
 import { APIRequestError } from "@/core/errors/api-request-error";
 import { axios } from "@/libs/axios";
-import type { BasicServerResponse } from "../types/server-responses/basic";
+import type {
+  BasicServerResponse,
+  BasicServerValidationErrors,
+} from "../types/server-responses/basic";
 import { mountPath } from ".";
 
-export type EditSelfValidationErrors = {
-  [K in keyof EditSelfArgs]: string[];
-};
+export type EditSelfValidationErrors =
+  BasicServerValidationErrors<EditSelfArgs>;
 
 export type EditSelfResponse = BasicServerResponse<
   never,

@@ -1,7 +1,6 @@
 "use client";
 
 import { SparkleIcon } from "@phosphor-icons/react/dist/ssr/Sparkle";
-import { useMutation } from "@tanstack/react-query";
 import {
   type ReactNode,
   type SubmitEvent,
@@ -10,11 +9,7 @@ import {
   useState,
 } from "react";
 import toast from "react-hot-toast";
-import apiUsersQueries from "@/api/api-users-queries";
-import type {
-  EditSelfArgs,
-  EditSelfValidationErrors,
-} from "@/api/api-users-queries/edit-self";
+import type { EditSelfValidationErrors } from "@/api/api-users-queries/edit-self";
 import { Alert } from "@/components/alert";
 import Button from "@/components/button";
 import Dialog from "@/components/dialog";
@@ -22,7 +17,7 @@ import Form from "@/components/form";
 import type { APIRequestError } from "@/core/errors/api-request-error";
 import type { Usuario } from "@/core/types/usuario";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
-import { queryClient, RQKeys } from "@/libs/react-query";
+import { useEditSelf } from "@/hooks/users/edit-self";
 import { SectionContainer } from "./section-container";
 
 type Props = {
@@ -75,13 +70,10 @@ function EditDialog({
   );
   const [descriptionError, setDescriptionError] = useState<string | null>(null);
 
-  const { isPending, mutate: editSelf } = useMutation({
-    mutationKey: RQKeys.user.editSelf(authUser?.id, completeUser),
+  const { isPending, mutate: editSelf } = useEditSelf({
+    authUser,
+    completeUser,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: RQKeys.user.findCompleteByUserUrl(authUser?.userUrl),
-      });
-
       toast.success("Descrição alterada.");
       setOpen(false);
     },
@@ -93,10 +85,6 @@ function EditDialog({
       }
 
       toast.error(error.message);
-    },
-    mutationFn: async (newData: EditSelfArgs) => {
-      await apiUsersQueries.editSelf(newData);
-      return;
     },
   });
 
