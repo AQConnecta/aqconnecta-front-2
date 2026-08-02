@@ -8,7 +8,7 @@ import { checkShouldRetry, ensureAuthUser } from "..";
 
 type Args = { authUser: Usuario | null };
 
-export const useFetchManyUniversities = ({ authUser }: Args) =>
+export const useFindUserEducation = ({ authUser }: Args) =>
   useQuery<FindUserEducationResponse, APIRequestError>({
     queryKey: RQKeys.education.listByUser(authUser?.id),
     queryFn: () => {
