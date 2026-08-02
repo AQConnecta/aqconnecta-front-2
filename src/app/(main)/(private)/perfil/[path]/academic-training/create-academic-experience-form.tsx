@@ -79,7 +79,7 @@ export function CreateAcademicExperienceFormDialog({
       },
       onError: (error: APIRequestError) => {
         if (error.body) {
-          console.log(error.body);
+          console.error(error.body);
           setServerErrors(error.body as ServerErrors);
         }
 
