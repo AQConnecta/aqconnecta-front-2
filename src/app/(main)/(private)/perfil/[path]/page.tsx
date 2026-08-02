@@ -63,6 +63,7 @@ export default function PerfilUsuario() {
             <AcademicTrainingSection
               completeUser={completeUser}
               userOwnsProfile={userOwnsProfile}
+              authUser={authUser}
             />
             <Experiences
               completeUser={completeUser}

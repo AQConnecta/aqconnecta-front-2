@@ -1,5 +1,6 @@
 import { GraduationCapIcon } from "@phosphor-icons/react/dist/ssr/GraduationCap";
 import { Alert } from "@/components/alert";
+import type { Usuario } from "@/core/types/usuario";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import type { FormacaoAcademica } from "@/core/types/value-objects/formacao-academica";
 import { SectionContainer } from "../section-container";
@@ -8,11 +9,13 @@ import { CreateAcademicExperienceFormDialog } from "./create-academic-experience
 type Props = {
   completeUser: UsuarioCompleto;
   userOwnsProfile: boolean;
+  authUser: Usuario | null;
 };
 
 export function AcademicTrainingSection({
   completeUser,
   userOwnsProfile,
+  authUser,
 }: Props) {
   const hasNoAcademicBackgronud = completeUser.formacoesAcademicas.length === 0;
 
@@ -37,7 +40,12 @@ export function AcademicTrainingSection({
       icon={GraduationCapIcon}
       title="Formação Acadêmica"
       shouldShowEditButton={userOwnsProfile}
-      actionContent={<CreateAcademicExperienceFormDialog />}
+      actionContent={
+        <CreateAcademicExperienceFormDialog
+          authUser={authUser}
+          completeUser={completeUser}
+        />
+      }
     >
       {content}
     </SectionContainer>
@@ -56,7 +64,7 @@ function AcademicTraining({ item }: { item: FormacaoAcademica }) {
   return (
     <div className="not-last-of-type:pb-3 not-first-of-type:mt-3">
       <p className="mb-1">
-        <span className="font-medium">{item.universidade.nomeInstituicao}</span>
+        <span className="font-medium">{item.universidade.nomeInstituicao}</span>{" "}
         - {item.descricao}
       </p>
       <span className="font-light">

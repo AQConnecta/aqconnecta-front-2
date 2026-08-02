@@ -2,12 +2,18 @@
 
 import { ScrollArea } from "@base-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useId } from "react";
+import { useEffect, useId, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import z from "zod";
+import type { BasicServerValidationErrors } from "@/api/types/server-responses/basic";
 import Button from "@/components/button";
 import Dialog from "@/components/dialog";
 import Form from "@/components/form";
+import type { APIRequestError } from "@/core/errors/api-request-error";
+import type { Usuario } from "@/core/types/usuario";
+import type { UsuarioCompleto } from "@/core/types/usuario-completo";
+import { useRegisterSelfEducation } from "@/hooks/education/register-self-education";
 import { SectionContainer } from "../section-container";
 import { UniversitiesCombobox } from "./universities-combobox";
 
@@ -39,12 +45,48 @@ export type CreateAcademicTrainingFormSchema = z.infer<
   typeof createAcademicTrainingFormSchema
 >;
 
-export function CreateAcademicExperienceFormDialog() {
+type ServerErrors = Omit<
+  BasicServerValidationErrors<CreateAcademicTrainingFormSchema>,
+  "universidade"
+> & { universidade?: { id?: string[] } };
+
+type Props = {
+  authUser: Usuario | null;
+  completeUser: UsuarioCompleto;
+};
+
+export function CreateAcademicExperienceFormDialog({
+  authUser,
+  completeUser,
+}: Props) {
   const formId = useId();
-  const { register, control, watch, setValue, handleSubmit, formState } =
+  const [isOpen, setIsOpen] = useState(false);
+  const [serverErrors, setServerErrors] = useState<ServerErrors | null>(null);
+
+  const { register, reset, control, watch, setValue, handleSubmit, formState } =
     useForm({
       resolver: zodResolver(createAcademicTrainingFormSchema),
     });
+
+  const { isPending, mutate: registerSelfEducation } = useRegisterSelfEducation(
+    {
+      authUser,
+      completeUser,
+      onSuccess: () => {
+        toast.success("Formação acadêmica adicionada.");
+        setIsOpen(false);
+        reset();
+      },
+      onError: (error: APIRequestError) => {
+        if (error.body) {
+          console.log(error.body);
+          setServerErrors(error.body as ServerErrors);
+        }
+
+        toast.error(error.message);
+      },
+    },
+  );
 
   const isAtualFormacao = watch("atualFormacao");
 
@@ -58,7 +100,7 @@ export function CreateAcademicExperienceFormDialog() {
   }, [isAtualFormacao, setValue]);
 
   return (
-    <Dialog.Root>
+    <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
       <Dialog.Trigger asChild>
         <SectionContainer.AddButton addButtonLabel="Adicionar nova formação acadêmica" />
       </Dialog.Trigger>
@@ -74,7 +116,7 @@ export function CreateAcademicExperienceFormDialog() {
               <form
                 id={formId}
                 className="flex flex-col gap-3"
-                onSubmit={handleSubmit((data) => console.log(data))}
+                onSubmit={handleSubmit((data) => registerSelfEducation(data))}
               >
                 <Controller
                   control={control}
@@ -82,7 +124,10 @@ export function CreateAcademicExperienceFormDialog() {
                   render={({ field, fieldState }) => (
                     <UniversitiesCombobox
                       {...field}
-                      errorMessage={fieldState.error?.message}
+                      errorMessage={
+                        fieldState.error?.message ??
+                        serverErrors?.universidade?.id?.[0]
+                      }
                       onSelectUniversity={(universityId) =>
                         field.onChange(universityId)
                       }
@@ -95,7 +140,10 @@ export function CreateAcademicExperienceFormDialog() {
                   label="Diploma"
                   placeholder="ex: Bacharelado em Ciência da Computação"
                   inputProps={register("diploma")}
-                  errorMessage={formState.errors.diploma?.message}
+                  errorMessage={
+                    formState.errors.diploma?.message ??
+                    serverErrors?.diploma?.[0]
+                  }
                 />
 
                 <Form.Input
@@ -106,7 +154,10 @@ export function CreateAcademicExperienceFormDialog() {
                   asChild
                   inputWrapperClassname="p-0"
                   inputProps={register("descricao")}
-                  errorMessage={formState.errors.descricao?.message}
+                  errorMessage={
+                    formState.errors.descricao?.message ??
+                    serverErrors?.descricao?.[0]
+                  }
                 >
                   <textarea className="p-3 resize-y" />
                 </Form.Input>
@@ -122,7 +173,10 @@ export function CreateAcademicExperienceFormDialog() {
                       {...props}
                       label="Formação atual"
                       onCheckedChange={onChange}
-                      errorMessage={fieldState.error?.message}
+                      errorMessage={
+                        fieldState.error?.message ??
+                        serverErrors?.atualFormacao?.[0]
+                      }
                     />
                   )}
                 />
@@ -138,7 +192,10 @@ export function CreateAcademicExperienceFormDialog() {
                         label="Data de início"
                         required
                         onDateChange={onChange}
-                        errorMessage={fieldState.error?.message}
+                        errorMessage={
+                          fieldState.error?.message ??
+                          serverErrors?.dataInicio?.[0]
+                        }
                       />
                     )}
                   />
@@ -152,7 +209,10 @@ export function CreateAcademicExperienceFormDialog() {
                         className="w-full"
                         label="Data de formação"
                         onDateChange={onChange}
-                        errorMessage={fieldState.error?.message}
+                        errorMessage={
+                          fieldState.error?.message ??
+                          serverErrors?.dataFim?.[0]
+                        }
                         disabled={watch("atualFormacao")}
                       />
                     )}
@@ -165,14 +225,16 @@ export function CreateAcademicExperienceFormDialog() {
 
         <Dialog.ActionsContainer>
           <Dialog.ActionsContainer.LeftArea>
-            <Dialog.Close asChild>
+            <Dialog.Close asChild disabled={isPending}>
               <Button.Root variant="outline">Cancelar</Button.Root>
             </Dialog.Close>
+
             <Button.Root
               variant="default"
               color="primary"
               type="submit"
               form={formId}
+              disabled={isPending}
             >
               Adicionar
             </Button.Root>
