@@ -26,12 +26,17 @@ export function AcademicTrainingSection({
     />
   ) : (
     <div className="divide-y divide-gray-200">
-      {completeUser.formacoesAcademicas.map((item) => (
-        <AcademicTraining
-          key={`user-profile-${completeUser.id}-academic-training-${item.id}`}
-          item={item}
-        />
-      ))}
+      {completeUser.formacoesAcademicas
+        .sort(
+          (a, b) =>
+            new Date(b.dataInicio).getTime() - new Date(a.dataInicio).getTime(),
+        )
+        .map((item) => (
+          <AcademicTraining
+            key={`user-profile-${completeUser.id}-academic-training-${item.id}`}
+            item={item}
+          />
+        ))}
     </div>
   );
 
