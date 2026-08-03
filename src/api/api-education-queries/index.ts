@@ -1,3 +1,4 @@
+import { deleteOwnEducation } from "./delete-own-education";
 import { findUserEducation } from "./find-user-education";
 import { registerSelfEducation } from "./register-self-education";
 
@@ -10,4 +11,5 @@ export function mountPath(endpoint: string): string {
 export default {
   findUserEducation,
   registerSelfEducation,
+  deleteOwnEducation,
 };
