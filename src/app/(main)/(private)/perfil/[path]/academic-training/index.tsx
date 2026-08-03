@@ -1,10 +1,13 @@
 import { GraduationCapIcon } from "@phosphor-icons/react/dist/ssr/GraduationCap";
+import { PencilIcon } from "@phosphor-icons/react/dist/ssr/Pencil";
 import { Alert } from "@/components/alert";
+import Button from "@/components/button";
 import type { Usuario } from "@/core/types/usuario";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import type { FormacaoAcademica } from "@/core/types/value-objects/formacao-academica";
 import { SectionContainer } from "../section-container";
 import { CreateAcademicExperienceFormDialog } from "./create-academic-experience-form";
+import { DeleteAcademicExperienceDialog } from "./delete-academic-experience";
 
 type Props = {
   completeUser: UsuarioCompleto;
@@ -33,8 +36,11 @@ export function AcademicTrainingSection({
         )
         .map((item) => (
           <AcademicTraining
-            key={`user-profile-${completeUser.id}-academic-training-${item.id}`}
             item={item}
+            authUser={authUser}
+            completeUser={completeUser}
+            userOwnsProfile={userOwnsProfile}
+            key={`user-profile-${completeUser.id}-academic-training-${item.id}`}
           />
         ))}
     </div>
@@ -59,7 +65,14 @@ export function AcademicTrainingSection({
 
 const dateFormatter = Intl.DateTimeFormat("pt-BR", { dateStyle: "medium" });
 
-function AcademicTraining({ item }: { item: FormacaoAcademica }) {
+function AcademicTraining({
+  item,
+  userOwnsProfile,
+  authUser,
+  completeUser,
+}: {
+  item: FormacaoAcademica;
+} & Props) {
   const startDate = dateFormatter.format(new Date(item.dataInicio));
   const endDate =
     item.atualFormacao || !item.dataFim
@@ -75,6 +88,22 @@ function AcademicTraining({ item }: { item: FormacaoAcademica }) {
       <span className="font-light">
         {startDate} - {endDate}
       </span>
+
+      {userOwnsProfile && (
+        <div className="flex justify-end items-center gap-2 mt-2">
+          <DeleteAcademicExperienceDialog
+            authUser={authUser}
+            completeUser={completeUser}
+            universidade={item.universidade}
+            diploma={item.diploma}
+            idFormacaoAcademica={item.id}
+          />
+
+          <Button.Root size="sm" variant="ghost">
+            <Button.Icon icon={PencilIcon} /> Editar
+          </Button.Root>
+        </div>
+      )}
     </div>
   );
 }
