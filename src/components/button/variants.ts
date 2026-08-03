@@ -57,7 +57,7 @@ const buttonVariants = cva(
         variant: "ghost",
         color: "default",
         class: [
-          "bg-black/0 text-foreground hover:bg-black/5 active:bg-black/10",
+          "bg-black/5 text-foreground hover:bg-black/10 active:bg-black/15",
           "ring-primary-300",
         ],
       },
@@ -73,7 +73,7 @@ const buttonVariants = cva(
         variant: "ghost",
         color: "destructive",
         class:
-          "bg-red-100 hover:bg-red-200 active:bg-red-300 ring-red-100 text-red-600",
+          "bg-red-100/25 hover:bg-red-100/75 active:bg-red-200 ring-red-100 text-red-600",
       },
       {
         variant: "outline",
