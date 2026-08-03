@@ -25,13 +25,19 @@ const createAcademicTrainingFormSchema = z.object({
   }),
   descricao: z.preprocess(
     (value) => value || undefined,
-    z.string("A descrição deve ser um texto."),
+    z.string("A descrição deve ser um texto.").max(100, {
+      error: ({ maximum }) =>
+        `A descrição deve ter no máximo ${maximum} caracteres.`,
+    }),
   ),
-  // TODO: verificar se aqui não deveria ser upload do diploma, e não apenas o link para o diploma
   diploma: z.preprocess(
     (value) => (value as string).trim() || undefined,
     z
       .string("Especifique o curso e o grau acadêmico em uma breve frase.")
+      .max(255, {
+        error: ({ maximum }) =>
+          `O campo diploma deve ter no máximo ${maximum} caracteres.`,
+      })
       .optional(),
   ),
   dataInicio: z.date("A data de início é inválida."),
