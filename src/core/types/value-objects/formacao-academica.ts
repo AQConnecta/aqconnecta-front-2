@@ -7,5 +7,5 @@ export type FormacaoAcademica = {
   diploma?: string | null;
   dataInicio: Date | string;
   dataFim?: Date | string | null;
-  atualFormacao?: boolean | null;
+  corrente?: boolean | null;
 };

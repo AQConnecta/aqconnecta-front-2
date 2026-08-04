@@ -75,7 +75,7 @@ function AcademicTraining({
 } & Props) {
   const startDate = dateFormatter.format(new Date(item.dataInicio));
   const endDate =
-    item.atualFormacao || !item.dataFim
+    item.corrente || !item.dataFim
       ? "Presente"
       : dateFormatter.format(new Date(item.dataFim));
 
