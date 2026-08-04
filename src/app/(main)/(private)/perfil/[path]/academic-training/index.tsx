@@ -1,13 +1,12 @@
 import { GraduationCapIcon } from "@phosphor-icons/react/dist/ssr/GraduationCap";
-import { PencilIcon } from "@phosphor-icons/react/dist/ssr/Pencil";
 import { Alert } from "@/components/alert";
-import Button from "@/components/button";
 import type { Usuario } from "@/core/types/usuario";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import type { FormacaoAcademica } from "@/core/types/value-objects/formacao-academica";
 import { SectionContainer } from "../section-container";
 import { CreateAcademicExperienceFormDialog } from "./create-academic-experience-form";
 import { DeleteAcademicExperienceDialog } from "./delete-academic-experience";
+import { EditAcademicExperienceFormDialog } from "./edit-academic-experience-form";
 
 type Props = {
   completeUser: UsuarioCompleto;
@@ -100,9 +99,11 @@ function AcademicTraining({
             idFormacaoAcademica={item.id}
           />
 
-          <Button.Root size="sm" variant="ghost">
-            <Button.Icon icon={PencilIcon} /> Editar
-          </Button.Root>
+          <EditAcademicExperienceFormDialog
+            authUser={authUser}
+            completeUser={completeUser}
+            formacaoAcademica={item}
+          />
         </div>
       )}
     </div>
