@@ -56,7 +56,8 @@ export class APIRequestError<ErrorBody = never> extends Error {
     if (
       errorResponseStatus &&
       [400, 422].includes(errorResponseStatus) &&
-      "data" in (error.response?.data ?? {})
+      "data" in (error.response?.data ?? {}) &&
+      error?.response?.data?.data !== null
     ) {
       return new APIRequestError<ErrorBody>(
         "Erros de validação encontrados.",
