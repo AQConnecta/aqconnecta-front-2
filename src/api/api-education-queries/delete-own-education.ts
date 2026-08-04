@@ -7,9 +7,7 @@ import { mountPath } from ".";
 export type DeleteOwnEducationResponse = BasicServerResponse<
   never,
   | HttpStatusCode.Unauthorized
-  | HttpStatusCode.Forbidden
   | HttpStatusCode.Ok
-  | HttpStatusCode.NotFound
   | HttpStatusCode.InternalServerError
 >;
 
