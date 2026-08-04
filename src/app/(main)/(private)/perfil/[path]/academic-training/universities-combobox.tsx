@@ -102,7 +102,9 @@ export const UniversitiesCombobox = memo(
         name={name}
         disabled={disabled}
         required={required}
-        value={universityId ? universityToNameMap.get(universityId) : undefined}
+        defaultValue={
+          universityId ? universityToNameMap.get(universityId) : undefined
+        }
         virtualized
         items={universities!}
         open={open}
