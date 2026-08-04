@@ -5,8 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useId, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import z from "zod";
-import type { BasicServerValidationErrors } from "@/api/types/server-responses/basic";
 import Button from "@/components/button";
 import Dialog from "@/components/dialog";
 import Form from "@/components/form";
@@ -15,46 +13,11 @@ import type { Usuario } from "@/core/types/usuario";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import { useRegisterSelfEducation } from "@/hooks/education/register-self-education";
 import { SectionContainer } from "../section-container";
+import {
+  type AcademicTrainingServerErrors,
+  academicTrainingFormSchema,
+} from "./schema";
 import { UniversitiesCombobox } from "./universities-combobox";
-
-const createAcademicTrainingFormSchema = z.object({
-  universidade: z.object({
-    id: z.uuid(
-      "É necessário selecionar uma universidade dentre as disponíveis.",
-    ),
-  }),
-  descricao: z.preprocess(
-    (value) => value || undefined,
-    z.string("A descrição deve ser um texto.").max(100, {
-      error: ({ maximum }) =>
-        `A descrição deve ter no máximo ${maximum} caracteres.`,
-    }),
-  ),
-  diploma: z.preprocess(
-    (value) => (value as string).trim() || undefined,
-    z
-      .string("Especifique o curso e o grau acadêmico em uma breve frase.")
-      .max(255, {
-        error: ({ maximum }) =>
-          `O campo diploma deve ter no máximo ${maximum} caracteres.`,
-      })
-      .optional(),
-  ),
-  dataInicio: z.date("A data de início é inválida."),
-  dataFim: z.date("A data de encerramento é inválida.").optional(),
-  atualFormacao: z
-    .boolean("A formação atual deve ser sinalizada por um valor booleano.")
-    .default(false),
-});
-
-export type CreateAcademicTrainingFormSchema = z.infer<
-  typeof createAcademicTrainingFormSchema
->;
-
-type ServerErrors = Omit<
-  BasicServerValidationErrors<CreateAcademicTrainingFormSchema>,
-  "universidade"
-> & { universidade?: { id?: string[] } };
 
 type Props = {
   authUser: Usuario | null;
@@ -67,11 +30,12 @@ export function CreateAcademicExperienceFormDialog({
 }: Props) {
   const formId = useId();
   const [isOpen, setIsOpen] = useState(false);
-  const [serverErrors, setServerErrors] = useState<ServerErrors | null>(null);
+  const [serverErrors, setServerErrors] =
+    useState<AcademicTrainingServerErrors | null>(null);
 
   const { register, reset, control, watch, setValue, handleSubmit, formState } =
     useForm({
-      resolver: zodResolver(createAcademicTrainingFormSchema),
+      resolver: zodResolver(academicTrainingFormSchema),
     });
 
   const { isPending, mutate: registerSelfEducation } = useRegisterSelfEducation(
@@ -86,7 +50,7 @@ export function CreateAcademicExperienceFormDialog({
       onError: (error: APIRequestError) => {
         if (error.body) {
           console.error(error.body);
-          setServerErrors(error.body as ServerErrors);
+          setServerErrors(error.body as AcademicTrainingServerErrors);
         }
 
         toast.error(error.message);

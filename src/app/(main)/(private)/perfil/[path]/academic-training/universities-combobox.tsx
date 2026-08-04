@@ -16,7 +16,7 @@ import Form from "@/components/form";
 import type { Universidade } from "@/core/types/universidade";
 import { useFetchManyUniversities } from "@/hooks/universities/fetch-many-universities";
 import { useAuth } from "@/stores/auth";
-import type { CreateAcademicTrainingFormSchema } from "./create-academic-experience-form";
+import type { AcademicTrainingFormSchema } from "./schema";
 
 type Props = {
   onSelectUniversity: (universityId: string) => void;
@@ -24,7 +24,7 @@ type Props = {
   universityId?: string;
   required?: boolean;
 } & Omit<
-  ControllerRenderProps<CreateAcademicTrainingFormSchema, "universidade.id">,
+  ControllerRenderProps<AcademicTrainingFormSchema, "universidade.id">,
   "value" | "onChange"
 >;
 
