@@ -39,7 +39,7 @@ export function DeleteAcademicExperienceDialog({
       setIsOpen(false);
     },
     onError: (error: APIRequestError) => {
-      if (error.body) console.log(error.body);
+      if (error.body) console.error(error.body);
       toast.error(error.message);
     },
   });
