@@ -1,4 +1,5 @@
 import { deleteOwnEducation } from "./delete-own-education";
+import { editOwnEducation } from "./edit-own-education";
 import { findUserEducation } from "./find-user-education";
 import { registerSelfEducation } from "./register-self-education";
 
@@ -12,4 +13,5 @@ export default {
   findUserEducation,
   registerSelfEducation,
   deleteOwnEducation,
+  editOwnEducation,
 };
