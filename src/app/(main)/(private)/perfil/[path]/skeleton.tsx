@@ -16,7 +16,7 @@ export function Skeleton() {
   );
 }
 
-function SectionSkeleton({
+export function SectionSkeleton({
   className,
   titleChars = 24,
 }: {
