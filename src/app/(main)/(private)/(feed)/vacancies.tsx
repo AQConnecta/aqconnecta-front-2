@@ -76,6 +76,11 @@ export function Vacancies() {
     <VacanciesContainer>
       {queryResult.data.map((vacancy) => {
         const isUserThePublisher = user?.id === vacancy.publicador.id;
+        const isExpired = Boolean(
+          vacancy.dataLimiteCandidatura &&
+            new Date(vacancy.dataLimiteCandidatura) < new Date(),
+        );
+
         return (
           <VacancyCard.Root key={`vacancy-card-${vacancy.id}`}>
             <VacancyCard.Header
@@ -87,6 +92,7 @@ export function Vacancies() {
             />
             <VacancyCard.Details
               acceptsBeginners={vacancy.isIniciante}
+              isExpired={isExpired}
               isRemote={vacancy.aceitaRemoto}
               locale={vacancy.localDaVaga}
             />
