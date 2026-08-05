@@ -1,22 +1,22 @@
-import Link from "next/link";
 import Avatar from "@/components/avatar";
-import { Routes } from "@/core/routes";
 import type { Usuario } from "@/core/types/usuario";
 
 type Props = {
   user: Usuario;
+  onGoToUserProfile: (user: Usuario) => void;
 };
 
-export function CandidatureCardAvatar({ user }: Props) {
+export function CandidatureCardAvatar({ user, onGoToUserProfile }: Props) {
   return (
-    <Link
-      className="[grid-area:avatar]"
-      href={Routes.users.profile(user.userUrl)}
+    <button
+      className="[grid-area:avatar] self-start"
+      onClick={() => onGoToUserProfile(user)}
+      type="button"
     >
       <Avatar.Root>
         <Avatar.Fallback name={user.nome} />
         <Avatar.Image src={user.fotoPerfil} />
       </Avatar.Root>
-    </Link>
+    </button>
   );
 }

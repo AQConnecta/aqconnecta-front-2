@@ -1,33 +1,41 @@
 import { ArrowSquareOutIcon } from "@phosphor-icons/react/dist/ssr/ArrowSquareOut";
 import { EnvelopeIcon } from "@phosphor-icons/react/dist/ssr/Envelope";
-import Link from "next/link";
 import { Badge } from "@/components/badge";
 import Button from "@/components/button";
-import { Routes } from "@/core/routes";
+import type { Usuario } from "@/core/types/usuario";
 import type { Candidatura } from "@/core/types/value-objects/candidatura";
 
 type Props = {
   candidature: Candidatura;
+  onGoToUserProfile: (user: Usuario) => void;
 };
 
-export function CandidatureCardContent({ candidature }: Props) {
+export function CandidatureCardContent({
+  candidature,
+  onGoToUserProfile,
+}: Props) {
   return (
     <div className="[grid-area:content]">
       <div className="flex items-center justify-between gap-3 mb-1">
-        <Link
+        <button
           className="text-base font-medium hover:text-primary-800"
-          href={Routes.users.profile(candidature.usuario.userUrl)}
+          onClick={() => onGoToUserProfile(candidature.usuario)}
+          type="button"
         >
           {candidature.usuario.nome}
-        </Link>
+        </button>
 
-        <Button.Root asChild variant="outline" size="sm">
-          <Link href={Routes.users.profile(candidature.usuario.userUrl)}>
-            <Button.Icon icon={ArrowSquareOutIcon} />
-            Ver perfil
-          </Link>
+        <Button.Root
+          variant="outline"
+          size="sm"
+          onClick={() => onGoToUserProfile(candidature.usuario)}
+          type="button"
+        >
+          <Button.Icon icon={ArrowSquareOutIcon} />
+          Ver perfil
         </Button.Root>
       </div>
+
       {candidature.usuario.descricao && (
         <p className="text-sm text-gray-700 mb-3">
           {candidature.usuario.descricao}
