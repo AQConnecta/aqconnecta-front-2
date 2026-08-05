@@ -6,9 +6,13 @@ import type { PresentedVacancy } from "@/api/types/presented-vacancy";
 import { CandidatureFormSkeleton } from "@/app/(main)/(private)/candidaturas/[vacancyId]/candidatar/candidature-form-skeleton";
 import { Alert } from "@/components/alert";
 import Dialog from "@/components/dialog";
+import { Routes } from "@/core/routes";
+import type { Usuario } from "@/core/types/usuario";
 import { useFetchVacancyCandidatures } from "@/hooks/vacancies/fetch-vacancy-candidatures";
 import CandidatureCard from "@/ui/candidature-card";
 import { DialogHeader } from "./dialog-header";
+
+const DIALOG_CLOSE_ANIMATION_DURATION_MS = 200;
 
 type Props = {
   vacancyId: PresentedVacancy["id"];
@@ -17,6 +21,13 @@ type Props = {
 export function ViewCandidaturesDialog({ vacancyId }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+
+  const onGoToUserProfile = (user: Usuario) => {
+    setIsOpen(false);
+    setTimeout(() => {
+      router.push(Routes.users.profile(user.userUrl));
+    }, DIALOG_CLOSE_ANIMATION_DURATION_MS);
+  };
 
   const {
     data: response,
@@ -40,8 +51,14 @@ export function ViewCandidaturesDialog({ vacancyId }: Props) {
                 <CandidatureCard.Root
                   key={`vacancy-${vacancyId}-candidature-${candidature.id}`}
                 >
-                  <CandidatureCard.Content candidature={candidature} />
-                  <CandidatureCard.Avatar user={candidature.usuario} />
+                  <CandidatureCard.Content
+                    candidature={candidature}
+                    onGoToUserProfile={onGoToUserProfile}
+                  />
+                  <CandidatureCard.Avatar
+                    user={candidature.usuario}
+                    onGoToUserProfile={onGoToUserProfile}
+                  />
                 </CandidatureCard.Root>
               ))}
             </div>
@@ -83,7 +100,8 @@ export function ViewCandidaturesDialog({ vacancyId }: Props) {
       open={isOpen}
       onOpenChange={(open) => {
         setIsOpen(open);
-        if (!open) setTimeout(() => router.back(), 200);
+        if (!open)
+          setTimeout(() => router.back(), DIALOG_CLOSE_ANIMATION_DURATION_MS);
       }}
     >
       <Dialog.Container className="w-full max-w-lg">{content}</Dialog.Container>

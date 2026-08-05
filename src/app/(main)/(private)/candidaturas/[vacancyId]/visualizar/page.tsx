@@ -1,11 +1,13 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import type { ReactElement } from "react";
 import { Alert } from "@/components/alert";
 import Button from "@/components/button";
 import { Heading } from "@/components/heading";
 import { Main } from "@/components/main";
+import { Routes } from "@/core/routes";
+import type { Usuario } from "@/core/types/usuario";
 import { useFetchVacancyCandidatures } from "@/hooks/vacancies/fetch-vacancy-candidatures";
 import { useFindVacancyById } from "@/hooks/vacancies/find-by-id";
 import CandidatureCard from "@/ui/candidature-card";
@@ -29,7 +31,13 @@ export default function ViewCandidatures() {
 type CandidaturesProps = {
   query: ReturnType<typeof useFetchVacancyCandidatures>;
 };
+
 function Candidatures({ query }: CandidaturesProps) {
+  const router = useRouter();
+
+  const onGoToUserProfile = (user: Usuario) =>
+    router.push(Routes.users.profile(user.userUrl));
+
   if (query.status === "error") {
     return <Alert variant="danger" content={query.error.message} />;
   }
@@ -53,8 +61,14 @@ function Candidatures({ query }: CandidaturesProps) {
           className="card p-4 py-5"
           key={`candidature-${candidature.id}-card-for-${candidature.usuario.id}`}
         >
-          <CandidatureCard.Avatar user={candidature.usuario} />
-          <CandidatureCard.Content candidature={candidature} />
+          <CandidatureCard.Avatar
+            user={candidature.usuario}
+            onGoToUserProfile={onGoToUserProfile}
+          />
+          <CandidatureCard.Content
+            candidature={candidature}
+            onGoToUserProfile={onGoToUserProfile}
+          />
         </CandidatureCard.Root>
       ));
     } else {
