@@ -23,7 +23,7 @@ export function SectionContainer({
   return (
     <section className="card">
       <header className="flex items-center gap-2 mb-4">
-        <I size={20} weight="bold" />
+        <I size={20} weight="fill" className="text-primary-600" />
         <Heading level={3} as="h2">
           {title}
         </Heading>
