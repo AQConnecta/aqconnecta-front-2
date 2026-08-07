@@ -1,4 +1,5 @@
 import { listUsersExperiences } from "./list-users-experiences";
+import { registerOwnExperience } from "./register-own-experience";
 
 const prefix = "/experiencia";
 
@@ -7,4 +8,4 @@ export function mountPath(endpoint: string): string {
   return `${prefix}/${endpoint}`;
 }
 
-export default { listUsersExperiences };
+export default { listUsersExperiences, registerOwnExperience };
