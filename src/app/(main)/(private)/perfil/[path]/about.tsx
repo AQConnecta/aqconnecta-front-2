@@ -47,7 +47,7 @@ export function About({ completeUser, authUser, userOwnsProfile }: Props) {
       authUser={authUser}
       completeUser={completeUser}
     >
-      <p className="whitespace-pre-wrap">{completeUser.descricao}</p>
+      <p className="user-text-area">{completeUser.descricao}</p>
     </Wrapper>
   );
 }

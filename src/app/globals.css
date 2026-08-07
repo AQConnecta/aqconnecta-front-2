@@ -126,3 +126,7 @@ a {
 
   @apply max-small-width:leading-4 small-width:leading-tight;
 }
+
+@utility user-text-area {
+  @apply whitespace-pre-wrap break-all;
+}

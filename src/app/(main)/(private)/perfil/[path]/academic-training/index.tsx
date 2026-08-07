@@ -84,7 +84,7 @@ function AcademicTraining({
         <span className="font-medium">{item.universidade.nomeInstituicao}</span>
         {item.diploma && ` - ${item.diploma}`}
       </p>
-      <p className="text-balance whitespace-pre-wrap">{item.descricao}</p>
+      <p className="text-balance user-text-area">{item.descricao}</p>
       <span className="font-light">
         {startDate} - {endDate}
       </span>

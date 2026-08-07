@@ -23,7 +23,7 @@ export function Experience({ experience }: { experience: Experiencia }) {
         </li>
       </ul>
 
-      <p>{experience.descricao}</p>
+      <p className="user-text-area">{experience.descricao}</p>
     </div>
   );
 }
