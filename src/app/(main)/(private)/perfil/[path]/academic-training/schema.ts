@@ -24,8 +24,42 @@ export const academicTrainingFormSchema = z.object({
       })
       .optional(),
   ),
-  dataInicio: z.date("A data de início é inválida."),
-  dataFim: z.date("A data de encerramento é inválida.").optional(),
+  dataInicio: z
+    .union([z.string(), z.date()])
+    .superRefine((value, ctx) => {
+      if (!value) {
+        ctx.addIssue({
+          code: "invalid_type",
+          message: "A data de início é obrigatória.",
+          expected: "date",
+        });
+        return;
+      }
+
+      if (!(value instanceof Date) || Number.isNaN(value.getTime())) {
+        ctx.addIssue({
+          code: "invalid_type",
+          message: "A data de início fornecida é inválida.",
+          expected: "date",
+        });
+      }
+    })
+    .transform((value) => value as Date),
+  dataFim: z
+    .union([z.string(), z.date()])
+    .optional()
+    .superRefine((value, ctx) => {
+      if (value === undefined || value === "") return;
+
+      if (!(value instanceof Date) || Number.isNaN(value.getTime())) {
+        ctx.addIssue({
+          code: "invalid_type",
+          message: "A data de término fornecida é inválida.",
+          expected: "date",
+        });
+      }
+    })
+    .transform((value) => value as Date),
   atualFormacao: z
     .boolean("A formação atual deve ser sinalizada por um valor booleano.")
     .default(false),

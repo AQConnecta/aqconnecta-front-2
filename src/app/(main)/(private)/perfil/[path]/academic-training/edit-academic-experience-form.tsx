@@ -78,7 +78,7 @@ export function EditAcademicExperienceFormDialog({
   useEffect(() => {
     if (!isAtualFormacao) return;
 
-    setValue("dataFim", undefined, {
+    setValue("dataFim", "" as unknown as Date, {
       shouldValidate: true,
       shouldDirty: true,
     });
