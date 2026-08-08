@@ -1,18 +1,25 @@
 import { ReadCvLogoIcon } from "@phosphor-icons/react/dist/ssr/ReadCvLogo";
 import type { ReactElement } from "react";
 import { Alert } from "@/components/alert";
+import type { Usuario } from "@/core/types/usuario";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import { useListUsersExperiences } from "@/hooks/experiences/list-users-experiences";
 import { SectionContainer } from "../section-container";
 import { SectionSkeleton } from "../skeleton";
+import { CreateExperienceFormDialog } from "./create-experience-form";
 import { Experience } from "./experience-card";
 
 type Props = {
+  authUser: Usuario | null;
   completeUser: UsuarioCompleto;
   userOwnsProfile: boolean;
 };
 
-export function Experiences({ completeUser, userOwnsProfile }: Props) {
+export function ExperiencesSection({
+  completeUser,
+  userOwnsProfile,
+  authUser,
+}: Props) {
   const { error, isError, isLoading, data } = useListUsersExperiences({
     userId: completeUser.id,
   });
@@ -41,6 +48,7 @@ export function Experiences({ completeUser, userOwnsProfile }: Props) {
           <Experience
             key={`user-profile-${completeUser.id}-experiences-${experience.id}`}
             experience={experience}
+            userOwnsProfile={userOwnsProfile}
           />
         ))}
       </div>
@@ -53,7 +61,10 @@ export function Experiences({ completeUser, userOwnsProfile }: Props) {
       title="Experiências"
       shouldShowEditButton={userOwnsProfile}
       actionContent={
-        <SectionContainer.EditButton editButtonLabel="Editar suas experiências acadêmicas e/ou profissionalizantes" />
+        <CreateExperienceFormDialog
+          authUser={authUser}
+          completeUser={completeUser}
+        />
       }
     >
       {content}

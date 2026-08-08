@@ -9,7 +9,7 @@ import { useAuth } from "@/stores/auth";
 import { About } from "./about";
 import { AcademicTrainingSection } from "./academic-training";
 import { Competences } from "./competences";
-import { Experiences } from "./experiences";
+import { ExperiencesSection } from "./experiences";
 import { Skeleton } from "./skeleton";
 import { Summary } from "./summary";
 
@@ -65,7 +65,8 @@ export default function PerfilUsuario() {
               userOwnsProfile={userOwnsProfile}
               authUser={authUser}
             />
-            <Experiences
+            <ExperiencesSection
+              authUser={authUser}
               completeUser={completeUser}
               userOwnsProfile={userOwnsProfile}
             />
