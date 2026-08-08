@@ -2,7 +2,7 @@
 
 import { CalendarIcon } from "@phosphor-icons/react/dist/ssr/Calendar";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useEffectEvent, useMemo } from "react";
 import Popover from "@/components/popover";
 import { Calendar } from "../calendar";
 import IconButton from "../icon-button";
@@ -10,7 +10,7 @@ import { FormErrorMessage } from "./error-message";
 import { FormLabel } from "./label";
 
 function formatDate(date: Date | undefined) {
-  if (!date) return "";
+  if (!date || !isValidDate(date)) return "";
 
   return date.toLocaleDateString("pt-BR", {
     day: "2-digit",
@@ -47,8 +47,24 @@ function parseDateBR(dateString: string): Date | undefined {
   return undefined;
 }
 
-function isValidDate(date: Date | undefined) {
-  return !!date && !Number.isNaN(date.getTime());
+/**
+ * Validates and parses external date (coming through `value` property).
+ */
+function toSafeExternalDate(
+  value: Date | string | undefined,
+): Date | undefined {
+  if (isValidDate(value)) return value;
+
+  if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}/.test(value)) {
+    const parsed = new Date(value);
+    if (isValidDate(parsed)) return parsed;
+  }
+
+  return undefined;
+}
+
+function isValidDate(date: unknown): date is Date {
+  return date instanceof Date && !Number.isNaN(new Date(date).getTime());
 }
 
 type Props = {
@@ -60,9 +76,9 @@ type Props = {
   placeholder?: string;
   errorMessage?: string;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-  onDateChange?: (date: Date | undefined) => void;
+  onDateChange?: (date: Date | string | undefined) => void;
   ref?: React.RefCallback<HTMLInputElement>;
-  value?: Date;
+  value?: Date | string;
 };
 
 const today = formatDate(new Date());
@@ -81,34 +97,54 @@ export function FormDatePickerInput({
   value,
 }: Props) {
   const dataPickerId = React.useId();
-  const resolvedDataPickerId = dataPickerId;
+  const safeValue = useMemo(() => toSafeExternalDate(value), [value]);
 
   const [open, setOpen] = React.useState(false);
-  const [month, setMonth] = React.useState<Date | undefined>(value);
-  const [inputValue, setInputValue] = React.useState(formatDate(value));
+  const [month, setMonth] = React.useState<Date | undefined>(safeValue);
+  const [inputValue, setInputValue] = React.useState(
+    safeValue ? formatDate(safeValue) : ((value as string | undefined) ?? ""),
+  );
 
-  const maybeUpdateDateDueToValueChange = React.useEffectEvent(
-    (newDate: Date | undefined) => {
-      const currentParsedDate = parseDateBR(inputValue);
+  const lastEmittedRef = React.useRef<Date | string | undefined>(value);
 
-      if (newDate?.getTime() !== currentParsedDate?.getTime()) {
-        setInputValue(formatDate(newDate));
-      }
+  const emit = (next: Date | string | undefined) => {
+    lastEmittedRef.current = next;
+    onDateChange?.(next);
+  };
 
-      if (isValidDate(newDate)) {
-        setMonth(newDate);
+  const maybeUpdateDateDueToExternalChange = useEffectEvent(
+    (
+      externalValue: Date | string | undefined,
+      resolvedDate: Date | undefined,
+    ) => {
+      if (resolvedDate) {
+        setInputValue(formatDate(resolvedDate));
+        setMonth(resolvedDate);
+      } else if (externalValue === undefined) {
+        setInputValue("");
+      } else if (typeof externalValue === "string") {
+        setInputValue(externalValue);
       }
     },
   );
 
   useEffect(() => {
-    maybeUpdateDateDueToValueChange(value);
-  }, [value]);
+    const isEcho =
+      value === lastEmittedRef.current ||
+      (isValidDate(value) &&
+        isValidDate(lastEmittedRef.current) &&
+        value.getTime() === (lastEmittedRef.current as Date).getTime());
+
+    if (isEcho) return;
+
+    lastEmittedRef.current = value;
+    maybeUpdateDateDueToExternalChange(value, safeValue);
+  }, [value, safeValue]);
 
   return (
     <div className={className}>
       <FormLabel
-        htmlFor={resolvedDataPickerId}
+        htmlFor={dataPickerId}
         required={required}
         className="block mb-1"
       >
@@ -118,7 +154,7 @@ export function FormDatePickerInput({
       <div className="input-wrapper gap-2.5 has-autofill:bg-primary-200">
         <input
           name={name}
-          id={resolvedDataPickerId}
+          id={dataPickerId}
           value={inputValue}
           placeholder={placeholder}
           className="input-inner"
@@ -130,9 +166,13 @@ export function FormDatePickerInput({
             setInputValue(e.target.value);
 
             const parsedDate = parseDateBR(rawDate);
-            onDateChange?.(parsedDate);
 
-            if (isValidDate(parsedDate)) setMonth(parsedDate);
+            if (parsedDate) {
+              emit(parsedDate);
+              setMonth(parsedDate);
+            } else {
+              emit(rawDate);
+            }
           }}
           onKeyDown={(e) => {
             if (e.key === "ArrowDown") {
@@ -164,12 +204,12 @@ export function FormDatePickerInput({
             <Calendar
               disabled={disabled}
               mode="single"
-              selected={value}
+              selected={safeValue}
               month={month}
               onMonthChange={setMonth}
               onSelect={(date) => {
                 setInputValue(formatDate(date));
-                onDateChange?.(date);
+                emit(date);
                 setOpen(false);
               }}
             />
