@@ -18,7 +18,7 @@ type Props = {
   userOwnsProfile: boolean;
 };
 
-export function Summary({ completeUser, userOwnsProfile }: Props) {
+export function SummarySection({ completeUser, userOwnsProfile }: Props) {
   const firstAddress: Endereco | undefined = completeUser.enderecos[0];
 
   const authUserIsAdmin = useAuth((state) => state.userIsAdmin());

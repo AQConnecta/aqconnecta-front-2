@@ -26,7 +26,11 @@ type Props = {
   userOwnsProfile: boolean;
 };
 
-export function About({ completeUser, authUser, userOwnsProfile }: Props) {
+export function AboutSection({
+  completeUser,
+  authUser,
+  userOwnsProfile,
+}: Props) {
   if (!completeUser.descricao && userOwnsProfile) {
     return (
       <Wrapper

@@ -6,12 +6,12 @@ import { Alert } from "@/components/alert";
 import { Main } from "@/components/main";
 import { useGetUserProfile } from "@/hooks/users/get-user-profile";
 import { useAuth } from "@/stores/auth";
-import { About } from "./about";
+import { AboutSection } from "./about";
 import { AcademicTrainingSection } from "./academic-training";
-import { Competences } from "./competences";
+import { CompetencesSection } from "./competences";
 import { ExperiencesSection } from "./experiences";
 import { Skeleton } from "./skeleton";
-import { Summary } from "./summary";
+import { SummarySection } from "./summary";
 
 type Params = {
   path: string;
@@ -44,18 +44,18 @@ export default function PerfilUsuario() {
       content = (
         <div className="flex gap-4 max-small-width:flex-col">
           <div className="w-full medium-width:max-w-3xs flex flex-col gap-4 min-w-0">
-            <Summary
+            <SummarySection
               completeUser={completeUser}
               userOwnsProfile={userOwnsProfile}
             />
-            <Competences
+            <CompetencesSection
               completeUser={completeUser}
               userOwnsProfile={userOwnsProfile}
             />
           </div>
 
           <div className="flex flex-col w-full gap-4 min-w-0">
-            <About
+            <AboutSection
               authUser={authUser}
               completeUser={completeUser}
               userOwnsProfile={userOwnsProfile}

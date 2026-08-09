@@ -10,7 +10,7 @@ type Props = {
   userOwnsProfile: boolean;
 };
 
-export function Competences({ completeUser, userOwnsProfile }: Props) {
+export function CompetencesSection({ completeUser, userOwnsProfile }: Props) {
   const hasNoCompetences = completeUser.competencias.length === 0;
 
   if (userOwnsProfile && hasNoCompetences) {
