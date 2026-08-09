@@ -47,7 +47,9 @@ export function ExperiencesSection({
         {experiences.map((experience) => (
           <Experience
             key={`user-profile-${completeUser.id}-experiences-${experience.id}`}
+            authUser={authUser}
             experience={experience}
+            completeUser={completeUser}
             userOwnsProfile={userOwnsProfile}
           />
         ))}

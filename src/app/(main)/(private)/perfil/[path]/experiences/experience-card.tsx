@@ -1,14 +1,26 @@
 import { PencilIcon } from "@phosphor-icons/react/dist/ssr/Pencil";
-import { TrashIcon } from "@phosphor-icons/react/dist/ssr/Trash";
 import Button from "@/components/button";
 import { Heading } from "@/components/heading";
+import type { Usuario } from "@/core/types/usuario";
+import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import type { Experiencia } from "@/core/types/value-objects/experiencia";
+import { DeleteExperienceDialog } from "./delete-experience";
 
 const formatter = Intl.DateTimeFormat("pt-BR", { dateStyle: "medium" });
 
-type Props = { experience: Experiencia; userOwnsProfile: boolean };
+type Props = {
+  experience: Experiencia;
+  userOwnsProfile: boolean;
+  authUser: Usuario | null;
+  completeUser: UsuarioCompleto;
+};
 
-export function Experience({ experience, userOwnsProfile }: Props) {
+export function Experience({
+  authUser,
+  experience,
+  completeUser,
+  userOwnsProfile,
+}: Props) {
   const startDate = formatter.format(new Date(experience.dataInicio));
   const endDate =
     experience.atualExperiencia || !experience.dataFim
@@ -32,9 +44,12 @@ export function Experience({ experience, userOwnsProfile }: Props) {
 
       {userOwnsProfile && (
         <div className="mt-2 flex items-center justify-end gap-2">
-          <Button.Root size="sm" variant="ghost" color="destructive">
-            <Button.Icon icon={TrashIcon} /> Excluir
-          </Button.Root>
+          <DeleteExperienceDialog
+            authUser={authUser}
+            completeUser={completeUser}
+            experienceId={experience.id}
+            title={experience.titulo}
+          />
 
           <Button.Root size="sm" variant="ghost">
             <Button.Icon icon={PencilIcon} /> Editar

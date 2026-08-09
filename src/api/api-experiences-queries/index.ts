@@ -1,3 +1,4 @@
+import { deleteOwnExperience } from "./delete-own-experience";
 import { listUsersExperiences } from "./list-users-experiences";
 import { registerOwnExperience } from "./register-own-experience";
 
@@ -8,4 +9,8 @@ export function mountPath(endpoint: string): string {
   return `${prefix}/${endpoint}`;
 }
 
-export default { listUsersExperiences, registerOwnExperience };
+export default {
+  listUsersExperiences,
+  registerOwnExperience,
+  deleteOwnExperience,
+};
