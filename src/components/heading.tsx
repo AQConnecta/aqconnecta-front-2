@@ -16,7 +16,7 @@ export function Heading({
   return (
     <Element
       className={clsx(
-        "text-foreground max-xs-width:text-sm",
+        "text-foreground max-xs-width:text-sm wrap-break-word",
         level === 1 && "text-xl font-bold",
         level === 2 && "text-xl font-semibold",
         level === 3 && "text-lg font-semibold",

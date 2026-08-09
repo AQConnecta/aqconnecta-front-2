@@ -43,7 +43,7 @@ export default function PerfilUsuario() {
 
       content = (
         <div className="flex gap-4 max-small-width:flex-col">
-          <div className="w-full medium-width:max-w-3xs flex flex-col gap-4">
+          <div className="w-full medium-width:max-w-3xs flex flex-col gap-4 min-w-0">
             <Summary
               completeUser={completeUser}
               userOwnsProfile={userOwnsProfile}
@@ -54,7 +54,7 @@ export default function PerfilUsuario() {
             />
           </div>
 
-          <div className="flex flex-col w-full gap-4">
+          <div className="flex flex-col w-full gap-4 min-w-0">
             <About
               authUser={authUser}
               completeUser={completeUser}
