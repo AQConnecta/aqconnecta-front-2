@@ -61,7 +61,7 @@ export function DeleteAcademicExperienceDialog({
         <ScrollArea.Root className="relative flex-1 min-h-0 overflow-hidden flex flex-col ">
           <ScrollArea.Viewport className="flex-1 min-h-0 overflow-y-auto p-1">
             <ScrollArea.Content className="">
-              <p className="text-balance">
+              <p>
                 Você tem certeza que deseja remover sua formação acadêmica na
                 universidade {universidade.nomeInstituicao}? Esta ação é
                 irreversível.
