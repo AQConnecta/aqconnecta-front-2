@@ -140,7 +140,7 @@ export function EditExperienceFormDialog({
                   inputProps={register("descricao")}
                   errorMessage={formState.errors.descricao?.message}
                 >
-                  <textarea className="p-3 resize-y" />
+                  <textarea className="p-3 resize-y field-sizing-content" />
                 </Form.Input>
                 <Controller
                   control={control}

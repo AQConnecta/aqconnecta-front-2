@@ -129,7 +129,7 @@ export function CreateAcademicExperienceFormDialog({
                     serverErrors?.descricao?.[0]
                   }
                 >
-                  <textarea className="p-3 resize-y" />
+                  <textarea className="p-3 resize-y field-sizing-content" />
                 </Form.Input>
 
                 <Controller
