@@ -1,4 +1,5 @@
 import { deleteOwnExperience } from "./delete-own-experience";
+import { editOwnExperience } from "./edit-own-experience";
 import { listUsersExperiences } from "./list-users-experiences";
 import { registerOwnExperience } from "./register-own-experience";
 
@@ -13,4 +14,5 @@ export default {
   listUsersExperiences,
   registerOwnExperience,
   deleteOwnExperience,
+  editOwnExperience,
 };
