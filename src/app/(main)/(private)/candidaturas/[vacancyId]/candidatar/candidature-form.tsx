@@ -1,10 +1,9 @@
 import { Radio, RadioGroup } from "@base-ui/react";
 import { ArrowSquareOutIcon } from "@phosphor-icons/react/dist/ssr/ArrowSquareOut";
 import clsx from "clsx";
-import Link from "next/link";
 import {
-  type FormEvent,
   type ReactElement,
+  type SubmitEvent,
   useCallback,
   useId,
   useState,
@@ -23,6 +22,7 @@ type Props = {
   resumes: Curriculo[];
   cancelButton?: ReactElement;
   extraActionButtons?: ReactElement | ReactElement[];
+  navigate: (href: string) => void;
 };
 
 export function CandidatureForm({
@@ -31,6 +31,7 @@ export function CandidatureForm({
   formId,
   cancelButton,
   extraActionButtons,
+  navigate,
 }: Props) {
   const hasResumes = Boolean(resumes.length);
 
@@ -46,7 +47,7 @@ export function CandidatureForm({
   } = useCandidate(vacancyId, resumeId);
 
   const handleSubmit = useCallback(
-    (event: FormEvent) => {
+    (event: SubmitEvent) => {
       event.preventDefault();
       apply();
     },
@@ -82,12 +83,13 @@ export function CandidatureForm({
         </RadioGroup>
       </form>
 
-      <Link
-        href={Routes.resumes.list}
+      <button
+        type="button"
+        onClick={() => navigate(Routes.resumes.list)}
         className="font-semibold text-primary-600 inline-block mt-3"
       >
         Gerencie seus currículos
-      </Link>
+      </button>
 
       <Dialog.ActionsContainer>
         <Dialog.ActionsContainer.RightArea>

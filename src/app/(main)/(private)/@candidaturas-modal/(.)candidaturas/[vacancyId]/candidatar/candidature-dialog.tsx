@@ -7,7 +7,9 @@ import { CandidatureForm } from "@/app/(main)/(private)/candidaturas/[vacancyId]
 import { CandidatureFormSkeleton } from "@/app/(main)/(private)/candidaturas/[vacancyId]/candidatar/candidature-form-skeleton";
 import { Alert } from "@/components/alert";
 import Button from "@/components/button";
-import Dialog from "@/components/dialog";
+import Dialog, {
+  DIALOG_CLOSE_ANIMATION_DURATION_MS,
+} from "@/components/dialog";
 import { useFindVacancyById } from "@/hooks/vacancies/find-by-id";
 import { useAuth } from "@/stores/auth";
 
@@ -22,9 +24,18 @@ export function CandidatureDialog({ vacancyId }: Props) {
   const router = useRouter();
 
   const { data: response, error, status } = useFindVacancyById({ vacancyId });
+
+  const handleNavigate = (href: string) => {
+    setIsOpen(false);
+    setTimeout(() => {
+      router.push(href);
+    }, DIALOG_CLOSE_ANIMATION_DURATION_MS);
+  };
+
   useEffect(() => setIsOpen(true), []);
 
   let content: ReactElement;
+
   switch (status) {
     case "success": {
       const vacancy = response.data!;
@@ -41,6 +52,7 @@ export function CandidatureDialog({ vacancyId }: Props) {
               formId={formId}
               vacancyId={vacancy.id}
               resumes={user.curriculo}
+              navigate={handleNavigate}
               cancelButton={
                 <Dialog.Close asChild>
                   <Button.Root variant="outline">Cancelar</Button.Root>
@@ -86,7 +98,8 @@ export function CandidatureDialog({ vacancyId }: Props) {
       open={isOpen}
       onOpenChange={(open) => {
         setIsOpen(open);
-        if (!open) setTimeout(() => router.back(), 200);
+        if (!open)
+          setTimeout(() => router.back(), DIALOG_CLOSE_ANIMATION_DURATION_MS);
       }}
     >
       <Dialog.Container className="w-full max-w-lg">{content}</Dialog.Container>
