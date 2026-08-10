@@ -64,7 +64,7 @@ hr {
 }
 
 @utility card {
-  border-radius: calc(var(--spacing) * 3);
+  border-radius: calc(var(--spacing) * 4);
   padding: calc(var(--spacing) * 6);
   background: var(--color-white);
   box-shadow: 0 2px 8px -4px
