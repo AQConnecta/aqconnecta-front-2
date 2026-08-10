@@ -1,13 +1,13 @@
 import type { HttpStatusCode } from "axios";
 import { APIRequestError } from "@/core/errors/api-request-error";
 import type { Usuario } from "@/core/types/usuario";
-import type { Experiencia } from "@/core/types/value-objects/experiencia";
 import { axios } from "@/libs/axios";
+import type { PresentedExperience } from "../types/presented-experience";
 import type { BasicServerResponse } from "../types/server-responses/basic";
 import { mountPath } from ".";
 
 export type ListUsersExperiencesResponse = BasicServerResponse<
-  Experiencia[],
+  PresentedExperience[],
   | HttpStatusCode.Ok
   | HttpStatusCode.NotFound
   | HttpStatusCode.Forbidden

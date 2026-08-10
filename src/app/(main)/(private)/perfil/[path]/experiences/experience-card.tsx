@@ -1,5 +1,4 @@
-import { PencilIcon } from "@phosphor-icons/react/dist/ssr/Pencil";
-import Button from "@/components/button";
+import type { PresentedExperience } from "@/api/types/presented-experience";
 import { Heading } from "@/components/heading";
 import type { Usuario } from "@/core/types/usuario";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
@@ -9,7 +8,7 @@ import { DeleteExperienceDialog } from "./delete-experience";
 const formatter = Intl.DateTimeFormat("pt-BR", { dateStyle: "medium" });
 
 type Props = {
-  experience: Experiencia;
+  experience: PresentedExperience;
   userOwnsProfile: boolean;
   authUser: Usuario | null;
   completeUser: UsuarioCompleto;
@@ -23,7 +22,7 @@ export function Experience({
 }: Props) {
   const startDate = formatter.format(new Date(experience.dataInicio));
   const endDate =
-    experience.atualExperiencia || !experience.dataFim
+    experience.corrente || !experience.dataFim
       ? "Presente"
       : formatter.format(new Date(experience.dataFim));
 
