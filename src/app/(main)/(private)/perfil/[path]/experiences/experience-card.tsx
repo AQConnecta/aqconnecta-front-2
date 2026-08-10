@@ -2,8 +2,8 @@ import type { PresentedExperience } from "@/api/types/presented-experience";
 import { Heading } from "@/components/heading";
 import type { Usuario } from "@/core/types/usuario";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
-import type { Experiencia } from "@/core/types/value-objects/experiencia";
 import { DeleteExperienceDialog } from "./delete-experience";
+import { EditExperienceFormDialog } from "./edit-experience-form";
 
 const formatter = Intl.DateTimeFormat("pt-BR", { dateStyle: "medium" });
 
@@ -50,9 +50,11 @@ export function Experience({
             title={experience.titulo}
           />
 
-          <Button.Root size="sm" variant="ghost">
-            <Button.Icon icon={PencilIcon} /> Editar
-          </Button.Root>
+          <EditExperienceFormDialog
+            authUser={authUser}
+            completeUser={completeUser}
+            experience={experience}
+          />
         </div>
       )}
     </div>
