@@ -93,7 +93,7 @@ export function EditAcademicExperienceFormDialog({
       </Dialog.Trigger>
       <Dialog.Container className="flex flex-col">
         <Dialog.Header
-          title="Adicionar nova formação acadêmica"
+          title={`Editar formação acadêmica "${formacaoAcademica.diploma ?? formacaoAcademica.universidade.nomeInstituicao}"`}
           className="capitalize"
         />
 
