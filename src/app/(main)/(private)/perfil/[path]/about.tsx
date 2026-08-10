@@ -1,5 +1,6 @@
 "use client";
 
+import { ScrollArea } from "@base-ui/react";
 import { SparkleIcon } from "@phosphor-icons/react/dist/ssr/Sparkle";
 import {
   type ReactNode,
@@ -117,40 +118,46 @@ function EditDialog({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
-      <Dialog.Container>
+      <Dialog.Container className="flex flex-col">
         <Dialog.Header title="Editar biografia" className="capitalize" />
         <Dialog.Description className="mb-3">
           Edite a sua biografia para que os outros usuários possam te conhecer.
         </Dialog.Description>
 
-        <form id={formId} onSubmit={handleSubmit}>
-          <div>
-            <Form.Label
-              htmlFor={descriptionInputId}
-              required
-              className="block mb-1"
-            >
-              Biografia
-            </Form.Label>
+        <ScrollArea.Root className="relative min-h-0 flex flex-col">
+          <ScrollArea.Viewport className="-m-2 p-2">
+            <ScrollArea.Content>
+              <form id={formId} onSubmit={handleSubmit}>
+                <div>
+                  <Form.Label
+                    htmlFor={descriptionInputId}
+                    required
+                    className="block mb-1"
+                  >
+                    Biografia
+                  </Form.Label>
 
-            <Form.TextField.Root>
-              <Form.TextField.Input
-                id={descriptionInputId}
-                placeholder="Conte detalhes sobre você."
-                defaultValue={completeUser.descricao}
-                onInput={(e) => setDescription(e.currentTarget.value)}
-                asChild
-                className="py-2"
-              >
-                <textarea rows={10} />
-              </Form.TextField.Input>
-            </Form.TextField.Root>
+                  <Form.TextField.Root>
+                    <Form.TextField.Input
+                      id={descriptionInputId}
+                      placeholder="Conte detalhes sobre você."
+                      defaultValue={completeUser.descricao}
+                      onInput={(e) => setDescription(e.currentTarget.value)}
+                      asChild
+                      className="py-2"
+                    >
+                      <textarea rows={10} className="field-sizing-content" />
+                    </Form.TextField.Input>
+                  </Form.TextField.Root>
 
-            {descriptionError && (
-              <Form.TextField.ErrorMessage message={descriptionError} />
-            )}
-          </div>
-        </form>
+                  {descriptionError && (
+                    <Form.TextField.ErrorMessage message={descriptionError} />
+                  )}
+                </div>
+              </form>
+            </ScrollArea.Content>
+          </ScrollArea.Viewport>
+        </ScrollArea.Root>
 
         <Dialog.ActionsContainer>
           <Dialog.ActionsContainer.LeftArea>
