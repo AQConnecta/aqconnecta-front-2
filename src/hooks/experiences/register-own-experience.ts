@@ -35,14 +35,9 @@ export const useRegisterOwnExperience = ({
       "register_own_professional_experience",
     ),
     onSuccess: async (data, variables, onMutateResult, context) => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: RQKeys.education.listByUser(authUser?.id),
-        }),
-        queryClient.invalidateQueries({
-          queryKey: RQKeys.user.findCompleteByUserUrl(completeUser.userUrl),
-        }),
-      ]);
+      await queryClient.invalidateQueries({
+        queryKey: RQKeys.education.listByUser(authUser?.id),
+      });
 
       await onSuccess?.(data, variables, onMutateResult, context);
     },

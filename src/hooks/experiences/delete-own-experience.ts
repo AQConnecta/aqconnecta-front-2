@@ -34,11 +34,9 @@ export const useDeleteOwnExperience = ({
       "delete_own_experience",
     ),
     onSuccess: async (data, variables, onMutateResult, context) => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: RQKeys.experience.listByUser(authUser?.id),
-        }),
-      ]);
+      await queryClient.invalidateQueries({
+        queryKey: RQKeys.experience.listByUser(authUser?.id),
+      });
 
       await onSuccess?.(data, variables, onMutateResult, context);
     },

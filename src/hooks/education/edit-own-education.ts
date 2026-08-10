@@ -41,13 +41,6 @@ export const useEditOwnEducation = ({
         queryClient.invalidateQueries({
           queryKey: RQKeys.user.findCompleteByUserUrl(completeUser.userUrl),
         }),
-        queryClient.invalidateQueries({
-          queryKey: RQKeys.user.editSelf(
-            authUser?.id,
-            completeUser,
-            "edit_own_education",
-          ),
-        }),
       ]);
 
       await onSuccess?.(data, variables, onMutateResult, context);
