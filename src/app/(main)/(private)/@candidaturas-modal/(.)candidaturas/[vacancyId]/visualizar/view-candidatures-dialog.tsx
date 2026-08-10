@@ -5,14 +5,14 @@ import { type ReactElement, useEffect, useState } from "react";
 import type { PresentedVacancy } from "@/api/types/presented-vacancy";
 import { CandidatureFormSkeleton } from "@/app/(main)/(private)/candidaturas/[vacancyId]/candidatar/candidature-form-skeleton";
 import { Alert } from "@/components/alert";
-import Dialog from "@/components/dialog";
+import Dialog, {
+  DIALOG_CLOSE_ANIMATION_DURATION_MS,
+} from "@/components/dialog";
 import { Routes } from "@/core/routes";
 import type { Usuario } from "@/core/types/usuario";
 import { useFetchVacancyCandidatures } from "@/hooks/vacancies/fetch-vacancy-candidatures";
 import CandidatureCard from "@/ui/candidature-card";
 import { DialogHeader } from "./dialog-header";
-
-const DIALOG_CLOSE_ANIMATION_DURATION_MS = 200;
 
 type Props = {
   vacancyId: PresentedVacancy["id"];
