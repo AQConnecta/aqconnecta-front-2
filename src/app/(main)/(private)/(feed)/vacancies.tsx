@@ -88,6 +88,7 @@ export function Vacancies() {
               publisherName={vacancy.publicador.nome}
               title={vacancy.titulo}
               publisherProfilePicutreUrl={vacancy.publicador.fotoPerfil}
+              publisherSlug={vacancy.publicador.userUrl}
             />
             <VacancyCard.Details
               acceptsBeginners={vacancy.isIniciante}
@@ -108,6 +109,8 @@ export function Vacancies() {
 
               <Button.Root
                 className="justify-self-end w-fit place-self-end"
+                variant="default"
+                color="primary"
                 asChild
               >
                 <Link

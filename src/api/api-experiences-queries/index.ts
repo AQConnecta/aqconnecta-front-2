@@ -1,0 +1,18 @@
+import { deleteOwnExperience } from "./delete-own-experience";
+import { editOwnExperience } from "./edit-own-experience";
+import { listUsersExperiences } from "./list-users-experiences";
+import { registerOwnExperience } from "./register-own-experience";
+
+const prefix = "/experiencia";
+
+export function mountPath(endpoint: string): string {
+  if (endpoint.startsWith("/")) endpoint = endpoint.slice(1);
+  return `${prefix}/${endpoint}`;
+}
+
+export default {
+  listUsersExperiences,
+  registerOwnExperience,
+  deleteOwnExperience,
+  editOwnExperience,
+};

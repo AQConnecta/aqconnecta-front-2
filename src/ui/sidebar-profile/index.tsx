@@ -46,11 +46,11 @@ export function SidebarAuthUserProfile() {
 
             <span className="block text-base">{user.nome}</span>
             {user.descricao && (
-              <p className="text-gray-700">{user.descricao}</p>
+              <p className="text-gray-700 user-text-area">{user.descricao}</p>
             )}
           </header>
 
-          <div className="mt-6 p-4 grid place-items-center rounded-lg bg-gray-100">
+          <div className="mt-4 p-4 grid place-items-center rounded-xl bg-gray-100">
             <span className="font-bold text-primary-600 text-base">
               {candidaturesCount}
             </span>

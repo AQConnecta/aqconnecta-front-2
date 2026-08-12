@@ -2,7 +2,7 @@
 
 import { HttpStatusCode } from "axios";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { type ReactElement, useId } from "react";
 import { Alert } from "@/components/alert";
 import Button from "@/components/button";
@@ -18,6 +18,7 @@ export default function Candidatar() {
   const user = useAuth((state) => state.user);
   const formId = useId();
   const { vacancyId } = useParams();
+  const { push } = useRouter();
 
   const { data, error, status } = useFindVacancyById({
     vacancyId: vacancyId?.toString(),
@@ -62,11 +63,16 @@ export default function Candidatar() {
               isUserThePublisher={userIsThePublisher}
               publisherName={vacancy.publicador.nome}
               publisherProfilePicutreUrl={vacancy.publicador.fotoPerfil}
+              publisherSlug={vacancy.publicador.userUrl}
             />
             <VacancyCard.Details
               acceptsBeginners={vacancy.isIniciante}
               isRemote={vacancy.aceitaRemoto}
               locale={vacancy.localDaVaga}
+              isExpired={Boolean(
+                vacancy.dataLimiteCandidatura &&
+                  new Date(vacancy.dataLimiteCandidatura) < new Date(),
+              )}
             />
             <VacancyCard.Content description={vacancy.descricao} />
             <VacancyCard.Footer>
@@ -74,6 +80,7 @@ export default function Candidatar() {
                 formId={formId}
                 resumes={user?.curriculo ?? []}
                 vacancyId={vacancy.id}
+                navigate={push}
                 extraActionButtons={
                   <VacancyCard.SeeCandidaturesButton
                     userIsThePublisher={userIsThePublisher}

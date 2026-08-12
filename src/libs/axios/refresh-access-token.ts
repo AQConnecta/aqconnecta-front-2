@@ -38,8 +38,6 @@ export async function refreshAndRetryFailedRequest(
     if (response.data) {
       const { token } = trySetAuthState(response);
       config.headers.setAuthorization(`Bearer ${token}`);
-      const newResponse = await axios.request(config);
-      return newResponse;
     }
   } catch (e) {
     useAuth.getState().removeAuth();
@@ -50,6 +48,8 @@ export async function refreshAndRetryFailedRequest(
     if (error) return Promise.reject(error);
     return Promise.reject(e);
   }
+
+  return await axios.request(config);
 }
 
 export async function tryToPrefetchAccessToken() {

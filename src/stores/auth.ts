@@ -5,6 +5,7 @@ type AuthStore = {
   token: string | null;
   user: Usuario | null;
   isLoadingAuth: boolean;
+  userIsAdmin: () => boolean;
 
   setAuth(token: string, user: Usuario): void;
   removeAuth(): void;
@@ -28,6 +29,14 @@ export const useAuth = create<AuthStore>(
 
       sinalizeStoppedLoading() {
         set({ isLoadingAuth: false });
+      },
+
+      userIsAdmin() {
+        const hasAdminRole = this.user?.permissao.some(
+          (permission) => permission.descricao === "ADMIN",
+        );
+
+        return hasAdminRole ?? false;
       },
     }) satisfies AuthStore,
 );

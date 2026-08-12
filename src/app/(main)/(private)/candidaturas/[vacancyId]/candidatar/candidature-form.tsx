@@ -1,10 +1,9 @@
 import { Radio, RadioGroup } from "@base-ui/react";
 import { ArrowSquareOutIcon } from "@phosphor-icons/react/dist/ssr/ArrowSquareOut";
 import clsx from "clsx";
-import Link from "next/link";
 import {
-  type FormEvent,
   type ReactElement,
+  type SubmitEvent,
   useCallback,
   useId,
   useState,
@@ -12,6 +11,7 @@ import {
 import type { PresentedVacancy } from "@/api/types/presented-vacancy";
 import { Alert } from "@/components/alert";
 import Button from "@/components/button";
+import Dialog from "@/components/dialog";
 import { Routes } from "@/core/routes";
 import type { Curriculo } from "@/core/types/value-objects/curriculo";
 import { useCandidate } from "@/hooks/vacancies/use-candidate";
@@ -22,6 +22,7 @@ type Props = {
   resumes: Curriculo[];
   cancelButton?: ReactElement;
   extraActionButtons?: ReactElement | ReactElement[];
+  navigate: (href: string) => void;
 };
 
 export function CandidatureForm({
@@ -30,6 +31,7 @@ export function CandidatureForm({
   formId,
   cancelButton,
   extraActionButtons,
+  navigate,
 }: Props) {
   const hasResumes = Boolean(resumes.length);
 
@@ -45,7 +47,7 @@ export function CandidatureForm({
   } = useCandidate(vacancyId, resumeId);
 
   const handleSubmit = useCallback(
-    (event: FormEvent) => {
+    (event: SubmitEvent) => {
       event.preventDefault();
       apply();
     },
@@ -81,18 +83,19 @@ export function CandidatureForm({
         </RadioGroup>
       </form>
 
-      <Link
-        href={Routes.resumes.list}
+      <button
+        type="button"
+        onClick={() => navigate(Routes.resumes.list)}
         className="font-semibold text-primary-600 inline-block mt-3"
       >
         Gerencie seus currículos
-      </Link>
+      </button>
 
-      <hr className="my-6" />
-
-      <div className="grid grid-flow-col gap-2">
-        <div className="self-start">{extraActionButtons}</div>
-        <div className="self-end flex items-center justify-end gap-2">
+      <Dialog.ActionsContainer>
+        <Dialog.ActionsContainer.RightArea>
+          {extraActionButtons}
+        </Dialog.ActionsContainer.RightArea>
+        <Dialog.ActionsContainer.LeftArea>
           {cancelButton}
 
           <Button.Root
@@ -100,11 +103,12 @@ export function CandidatureForm({
             form={formId}
             disabled={isPending || isSuccess}
             aria-disabled={isPending}
+            color="primary"
           >
             Avançar
           </Button.Root>
-        </div>
-      </div>
+        </Dialog.ActionsContainer.LeftArea>
+      </Dialog.ActionsContainer>
     </div>
   );
 }

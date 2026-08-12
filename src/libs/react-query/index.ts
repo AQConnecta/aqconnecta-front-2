@@ -27,17 +27,22 @@ export const RQKeys = {
           ...RQKeys.vacancies.base,
           ...RQKeys.vacancies.candidatures.base,
           "list",
+          "by_user",
           userId,
           filters,
         ] as const,
-      listByVacancy: (vacancyId?: string, filters?: object) =>
+      listByEveryVacancy: () =>
         [
           ...RQKeys.vacancies.base,
           ...RQKeys.vacancies.candidatures.base,
           "list",
-          vacancyId,
-          filters,
+          "by_vacancy",
         ] as const,
+      listByVacancy: (vacancyId?: string, filters?: object) => [
+        ...RQKeys.vacancies.candidatures.listByEveryVacancy(),
+        vacancyId,
+        filters,
+      ],
     },
   },
   auth: {
@@ -48,5 +53,36 @@ export const RQKeys = {
     base: ["user"] as const,
     findCompleteByUserUrl: (userUrl?: string) =>
       [...RQKeys.user.base, "find_complete_by_user_url", userUrl] as const,
+    editSelf: (
+      userId: string | undefined,
+      currentUserData: object,
+      scope: string,
+    ) => [
+      ...RQKeys.user.base,
+      "edit_self_data",
+      userId,
+      currentUserData,
+      scope,
+    ],
+  },
+  universities: {
+    base: ["university"] as const,
+    list: (filters?: object) =>
+      [...RQKeys.universities.base, "list", filters] as const,
+  },
+  education: {
+    base: ["education"] as const,
+    listByUser: (userId?: string) =>
+      [...RQKeys.education.base, "list", "userId", userId] as const,
+  },
+  experience: {
+    base: ["professional_experience"] as const,
+    listByUser: (userId?: string) =>
+      [...RQKeys.education.base, "list", "userId", userId] as const,
+  },
+  competence: {
+    base: ["competence"] as const,
+    list: (filters?: object) =>
+      [...RQKeys.competence.base, "list", filters] as const,
   },
 };

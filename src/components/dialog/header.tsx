@@ -13,7 +13,7 @@ export function DialogHeader({ className, title }: Props) {
   return (
     <header
       className={clsx(
-        "max-w-[calc(100%-calc(var(--spacing)*10))] mb-3",
+        "max-w-[calc(100%-calc(var(--spacing)*10))] mb-3 wrap-break-word",
         className,
       )}
     >

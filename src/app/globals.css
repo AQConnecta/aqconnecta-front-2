@@ -11,6 +11,7 @@
   --color-gray-100: #f5f5f5;
   --color-gray-200: #e5e7eb;
   --color-gray-300: #bbbbbb;
+  --color-gray-350: #aaaaaa;
   --color-gray-600: #777777;
   --color-gray-700: #555555;
   --color-gray-750: #444444;
@@ -35,6 +36,7 @@
 @theme {
   --container-full-with-margins: calc(100% - 48px);
   --container-full-area: 1440px;
+  --container-medium-area: 940px;
   --container-main-area: 744px;
 
   --breakpoint-full-width: 1440px;
@@ -62,7 +64,7 @@ hr {
 }
 
 @utility card {
-  border-radius: calc(var(--spacing) * 3);
+  border-radius: calc(var(--spacing) * 4);
   padding: calc(var(--spacing) * 6);
   background: var(--color-white);
   box-shadow: 0 2px 8px -4px
@@ -81,4 +83,50 @@ hr {
 a {
   transition: all 100ms ease;
   @apply outline-0 outline-offset-1 outline-primary-300 focus-visible:outline-2;
+}
+
+@utility input-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: --spacing(9);
+
+  display: flex;
+  align-items: stretch;
+  gap: --spacing(3);
+
+  border-radius: var(--radius-md);
+  background: var(--color-gray-100);
+  padding-inline: --spacing(3);
+  font-size: var(--text-sm);
+
+  outline: none;
+
+  &:disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 50%;
+  }
+
+  will-change: color, box-shadow;
+  @apply ring-0 transition-[color,box-shadow] ring-primary-600/40 focus-within:ring-4 aria-invalid:ring-red-500/20;
+  @apply max-small-width:text-sm;
+}
+
+@utility input-inner {
+  height: auto;
+  width: 100%;
+  outline: none;
+
+  &::placeholder {
+    color: var(--color-gray-600);
+    text-overflow: ellipsis;
+  }
+
+  text-wrap: wrap;
+
+  @apply max-small-width:leading-4 small-width:leading-tight;
+}
+
+@utility user-text-area {
+  @apply whitespace-pre-wrap break-all;
 }

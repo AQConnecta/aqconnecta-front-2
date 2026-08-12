@@ -56,7 +56,7 @@ export function CandidatureCardContent({
         {candidature.usuario.competencias.map((competencia) => (
           <Badge
             variant="default"
-            key={`candidature-card-$candidature.id-$candidature.usuario.id-$competencia.id`}
+            key={`candidature-card-${candidature.id}-${candidature.usuario.id}-${competencia.id}`}
           >
             {competencia.descricao}
           </Badge>
