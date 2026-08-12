@@ -11,7 +11,7 @@ import IconButton from "@/components/icon-button";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import type { Endereco } from "@/core/types/value-objects/endereco";
 import { useAuth } from "@/stores/auth";
-import { SectionContainer } from "./section-container";
+import { SectionContainer } from "../section-container";
 
 type Props = {
   completeUser: UsuarioCompleto;
