@@ -13,7 +13,7 @@ export type DeleteOwnCompetencesResponse = BasicServerResponse<
   | HttpStatusCode.Ok // usuário não tem competências
   | HttpStatusCode.Created // competências removidas c/ sucesso
   | HttpStatusCode.NotFound // not found tá substituindo o erro 500...
-  // | HttpStatusCode.InternalServerError
+  | HttpStatusCode.InternalServerError
 >;
 
 export type DeleteOwnCompetencesArgs = {
