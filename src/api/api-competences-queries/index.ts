@@ -1,3 +1,4 @@
+import { addOwnCompetences } from "./add-own-competences";
 import { deleteOwnCompetences } from "./delete-own-competence";
 import { fetchManyCompetences } from "./fetch-many-competences";
 
@@ -11,4 +12,5 @@ export function mountPath(endpoint: string): string {
 export default {
   fetchManyCompetences,
   deleteOwnCompetences,
+  addOwnCompetences,
 };
