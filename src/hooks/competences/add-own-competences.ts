@@ -38,20 +38,25 @@ export const useAddOwnCompetences = ({
     ),
     onMutate,
     onSuccess: async (data, variables, onMutateResult, context) => {
-      await queryClient.setQueryData(
-        RQKeys.user.findCompleteByUserUrl(completeUser.userUrl),
-        (oldData: FindCompleteUserResponse) => {
-          if (!oldData?.data) return oldData;
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: RQKeys.vacancies.candidatures.listByEveryVacancy(),
+        }),
+        queryClient.setQueryData(
+          RQKeys.user.findCompleteByUserUrl(completeUser.userUrl),
+          (oldData: FindCompleteUserResponse) => {
+            if (!oldData?.data) return oldData;
 
-          return {
-            ...oldData,
-            data: {
-              ...oldData.data!,
-              competencias: data.data.data!, // 🕊️
-            },
-          } satisfies FindCompleteUserResponse;
-        },
-      );
+            return {
+              ...oldData,
+              data: {
+                ...oldData.data!,
+                competencias: data.data.data!, // 🕊️
+              },
+            } satisfies FindCompleteUserResponse;
+          },
+        ),
+      ]);
 
       toast.success("Competências adicionadas!");
       await onSuccess?.(data, variables, onMutateResult, context);

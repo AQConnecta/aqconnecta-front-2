@@ -27,17 +27,22 @@ export const RQKeys = {
           ...RQKeys.vacancies.base,
           ...RQKeys.vacancies.candidatures.base,
           "list",
+          "by_user",
           userId,
           filters,
         ] as const,
-      listByVacancy: (vacancyId?: string, filters?: object) =>
+      listByEveryVacancy: () =>
         [
           ...RQKeys.vacancies.base,
           ...RQKeys.vacancies.candidatures.base,
           "list",
-          vacancyId,
-          filters,
+          "by_vacancy",
         ] as const,
+      listByVacancy: (vacancyId?: string, filters?: object) => [
+        ...RQKeys.vacancies.candidatures.listByEveryVacancy(),
+        vacancyId,
+        filters,
+      ],
     },
   },
   auth: {
