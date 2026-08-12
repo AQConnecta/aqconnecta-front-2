@@ -19,6 +19,7 @@ export const iconButtonVariants = cva(
         foreground: "",
       },
       size: {
+        xs: "rounded-lg px-1 py-0.5",
         sm: "rounded-[10px] px-1.5 py-1",
         md: "rounded-xl px-2 py-1",
       },
