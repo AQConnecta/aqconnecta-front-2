@@ -1,12 +1,13 @@
 import { MedalIcon } from "@phosphor-icons/react/dist/ssr/Medal";
-import type { MouseEventHandler, ReactNode } from "react";
+import type { MouseEventHandler, PropsWithChildren } from "react";
 import toast from "react-hot-toast";
 import { Alert } from "@/components/alert";
 import { Badge } from "@/components/badge";
 import type { Usuario } from "@/core/types/usuario";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import { useDeleteOwnCompetences } from "@/hooks/competences/delete-own-competences";
-import { SectionContainer } from "./section-container";
+import { SectionContainer } from "../section-container";
+import { AddCompetencesFormDialog } from "./add-competences-form";
 
 type Props = {
   authUser: Usuario | null;
@@ -26,14 +27,18 @@ export function CompetencesSection({
     completeUser,
     onSuccess: () => toast.success("Competência removida com sucesso."),
     onError: (error) => {
-      console.error(error.message, error.status);
+      console.error(error.message);
       toast.error(`Não foi possível remover a competência.`);
     },
   });
 
   if (userOwnsProfile && hasNoCompetences) {
     return (
-      <Wrapper userOwnsProfile={userOwnsProfile}>
+      <Wrapper
+        userOwnsProfile={userOwnsProfile}
+        authUser={authUser}
+        completeUser={completeUser}
+      >
         <Alert variant="warning" title="Você ainda não possui competências!" />
       </Wrapper>
     );
@@ -42,7 +47,11 @@ export function CompetencesSection({
   if (hasNoCompetences) return null;
 
   return (
-    <Wrapper userOwnsProfile={userOwnsProfile}>
+    <Wrapper
+      userOwnsProfile={userOwnsProfile}
+      authUser={authUser}
+      completeUser={completeUser}
+    >
       <div className="flex flex-wrap gap-2">
         {completeUser.competencias.map((competencia) => {
           let onDelete: MouseEventHandler | undefined;
@@ -70,17 +79,19 @@ export function CompetencesSection({
 function Wrapper({
   children,
   userOwnsProfile,
-}: {
-  children: ReactNode;
-  userOwnsProfile: boolean;
-}) {
+  authUser,
+  completeUser,
+}: PropsWithChildren<Props>) {
   return (
     <SectionContainer
       shouldShowEditButton={userOwnsProfile}
       icon={MedalIcon}
       title="Competências"
       actionContent={
-        <SectionContainer.AddButton addButtonLabel="Adicionar novas competências" />
+        <AddCompetencesFormDialog
+          authUser={authUser}
+          completeUser={completeUser}
+        />
       }
     >
       {children}

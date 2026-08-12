@@ -49,6 +49,7 @@ export default function PerfilUsuario() {
               userOwnsProfile={userOwnsProfile}
             />
             <CompetencesSection
+              authUser={authUser}
               completeUser={completeUser}
               userOwnsProfile={userOwnsProfile}
             />
