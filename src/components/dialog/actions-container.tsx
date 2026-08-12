@@ -1,9 +1,13 @@
+import clsx from "clsx";
 import type { PropsWithChildren } from "react";
 
-export function DialogActionsContainer({ children }: PropsWithChildren) {
+export function DialogActionsContainer({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) {
   return (
     <>
-      <hr className="my-6" />
+      <hr className={clsx("my-6", className)} />
 
       <div className="grid grid-flow-col gap-2">{children}</div>
     </>
