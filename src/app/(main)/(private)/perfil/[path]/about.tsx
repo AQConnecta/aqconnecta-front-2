@@ -15,7 +15,6 @@ import { Alert } from "@/components/alert";
 import Button from "@/components/button";
 import Dialog from "@/components/dialog";
 import Form from "@/components/form";
-import type { APIRequestError } from "@/core/errors/api-request-error";
 import type { Usuario } from "@/core/types/usuario";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import { useEditSelf } from "@/hooks/users/edit-self";
@@ -82,7 +81,7 @@ function EditDialog({
       toast.success("Descrição alterada.");
       setOpen(false);
     },
-    onError: (error: APIRequestError) => {
+    onError: (error) => {
       if (error.body) {
         setDescriptionError(
           (error.body as EditSelfValidationErrors).descricao?.[0] ?? null,
