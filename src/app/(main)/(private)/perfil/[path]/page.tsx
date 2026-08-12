@@ -45,6 +45,7 @@ export default function PerfilUsuario() {
         <div className="flex gap-4 max-small-width:flex-col">
           <div className="w-full medium-width:max-w-3xs flex flex-col gap-4 min-w-0">
             <SummarySection
+              authUser={authUser}
               completeUser={completeUser}
               userOwnsProfile={userOwnsProfile}
             />

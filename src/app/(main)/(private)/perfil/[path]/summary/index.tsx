@@ -8,17 +8,23 @@ import { PhoneIcon } from "@phosphor-icons/react/dist/ssr/Phone";
 import Avatar from "@/components/avatar";
 import { Heading } from "@/components/heading";
 import IconButton from "@/components/icon-button";
+import type { Usuario } from "@/core/types/usuario";
 import type { UsuarioCompleto } from "@/core/types/usuario-completo";
 import type { Endereco } from "@/core/types/value-objects/endereco";
 import { useAuth } from "@/stores/auth";
-import { SectionContainer } from "../section-container";
+import { EditSocialMediaFormDialog } from "./edit-social-media-form";
 
 type Props = {
+  authUser: Usuario | null;
   completeUser: UsuarioCompleto;
   userOwnsProfile: boolean;
 };
 
-export function SummarySection({ completeUser, userOwnsProfile }: Props) {
+export function SummarySection({
+  completeUser,
+  userOwnsProfile,
+  authUser,
+}: Props) {
   const firstAddress: Endereco | undefined = completeUser.enderecos[0];
 
   const authUserIsAdmin = useAuth((state) => state.userIsAdmin());
@@ -33,7 +39,10 @@ export function SummarySection({ completeUser, userOwnsProfile }: Props) {
   return (
     <section className="card flex flex-col items-center gap-4">
       {userOwnsProfile && (
-        <SectionContainer.EditButton editButtonLabel="Editar informações do perfil" />
+        <EditSocialMediaFormDialog
+          authUser={authUser}
+          completeUser={completeUser}
+        />
       )}
 
       <Avatar.Root className="size-32">
@@ -46,22 +55,24 @@ export function SummarySection({ completeUser, userOwnsProfile }: Props) {
         {completeUser.nome}
       </Heading>
 
-      <ul className="flex flex-col items-center justify-center gap-2 list-none">
-        {firstAddress && (
-          <SummaryListItem
-            icon={MapPinIcon}
-            content={`${firstAddress.cidade}, ${firstAddress.estado}`}
-          />
-        )}
+      {(firstAddress || canSeeEmail || completeUser.telefone) && (
+        <ul className="flex flex-col items-center justify-center gap-2 list-none">
+          {firstAddress && (
+            <SummaryListItem
+              icon={MapPinIcon}
+              content={`${firstAddress.cidade}, ${firstAddress.estado}`}
+            />
+          )}
 
-        {canSeeEmail && (
-          <SummaryListItem icon={EnvelopeIcon} content={completeUser.email} />
-        )}
+          {canSeeEmail && (
+            <SummaryListItem icon={EnvelopeIcon} content={completeUser.email} />
+          )}
 
-        {completeUser.telefone && (
-          <SummaryListItem icon={PhoneIcon} content={completeUser.telefone} />
-        )}
-      </ul>
+          {completeUser.telefone && (
+            <SummaryListItem icon={PhoneIcon} content={completeUser.telefone} />
+          )}
+        </ul>
+      )}
 
       {hasAnySocialMedia && (
         <>
