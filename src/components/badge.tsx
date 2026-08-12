@@ -1,11 +1,13 @@
+import { TrashIcon } from "@phosphor-icons/react/dist/ssr/Trash";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import clsx from "clsx";
 import type * as React from "react";
+import IconButton from "./icon-button";
 
 const badgeVariants = cva(
   [
-    "inline-flex items-center justify-center rounded-lg border px-2 py-0.5",
+    "rounded-xl border",
     "text-xs font-semibold w-fit whitespace-nowrap shrink-0 focus-visible:border-ring",
     "focus-visible:ring-4 transition-[color,box-shadow] overflow-hidden",
     "[&>svg]:size-3 gap-1 [&>svg]:pointer-events-none",
@@ -28,21 +30,52 @@ const badgeVariants = cva(
   },
 );
 
+type Props = React.ComponentProps<"span"> &
+  VariantProps<typeof badgeVariants> & {
+    asChild?: boolean;
+    onDelete?: React.MouseEventHandler;
+  };
+
 function Badge({
   className,
   variant,
   asChild = false,
+  children,
+  onDelete,
   ...props
-}: React.ComponentProps<"span"> &
-  VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
+}: Props) {
   const Comp = asChild ? Slot : "span";
+
+  let deleteButton = null;
+
+  if (onDelete)
+    deleteButton = (
+      <IconButton.Root onClick={onDelete} size="sm" title="Remover">
+        <IconButton.Label>Remover</IconButton.Label>
+        <IconButton.Icon icon={TrashIcon} weight="fill" />
+      </IconButton.Root>
+    );
 
   return (
     <Comp
       data-slot="badge"
-      className={clsx(badgeVariants({ variant }), className)}
+      className={clsx(
+        "inline-flex items-center justify-center px-2 py-0.5",
+        onDelete && "pr-0.5",
+        badgeVariants({ variant }),
+        className,
+      )}
       {...props}
-    />
+    >
+      {onDelete ? (
+        children
+      ) : (
+        <span className="inline-flex items-center justify-center gap-1">
+          {children}
+        </span>
+      )}
+      {deleteButton}
+    </Comp>
   );
 }
 
