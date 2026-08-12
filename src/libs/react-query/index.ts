@@ -75,4 +75,9 @@ export const RQKeys = {
     listByUser: (userId?: string) =>
       [...RQKeys.education.base, "list", "userId", userId] as const,
   },
+  competence: {
+    base: ["competence"] as const,
+    list: (filters?: object) =>
+      [...RQKeys.competence.base, "list", filters] as const,
+  },
 };

@@ -1,4 +1,5 @@
 import { deleteOwnCompetences } from "./delete-own-competence";
+import { fetchManyCompetences } from "./fetch-many-competences";
 
 const prefix = "/competencia";
 
@@ -8,5 +9,6 @@ export function mountPath(endpoint: string): string {
 }
 
 export default {
+  fetchManyCompetences,
   deleteOwnCompetences,
 };
