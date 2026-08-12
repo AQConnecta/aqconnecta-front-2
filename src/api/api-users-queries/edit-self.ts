@@ -7,6 +7,9 @@ import type {
 } from "../types/server-responses/basic";
 import { mountPath } from ".";
 
+export type EditSelfErrorResponse =
+  BasicServerResponse<EditSelfValidationErrors>;
+
 export type EditSelfValidationErrors =
   BasicServerValidationErrors<EditSelfArgs>;
 
